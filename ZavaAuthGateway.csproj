@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4D1C42CB-5E98-4F55-BDA5-9749D7CA672A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ZavaAuthGateway</RootNamespace>
+    <AssemblyName>ZavaAuthGateway</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiAuthValidate.ashx.cs" />
+    <Compile Include="AuthRepository.cs" />
+    <Compile Include="DbConfig.cs" />
+    <Compile Include="Default.aspx.cs" />
+    <Compile Include="Default.aspx.designer.cs" />
+    <Compile Include="Health.ashx.cs" />
+    <Compile Include="WhoAmI.ashx.cs" />
+    <Compile Include="Login.aspx.cs" />
+    <Compile Include="Login.aspx.designer.cs" />
+    <Compile Include="Logout.aspx.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ApiAuthValidate.ashx" />
+    <Content Include="Default.aspx" />
+    <Content Include="Dockerfile" />
+    <Content Include="Health.ashx" />
+    <Content Include="WhoAmI.ashx" />
+    <Content Include="Login.aspx" />
+    <Content Include="Logout.aspx" />
+    <Content Include="web.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
