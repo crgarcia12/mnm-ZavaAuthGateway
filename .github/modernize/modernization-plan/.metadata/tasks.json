@@ -10,9 +10,9 @@
       "requirements": "Upgrade vulnerable dependencies to the minimum patched version. If a fix requires a major version upgrade, document current version, upgraded version, and breaking-change risk. Verify the project builds and existing tests pass after remediation.",
       "environmentConfiguration": "Use the existing project runtime/build environment for .NET Framework 4.8 dependency analysis and remediation.",
       "successCriteria": {
-        "passBuild": true,
-        "generateNewUnitTests": false,
-        "passUnitTests": true
+        "passBuild": "true",
+        "generateNewUnitTests": "false",
+        "passUnitTests": "true"
       }
     }
   ],
