@@ -1,0 +1,1879 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.UpgradeAssistant.Cli.Impl</name>
+    </assembly>
+    <members>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Commands.CommonCommandSettings.ProgressToStdout">
+            <summary>
+            Hidden option consumed by external tools (e.g. modernize-cli).
+            When set, each progress update is written to stdout as a plain-text line:
+              APPCAT_PROGRESS:{0-100}:{message}
+            This bypasses Spectre.Console's TTY detection so callers that redirect
+            stdout can still receive real-time percentage progress.
+            </summary>
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Dependencies.ExportAssembliesLocator">
+            <summary>
+            Locates all assemblies that should be exported by the CLI.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Dependencies.ExportProvider.GetExport``1">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Dependencies.ExportProvider.GetExport(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Dependencies.ExportProvider.GetExports``1">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Dependencies.ICompositionInitializer">
+            <summary>
+            Specific initialization action that should run before <see cref="T:Microsoft.UpgradeAssistant.Cli.Dependencies.ExportProvider" /> is initialized.
+            </summary>
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Dependencies.IExportProvider">
+            <summary>
+            Provides access to contracts decorated with MEF <see cref="T:System.ComponentModel.Composition.ExportAttribute" />.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Dependencies.IExportProvider.GetExport``1">
+            <summary>
+            If a contract of type T found in MEF catalog returns its instance, otherwise returns null.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Dependencies.IExportProvider.GetExport(System.Type)">
+            <summary>
+            If a contract with specified type was found, return its instance.
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Dependencies.IExportProvider.GetExports``1">
+            <summary>
+            Returns all available exports of type T.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Dependencies.MsBuildRegistrationInitializer.Initialize">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Dependencies.TypeRegistrar">
+            <summary>
+            Custom dependency injection adapter for Spectre.Console to use to instantiate its
+            contracts and get access to our MEF exports.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Microsoft.UpgradeAssistant.Cli.Dependencies.TypeRegistrar.Register(System.Type,System.Type)" -->
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.FlowProvider.CurrentFlow">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.FlowProvider.GetFlow(System.Collections.Generic.IEnumerable{Spectre.Console.Flow.IFlowStep},System.Collections.Generic.Dictionary{System.String,System.Object},System.Boolean,System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.FlowProvider.Initialize(Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Flow.IFlowProvider">
+            <summary>
+            A factory that creates a new flow.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.IFlowProvider.CurrentFlow">
+            <summary>
+            Since we ar ein CLI, only one flow is possible at the given moment. This property contains current flow object.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.IFlowProvider.GetFlow(System.Collections.Generic.IEnumerable{Spectre.Console.Flow.IFlowStep},System.Collections.Generic.Dictionary{System.String,System.Object},System.Boolean,System.Boolean)">
+            <summary>
+            Creates and returns new flow object.
+            </summary>
+            <param name="steps"></param>
+            <param name="properties"></param>
+            <param name="nonInteractive"></param>
+            <param name="showSelectedOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Settings.AnalysisSettingsFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Settings.AnalysisSettingsFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Settings.AnalysisSettingsFlowStep.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Settings.AnalysisSettingsFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Settings.AnalysisSettingsFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Settings.AnalysisSettingsFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Analysis.AnalysisSourceFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Analysis.AnalysisSourceFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Analysis.AnalysisSourceFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Analysis.AnalysisSourceFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Analysis.AnalysisSourceFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.StartEntryAsync(Microsoft.UpgradeAssistant.Analysis.AnalysisEntry,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.UpdateEntryAsync(Microsoft.UpgradeAssistant.Analysis.AnalysisEntry,System.Double,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.CompleteEntryAsync(Microsoft.UpgradeAssistant.Analysis.AnalysisEntry,Microsoft.UpgradeAssistant.Analysis.AnalysisState,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.RunConfigFileFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.RunConfigFileFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.RunConfigFileFlowStep.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.RunConfigFileFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.RunConfigFileFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.RunConfigFileFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.ReportFileFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.ReportFileFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.ReportFileFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.ReportFileFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.ReportFileFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.ReportSerializerFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.ReportSerializerFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.ReportSerializerFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.ReportSerializerFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.ReportSerializerFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.CpmSdkStyleConversionFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.CpmSdkStyleConversionFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.CpmSdkStyleConversionFlowStep.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.CpmSdkStyleConversionFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.CpmSdkStyleConversionFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Report.CpmSdkStyleConversionFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Folder.FileFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Folder.FileFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Folder.FileFlowStep.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Folder.FileFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Folder.FileFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Folder.FileFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Folder.FolderFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Folder.FolderFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Folder.FolderFlowStep.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Folder.FolderFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Folder.FolderFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Folder.FolderFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Operation.ProjectRestoreAndBuildOperationInitializer.RunAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Collections.Generic.Dictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Operation.SolutionRestoreAndBuildOperationInitializer">
+            <summary>
+            Does solution or project restore and build using msbuild.exe.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Operation.SolutionRestoreAndBuildOperationInitializer.RunAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Collections.Generic.Dictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Operation.IOperationFlowInitializer.RunAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Collections.Generic.Dictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <summary>
+            Runs some initialization action.
+            </summary>
+            <param name="path"></param>
+            <param name="traits"></param>
+            <param name="properties"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Operation.OperationFlowInitializerAttribute">
+            <summary>
+            Attribute that is applicable for implementations of <see cref="T:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Operation.IOperationFlowInitializer" /> and
+            specifies when and how the initializer should be applied.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Operation.OperationFlowInitializerAttribute.Traits">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Operation.OperationFlowInitializerAttribute.Order">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Operation.IOperationFlowInitializerMetadata.Traits">
+            <summary>
+            A traits expression to use when decision is made to use the provider or not for
+            current project context. When null, applied for all projects.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Operation.RunOperationFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Operation.RunOperationFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Operation.RunOperationFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Operation.RunOperationFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Operation.RunOperationFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Operation.RunOperationFlowStep.StartNodeAsync(Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Operation.RunOperationFlowStep.CompleteNodeAsync(Microsoft.UpgradeAssistant.SliceNode,Microsoft.UpgradeAssistant.Operations.SliceNodeState,System.Collections.Generic.IEnumerable{Microsoft.UpgradeAssistant.Operations.OperationMessage},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Privacy.PrivacyModeFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Privacy.PrivacyModeFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Privacy.PrivacyModeFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Privacy.PrivacyModeFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Privacy.PrivacyModeFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.ExistingTargetProjectFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.ExistingTargetProjectFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.ExistingTargetProjectFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.ExistingTargetProjectFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.ExistingTargetProjectFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.NewTargetProjectFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.NewTargetProjectFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.NewTargetProjectFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.NewTargetProjectFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.NewTargetProjectFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.SourceProjectFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.SourceProjectFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.SourceProjectFlowStep.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.SourceProjectFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.SourceProjectFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.SourceProjectFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.SourceProjectsFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.SourceProjectsFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.SourceProjectsFlowStep.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.SourceProjectsFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.SourceProjectsFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Project.SourceProjectsFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Startup.StartupFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Startup.StartupFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Startup.StartupFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Startup.StartupFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Startup.StartupFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Template.ProjectTemplateFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Template.ProjectTemplateFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Template.ProjectTemplateFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Template.ProjectTemplateFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Template.ProjectTemplateFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Upgrade.SelectControllerFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Upgrade.SelectControllerFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Upgrade.SelectControllerFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Upgrade.SelectControllerFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Flow.Steps.Upgrade.SelectControllerFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.IUpgradeHost.GetStartups">
+            <summary>
+            Returns all applicable startup actions.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.IUpgradeHost.GetOperationInitializers(Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Threading.CancellationToken)">
+            <summary>
+            Returns all applicable operation initializers.
+            </summary>
+            <param name="traits"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.IUpgradeHost.GetTargetFrameworksAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Threading.CancellationToken)">
+            <summary>
+            Returns compatible target frameworks for given project traits.
+            </summary>
+            <param name="projectPath"></param>
+            <param name="traits"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.IUpgradeHost.GetOperationCategoriesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Returns all known operation categories.
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.IUpgradeHost.GetOperationControllersAsync(System.Threading.CancellationToken)">
+            <summary>
+            Returns all available operation controllers.
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.IUpgradeHost.GetOperationStepAsync(Microsoft.UpgradeAssistant.Operations.OperationStepDefinition,Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Threading.CancellationToken)">
+            <summary>
+            Returns an operation step implementation for given definition.
+            </summary>
+            <param name="definition"></param>
+            <param name="traits"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Nodes.AppFolderSliceNodeBuilder">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Nodes.AppFolderSliceNodeBuilder.CreateNode(System.String,System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Nodes.Providers.Binary.FolderBreakingChangesBinaryRuleProvider">
+            <summary>
+            Discovers rule instances by looking in binaries located in the specified folder.
+            </summary>
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Resources.Strings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.Analysis">
+            <summary>
+              Looks up a localized string similar to Analysis.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.AnalysisConfirmation">
+            <summary>
+              Looks up a localized string similar to We have gathered all required options and are ready to run analysis. Do you want to continue?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.AnalyzeBinariesDescription">
+            <summary>
+              Looks up a localized string similar to Includes all external binary dependencies of selected projects.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.AnalyzeCodeDescription">
+            <summary>
+              Looks up a localized string similar to Includes all your code, configs and settings in selected projects.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.AnalyzeCommandDescription">
+            <summary>
+              Looks up a localized string similar to Scan and analyze .NET applications source code and dependencies to identify upgrade complexity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.AnalyzingFolder">
+            <summary>
+              Looks up a localized string similar to Analyzing folder....
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ApplicationOptionDescription">
+            <summary>
+              Looks up a localized string similar to Path to the application to be analyzed (could be repo folder, solution or project file path)..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ApplicationUpgradeOptionDescription">
+            <summary>
+              Looks up a localized string similar to The path to source project(s), solution or folder to be upgraded..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.AssemblyLoadedFromPath">
+            <summary>
+              Looks up a localized string similar to Assembly {0} loaded into context {1} from '{2}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.BuildProject">
+            <summary>
+              Looks up a localized string similar to Building project '{0}'....
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.BuildSolution">
+            <summary>
+              Looks up a localized string similar to Building solution {0} ....
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.CollectionDisclosure">
+             <summary>
+               Looks up a localized string similar to {1} collects usage data in order to help us improve your experience. The data is collected by Microsoft and shared with the community. You can opt-out of telemetry by setting the {0} environment variable to '1' or 'true' using your favorite shell.
+            
+            Read more about {1} telemetry: {2}
+            Read more about .NET CLI Tools telemetry: https://aka.ms/dotnet-cli-telemetry.
+             </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ConfigFile">
+            <summary>
+              Looks up a localized string similar to Config file.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ConfigOptionDescription">
+            <summary>
+              Looks up a localized string similar to Config file to customize analysis (select binaries, add or modify analysis rules)..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ConvertToSdkStyleConfirmation">
+            <summary>
+              Looks up a localized string similar to Do you want to convert classic projects to SDK-Style?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ConvertWebProjectsToSdkStyleConfirmation">
+            <summary>
+              Looks up a localized string similar to Do you want to include web projects to SDK-style conversion [suggestion](it is recommended to upgrade them separately)[/]?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.DestinationIsRequired">
+            <summary>
+              Looks up a localized string similar to Upgrade destination is required. Specify either new project name or path to existing project..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.DestinationOptionDescription">
+            <summary>
+              Looks up a localized string similar to Upgrade destination when applicable. In case of SideBySide upgrade it could be a new project name or existing project path..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.DirectoryIsNotEmpty">
+            <summary>
+              Looks up a localized string similar to Directory '{0}' is not empty..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.DiscoveringComponentsToUpgrade">
+            <summary>
+              Looks up a localized string similar to Discovering components to upgrade....
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.EndOfSupportForTargetFramework">
+            <summary>
+              Looks up a localized string similar to Supported until {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.EnterFilePath">
+            <summary>
+              Looks up a localized string similar to Enter file path (or [highlight]&lt;[/] to go back).
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.EnterFolderPath">
+            <summary>
+              Looks up a localized string similar to Enter folder path (or [highlight]&lt;[/] to go back).
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.EnterNewProjectName">
+            <summary>
+              Looks up a localized string similar to Enter new project name (or [highlight]&lt;[/] to go back).
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.EnterReportName">
+            <summary>
+              Looks up a localized string similar to Enter report name (or [highlight]&lt;[/] to go back).
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.EnterRunConfigPath">
+            <summary>
+              Looks up a localized string similar to Enter path to config file ([highlight]&lt;[/] to go back, [highlight]&gt;[/] to skip).
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.Error_FailedToFindNuGetPackageInFeed">
+            <summary>
+              Looks up a localized string similar to Could not find '{0}' ({1} / {2}) in
+            - {3}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.Error_NoNuGetSourcesConfigured">
+            <summary>
+              Looks up a localized string similar to At least one NuGet feed must be configured.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ExistingProject">
+            <summary>
+              Looks up a localized string similar to Existing project.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ExistingProjectDoesNotExist">
+            <summary>
+              Looks up a localized string similar to Project '{0}' does not exist..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ExistingProjectRequired">
+            <summary>
+              Looks up a localized string similar to Specify full existing project path in --destination argument..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ExportManifestError">
+            <summary>
+              Looks up a localized string similar to Error reading extensions manifest at '{0}': {1}..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ExtensionsOptionDescription">
+            <summary>
+              Looks up a localized string similar to List of directories separated by '{0}' and containing extension.json file with additional extensibility assemblies..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.File">
+            <summary>
+              Looks up a localized string similar to File.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.FileDoesNotExist">
+            <summary>
+              Looks up a localized string similar to File '{0}' does not exist..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.FileDoesNotExistOrInvalid">
+            <summary>
+              Looks up a localized string similar to Folder '{0}' does not exist or contains invalid path characters..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.FilePath">
+            <summary>
+              Looks up a localized string similar to File path.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.FilePathRequired">
+            <summary>
+              Looks up a localized string similar to File path is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.Folder">
+            <summary>
+              Looks up a localized string similar to Folder.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.FolderAnalysisDescription">
+            <summary>
+              Looks up a localized string similar to build output binaries and settings.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.FolderDoesNotExist">
+            <summary>
+              Looks up a localized string similar to Folder '{0}' does not exist..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.FolderDoesNotExistOrInvalid">
+            <summary>
+              Looks up a localized string similar to Folder '{0}' does not exist or contains invalid path characters..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.FolderPath">
+            <summary>
+              Looks up a localized string similar to Folder path.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.FolderPathRequired">
+            <summary>
+              Looks up a localized string similar to Folder path is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.Folders">
+            <summary>
+              Looks up a localized string similar to Folders.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.FoundCandidateMsBuildInstance">
+            <summary>
+              Looks up a localized string similar to Found candidate MSBuild instance: '{0}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.GeneratingReport">
+            <summary>
+              Looks up a localized string similar to Generating report....
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.HelpOptionDescription">
+            <summary>
+              Looks up a localized string similar to Show help and usage information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.Initializing">
+            <summary>
+              Looks up a localized string similar to Initializing and loading extensions... .
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.InitializingOperation">
+            <summary>
+              Looks up a localized string similar to Initializing operation ....
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.InitializingSelectedProjects">
+            <summary>
+              Looks up a localized string similar to Initializing selected projects and their dependencies....
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.InvalidReportName">
+            <summary>
+              Looks up a localized string similar to Invalid report name '{0}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.LoadingSelectedProjects">
+            <summary>
+              Looks up a localized string similar to Loading selected projects and their dependencies....
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.LookingForProjectTraits">
+            <summary>
+              Looks up a localized string similar to Determining project traits....
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.LookingForUpgrades">
+            <summary>
+              Looks up a localized string similar to Determining supported upgrades....
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.MsbuildExitStatus">
+            <summary>
+              Looks up a localized string similar to MSBuild exited with status '{0}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.MSBuildPathNotSet">
+            <summary>
+              Looks up a localized string similar to Msbuild was not found..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.MtpUpgradeDescription">
+            <summary>
+              Looks up a localized string similar to Upgrades your test projects that are using MSTest, NUnit, or xUnit.net from VSTest to Microsoft.Testing.Platform..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NewProject">
+            <summary>
+              Looks up a localized string similar to New project.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NewProjectNameRequired">
+            <summary>
+              Looks up a localized string similar to New project name is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NewProjectUpgradeTargetDescription">
+            <summary>
+              Looks up a localized string similar to will be created from template used as upgrade target.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NoFlowStepsDiscovered">
+            <summary>
+              Looks up a localized string similar to No flow steps were discovered..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NoMatchingUpgradeTypes">
+            <summary>
+              Looks up a localized string similar to No upgrade types discovered for source project..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NoMsbuildFound">
+            <summary>
+              Looks up a localized string similar to No supported MSBuild found. Ensure `dotnet --list-sdks` show an install that has {0} architecture. If you have only pre-release .NET SDK installed, add 'DOTNET_ROLL_FORWARD_TO_PRERELEASE=1' to your environment and restart Upgrade Assistant tool..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NoMsBuildFoundAtPath">
+            <summary>
+              Looks up a localized string similar to No MSBuild instance was found at '{0}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NonInteractiveOptionDescription">
+            <summary>
+              Looks up a localized string similar to When specified, it would only use arguments specified in command line and not ask questions. If any required piece of data missing it would stop and print an error message..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NoProjectSelected">
+            <summary>
+              Looks up a localized string similar to No projects selected for analysis..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NoProjectsFound">
+            <summary>
+              Looks up a localized string similar to No projects found.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NoProjectsFoundInCurrentDir">
+            <summary>
+              Looks up a localized string similar to No projects found in current directory..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NoSourceSelected">
+            <summary>
+              Looks up a localized string similar to No source selected..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NoTargetFrameworks">
+            <summary>
+              Looks up a localized string similar to There are no target frameworks found to which your project could be upgraded..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NoTemplates">
+            <summary>
+              Looks up a localized string similar to No project templates found..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NotValidConfigPath">
+            <summary>
+              Looks up a localized string similar to Config path is either not valid or file does not exist..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NotValidFileName">
+            <summary>
+              Looks up a localized string similar to File name is invalid..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NotValidFolderName">
+            <summary>
+              Looks up a localized string similar to Folder name is invalid..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NotValidProjectName">
+            <summary>
+              Looks up a localized string similar to Project name is invalid.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.NotValidReportName">
+            <summary>
+              Looks up a localized string similar to Report name is invalid..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.OperationConfirmation">
+            <summary>
+              Looks up a localized string similar to We have gathered all required options and are ready to do the upgrade. Do you want to continue?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.OperationInitializationFailure">
+            <summary>
+              Looks up a localized string similar to Could not initialize an upgrade operation..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.OperationOptionDescription">
+            <summary>
+              Looks up a localized string similar to Type of upgrade operation (Inplace, SideBySide etc)..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.PickProjectFromTitle">
+            <summary>
+              Looks up a localized string similar to Which project do you want to upgrade [highlight](found {0})[/]?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.PickProjectTitle">
+            <summary>
+              Looks up a localized string similar to Which project do you want to upgrade?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.PickSolutionTitle">
+            <summary>
+              Looks up a localized string similar to Which solution to use to discover project for the upgrade?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.PressAnyKey">
+            <summary>
+              Looks up a localized string similar to Press any key to continue....
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.PreviewTargetFrameworkUpgradeDescription">
+            <summary>
+              Looks up a localized string similar to Try latest preview features.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.Privacy">
+            <summary>
+              Looks up a localized string similar to Privacy.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.PrivacyMode">
+            <summary>
+              Looks up a localized string similar to Privacy mode.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.PrivacyModeOptionDescription">
+            <summary>
+              Looks up a localized string similar to Privacy mode specifying how much data is included in generated report files (Unrestricted, Protected, Restricted)..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.PrivacyModeRequired">
+            <summary>
+              Looks up a localized string similar to Privacy mode is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ProjectFailedToLoad">
+            <summary>
+              Looks up a localized string similar to Could not load project '{0}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ProjectNameCanNotContainIllegalChars">
+            <summary>
+              Looks up a localized string similar to Project name cannot contain invalid path characters..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ProjectPathDoesNotExist">
+            <summary>
+              Looks up a localized string similar to Project path does not exist '{0}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ProjectPathInvalid">
+            <summary>
+              Looks up a localized string similar to Project path is invalid '{0}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ProtectedModeDescription">
+            <summary>
+              Looks up a localized string similar to No sensitive data included in report snippets.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ReloadingProject">
+            <summary>
+              Looks up a localized string similar to Reloading project....
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ReportFormat">
+            <summary>
+              Looks up a localized string similar to Report format.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ReportFormatRequired">
+            <summary>
+              Looks up a localized string similar to Report format is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ReportName">
+            <summary>
+              Looks up a localized string similar to Report name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ReportNameRequired">
+            <summary>
+              Looks up a localized string similar to Report name is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ReportOptionDescription">
+            <summary>
+              Looks up a localized string similar to Path or name of the report to be generated after analysis is complete (could be folder or file name depending on specified serializer)..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ReportSavedAtPath">
+            <summary>
+              Looks up a localized string similar to Report with [highlight]{0}[/] privacy mode saved at '{1}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.RestoreProject">
+            <summary>
+              Looks up a localized string similar to Restoring packages for '{0}'....
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.RestrictedModeDescription">
+            <summary>
+              Looks up a localized string similar to No snippets are included in report.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.RunConfigConfirmation">
+            <summary>
+              Looks up a localized string similar to Do you want to provide a config file with customization settings?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.RunConfigDoesNotExist">
+            <summary>
+              Looks up a localized string similar to Config file '{0}' does not exist..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.RunConfigIncorrectExtension">
+            <summary>
+              Looks up a localized string similar to Config file has incorrect format '{0}', it should be a JSON file..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SdkStyle">
+            <summary>
+              Looks up a localized string similar to SDK-style.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SdkStyleDescription">
+            <summary>
+              Looks up a localized string similar to Specify if you want to convert classic projects to SDK-style.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SdkStyleForWeb">
+            <summary>
+              Looks up a localized string similar to Include web projects.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SelectAll">
+            <summary>
+              Looks up a localized string similar to Select all.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SelectComponentsToAnalyze">
+            <summary>
+              Looks up a localized string similar to Select components to analyze..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SelectedProjects">
+            <summary>
+              Looks up a localized string similar to Selected projects.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SelectedProjectsValue">
+            <summary>
+              Looks up a localized string similar to {0} (+ {1} more projects).
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SelectExistingProject">
+            <summary>
+              Looks up a localized string similar to Existing project.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SelectExistingProjectUpgradeTargetDescription">
+            <summary>
+              Looks up a localized string similar to project of a supported type can be chosen to be upgrade target.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SelectPrivacyMode">
+            <summary>
+              Looks up a localized string similar to Select privacy mode.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SelectProjectTemplate">
+            <summary>
+              Looks up a localized string similar to What template to use for target project?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SelectReportSerializer">
+            <summary>
+              Looks up a localized string similar to In what format should the report be generated?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SelectSource">
+            <summary>
+              Looks up a localized string similar to What do you want to analyze?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SelectTargetFrameworkDescription">
+            <summary>
+              Looks up a localized string similar to What is your preferred target framework?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SelectUpgradeProjectType">
+            <summary>
+              Looks up a localized string similar to Upgrade target.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SelectUpgradeProjectTypeDescription">
+            <summary>
+              Looks up a localized string similar to What is your upgrade target?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SelectUpgradeTypeTitle">
+            <summary>
+              Looks up a localized string similar to How do you want to upgrade project [highlight]{0}[/]?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SerializeOptionDescription">
+            <summary>
+              Looks up a localized string similar to Specifies the format for the report to be used after analysis is complete (HTML, CSV, JSON, etc)..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SerializerUnknown">
+            <summary>
+              Looks up a localized string similar to Serializer '{0}' is unknown..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.Settings">
+            <summary>
+              Looks up a localized string similar to Settings.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.ShouldUseTransitivePinning">
+            <summary>
+              Looks up a localized string similar to Enable transitive pinning?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SkippingToolWithInconsistentBitnesss">
+            <summary>
+              Looks up a localized string similar to Skipping '{0}' as it has {1} architecture..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SliceFailure">
+            <summary>
+              Looks up a localized string similar to There was an error during scanning project components....
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SmallFolders">
+            <summary>
+              Looks up a localized string similar to folders.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SolutionAnalysis">
+            <summary>
+              Looks up a localized string similar to Application sources.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SolutionAnalysisDescription">
+            <summary>
+              Looks up a localized string similar to source code, settings and binary dependencies.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.Source">
+            <summary>
+              Looks up a localized string similar to Source.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SourceOptionDescription">
+            <summary>
+              Looks up a localized string similar to Source which the tool should analyze (Solution, Folder)..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SourceProject">
+            <summary>
+              Looks up a localized string similar to Source project.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SourceProjectRequired">
+            <summary>
+              Looks up a localized string similar to Project path is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SourceProjects">
+            <summary>
+              Looks up a localized string similar to Projects.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SourceRequired">
+            <summary>
+              Looks up a localized string similar to Analysis source is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.SourceUnknown">
+            <summary>
+              Looks up a localized string similar to Source '{0}' is unknown..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.Startup">
+            <summary>
+              Looks up a localized string similar to Startup.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.StartupFailed">
+            <summary>
+              Looks up a localized string similar to Start up action failed '{0}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.TargetFramework">
+            <summary>
+              Looks up a localized string similar to Target framework.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.TargetFrameworkOptionDescription">
+            <summary>
+              Looks up a localized string similar to Target framework to which source project should be upgraded. It could be a full or short framework name or one of following values: LTS, STS, PREVIEW..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.TargetFrameworkRequired">
+            <summary>
+              Looks up a localized string similar to Target framework is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.TargetFrameworkUnknown">
+            <summary>
+              Looks up a localized string similar to Unknown target framework..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.TargetProject">
+            <summary>
+              Looks up a localized string similar to Target project.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.Telemetry">
+            <summary>
+              Looks up a localized string similar to Telemetry.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.Template">
+            <summary>
+              Looks up a localized string similar to Template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.TemplateOptionDescription">
+            <summary>
+              Looks up a localized string similar to Project template to use to create a new target project in SideBySide upgrade..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.TemplateRequired">
+            <summary>
+              Looks up a localized string similar to Project template is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.TemplateUnknown">
+            <summary>
+              Looks up a localized string similar to Template '{0}' is unknown..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.TooManyUpgradeTypes">
+            <summary>
+              Looks up a localized string similar to Multiple upgrade operations are applicable to source project, user input is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.TotalEffortDiscovered">
+            <summary>
+              Looks up a localized string similar to Discovered story points: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.TotalElapsedTime">
+            <summary>
+              Looks up a localized string similar to Time elapsed {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.TotalIncidentsDiscovered">
+            <summary>
+              Looks up a localized string similar to Discovered incidents: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.TotalIssuesDiscovered">
+            <summary>
+              Looks up a localized string similar to Discovered issues: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.TransitivePinning">
+            <summary>
+              Looks up a localized string similar to Transitive pinning.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.UnableToResolveAssembly">
+            <summary>
+              Looks up a localized string similar to Unable to resolve assembly {0}..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.UnrestrictedModeDescription">
+            <summary>
+              Looks up a localized string similar to Source code and settings snippets are included in report.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.Upgrade">
+            <summary>
+              Looks up a localized string similar to Upgrade.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.UpgradeCommandDescription">
+            <summary>
+              Looks up a localized string similar to Upgrade project or its features. This command lets you pick upgrade options and guides through upgrade process..
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.UpgradeType">
+            <summary>
+              Looks up a localized string similar to Upgrade type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Resources.Strings.WhatToUpgrade">
+            <summary>
+              Looks up a localized string similar to What to upgrade?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Settings.AppSettings.GlobalProperties">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Settings.AppSettings.GetSettings(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Settings.AppSettings.AddSettings(System.String,System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Settings.CallerSettings">
+            <summary>
+            Contains additional information about the caller of the CLI.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Settings.TelemetrySettings.ConvertToVersion(System.ReadOnlySpan{System.Char})">
+            <summary>
+            Need to grab just the version part of strings such as: <c>0.2.231602+ef31c22633e629fac65d9f9d8bf700119c888380</c> and <c>0.2.0-dev</c>.
+            </summary>
+            <param name="version">An informational version string.</param>
+            <returns>A version.</returns>
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Settings.WorkspaceSettings">
+             <summary>
+             Workspace settings are initialized in following order:
+            
+             - by default we get values from the environment variables
+             - then when command line arguments are passed these settings could be overridden
+             - then when we discover any environment variables to be set/modified during IStartup executions,
+               we could set those settings if they were not provided before by earlier steps.
+            
+             This way we let shell environment variables override what we could potentially pick for msbuild or VS paths,
+             then user could explicitly specify those paths, and only then if nothing happened we would set them ourselves
+             to the value we think is the best on current machine.
+             </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Controllers.Cpm.CpmUpgradeController.GetOperationDefinitionAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Controllers.Framework.ProjectFrameworkInplaceController.GetTraitsAsync(Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Controllers.Framework.ProjectFrameworkInplaceController.GetOperationDefinitionAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Controllers.Framework.ProjectFrameworkSideBySideController.GetTraitsAsync(Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Controllers.Framework.ProjectFrameworkSideBySideController.GetOperationDefinitionAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Controllers.Sdk.SdkStyleUpgradeController.GetTraitsAsync(Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Controllers.Sdk.SdkStyleUpgradeController.GetOperationDefinitionAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Controllers.Sdk.SdkStyleUpgradePropertiesPreprocessor">
+            <summary>
+            Adds an slice with just a project node in it to convert only the project file and nothing else.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Controllers.Sdk.SdkStyleUpgradePropertiesPreprocessor.PreprocessAsync(System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.SolutionSelectTargetFrameworkOperationStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.SolutionSelectTargetFrameworkOperationStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.SolutionSelectTargetFrameworkOperationStep.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.SolutionSelectTargetFrameworkOperationStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.SolutionSelectTargetFrameworkOperationStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.SolutionSelectTargetFrameworkOperationStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.TargetFrameworkOperationStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.TargetFrameworkOperationStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.TargetFrameworkOperationStep.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.TargetFrameworkOperationStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.TargetFrameworkOperationStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.TargetFrameworkOperationStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.TargetProjectOperationStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.TargetProjectOperationStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.TargetProjectOperationStep.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.TargetProjectOperationStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.TargetProjectOperationStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Operations.Steps.TargetProjectOperationStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Slices.Services.Cache.ICache">
+            <summary>
+            Simple local machine cache based on file system.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Cache.ICache.Get(System.String,System.Func{System.String})">
+            <summary>
+            Returns value of the requested key. If it was not found in cache
+            valueInitializer is called to get value and store it in the cache.
+            </summary>
+            <param name="key"></param>
+            <param name="valueInitializer"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Slices.Services.Code.CodeService">
+            <summary>
+            Service that manages Roslyn workspace. It ensures that all projects of interest are loaded in the workspace and are up to date.
+                - If user's input path was a solution, we always open that solution when workspace reloads.
+                - If user's input path is project we also always open it since we expect some contracts might
+                  want to get access to that project.
+                - all other projects loaded to the workspace only per-request to avoid running DT builds on all
+                  full solution. When some caller need to ensure project is loaded (for example ProjectService
+                  when it creates a new instance of <see cref="T:Microsoft.UpgradeAssistant.Services.IProject" />) it should call OpenProjectAsync
+                  here and that would ensure project is loaded in the workspace.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Code.CodeService.GetWorkspaceAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Code.CodeService.TryApplyChangesAsync(Microsoft.CodeAnalysis.Solution,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Host.MacMsbuildEnvironmentVariableProvider.GetEnvironmentVariablesAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Host.VisualStudioEnvironmentVariableProvider.GetEnvironmentVariablesAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Slices.Services.Logging.CliLogger.FallbackOutput">
+            <summary>
+            Fallback output stream used when the MCP logger is not yet attached.
+            Defaults to <see cref="P:System.Console.Out" /> (stdout) for normal CLI usage.
+            MCP server hosts should set this to <see cref="P:System.Console.Error" /> before
+            any logging occurs so that stdout stays clean for JSON-RPC messages.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Slices.Services.Logging.CliLogger.McpLogger">
+            <summary>
+            Optional MCP protocol logger. When set, log messages are forwarded
+            as MCP notifications/message so the client (e.g. VS Code/Copilot CLI) can display them.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Logging.CliLogger.LogInfo(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Logging.CliLogger.LogWarning(System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Logging.CliLogger.LogError(System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Logging.CliLogger.LogDebug(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Logging.CliLogger.LogMessage(Microsoft.UpgradeAssistant.Operations.OperationMessage)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Slices.Services.Msbuild.MsbuildService">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Msbuild.MsbuildService.GetProjectAccessAsync(System.String,System.Boolean,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Slices.Services.NuGet.NuGetService">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.NuGet.NuGetService.Parse(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.NuGet.NuGetService.CompareVersions(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.NuGet.NuGetService.CompareVersionsAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.NuGet.NuGetService.AreTargetFrameworksCompatibleAsync(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.NuGet.NuGetService.GetNearestTargetFrameworkAsync(System.String,System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.NuGet.NuGetService.DoesPackageSupportTargetFrameworksAsync(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.NuGet.NuGetService.GetLatestSupportedPackageVersionAsync(System.String,System.Collections.Generic.IEnumerable{System.String},Microsoft.UpgradeAssistant.Services.PackageSearchOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.NuGet.NuGetService.GetSupportedPackageVersionsAsync(System.String,System.Collections.Generic.IEnumerable{System.String},Microsoft.UpgradeAssistant.Services.PackageSearchOptions,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.NuGet.NuGetService.GetPackageMetadataAsync(System.String,System.String,Microsoft.UpgradeAssistant.Services.PackageSearchOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.NuGet.NuGetService.DownloadPackageAsync(System.String,System.String,Microsoft.UpgradeAssistant.Services.PackageSearchOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.NuGet.NuGetService.DownloadPackageAsync(System.String,System.String,System.String,Microsoft.UpgradeAssistant.Services.PackageSearchOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.NuGet.NuGetService.GetLatestDownloadedPackagePathAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.NuGet.NuGetService.GetDowngradedPackageVersionsAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.InlineProjectDependenciesSetBuilder">
+            <summary>
+            Variant of <see cref="T:Microsoft.UpgradeAssistant.Msbuild.Services.Project.ProjectDependenciesSetBuilder" /> that re-exposes the
+            protected <c>GetDependenciesAsync(MsbuildProject, ...)</c> overload so callers
+            that already hold an open <c>IMsbuildProjectAccess</c> can compute dependencies
+            without acquiring a second access on the same project.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.AddPackageAsync(System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.RemovePackageAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.AddItemAsync(System.String,System.String,System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.HasItemAsync(System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.HasItemsInFolderAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.GetItemsAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.GetPropertyAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.SetPropertyAsync(System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.SetPropertiesAsync(System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.RemovePropertyAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.RemovePropertiesAsync(System.String,System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.CreateProjectAsync(Microsoft.UpgradeAssistant.Operations.OperationContext,Microsoft.UpgradeAssistant.Services.ISolution,System.String,System.String,Microsoft.UpgradeAssistant.Templates.IProjectTemplate,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.GetProjectByPathAsync(Microsoft.UpgradeAssistant.Services.ISolution,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.GetProjectByIdAsync(Microsoft.UpgradeAssistant.Services.ISolution,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.HasProjectTypeGuidAsync(Microsoft.UpgradeAssistant.Services.ISolution,System.String,System.Guid,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.GetReferenceTargetFrameworksAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Returns target frameworks of a specified reference (project path or assembly path)
+            </summary>
+            <param name="referencePath"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.GetDependenciesAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.ApplyDependenciesChangesAsync(Microsoft.UpgradeAssistant.Operations.OperationContext,Microsoft.UpgradeAssistant.Services.IProject,Microsoft.UpgradeAssistant.Services.DependenciesChangeSet,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.BuildProjectAsync(System.String,System.Boolean,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.RestoreProjectAsync(System.String,System.Boolean,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.BuildSolutionAsync(System.String,System.Boolean,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.RestoreSolutionAsync(System.String,System.Boolean,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.BuildProjectFromAccessAsync(Microsoft.UpgradeAssistant.Services.ISolution,Microsoft.UpgradeAssistant.Services.SolutionFile.ProjectInfo,System.String,Microsoft.UpgradeAssistant.Services.IMsbuildProjectAccess,System.Threading.CancellationToken)">
+            <summary>
+            Builds an <see cref="T:Microsoft.UpgradeAssistant.Services.IProject" /> from an already-open MSBuild access, populates
+            the project cache, and returns the discovered non-transitive project-reference
+            paths so callers (batch loader) can traverse the dependency graph.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Project.ProjectService.LoadProjectsBatchAsync(Microsoft.UpgradeAssistant.Services.ISolution,System.Collections.Generic.IEnumerable{System.String},System.Boolean,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.TargetFrameworks.TargetFrameworkService.Parse(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Telemetry.CommonPropertiesTelemetryInitializer.Initialize(Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Telemetry.CommonPropertiesTelemetryInitializer.GetKernelVersion">
+            <summary>
+            Returns a string identifying the OS kernel.
+            For Unix this currently comes from "uname -srv".
+            For Windows this currently comes from RtlGetVersion().
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Telemetry.CommonPropertiesTelemetryInitializer.GetOrCreateDevDeviceId">
+            <summary>
+            Gets or creates the dev device ID.
+            The device ID is a persistent UUID stored in platform-specific storage
+            to ensure consistent ID generation globally.
+            </summary>
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Slices.Services.Telemetry.ICliTelemetryService">
+            <summary>
+            Allows to (re) initialize telemetry service. I used at CLI startup to re-initialize service after sentinel 
+            message to opt out from telemetry is displayed. 
+            </summary>
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Slices.Services.Telemetry.IFirstTimeUseNoticeSentinel">
+            <summary>
+            Manages a marker (sentinel) file indicating indicating if user runs a tool very first
+            time and we need to do some action based on that (like show some disclaimer message).
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Slices.Services.Telemetry.IFirstTimeUseNoticeSentinel.Title">
+            <summary>
+            Title of the disclaimer message.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Slices.Services.Telemetry.IFirstTimeUseNoticeSentinel.DisclosureText">
+            <summary>
+            Disclosure message text.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Slices.Services.Telemetry.IFirstTimeUseNoticeSentinel.SkipFirstTimeExperience">
+            <summary>
+            Controls first time experience behavior.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Telemetry.IFirstTimeUseNoticeSentinel.Exists">
+            <summary>
+            Returns true if sentinel file exists on disc, false otherwise.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Telemetry.IFirstTimeUseNoticeSentinel.CreateIfNotExists">
+            <summary>
+            Creates a new sentinel file if it does not exist.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Telemetry.TelemetryService.Initialize">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Slices.Services.Telemetry.TelemetryService.Post(Microsoft.UpgradeAssistant.Services.TelemetryEvent)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Slices.Traits.Providers.ProjectFlavorProvider">
+            <summary>
+            Discovers if solution needs to be reloaded if project flavor GUID needs to be changed in .sln file.
+            </summary>
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Slices.Traits.Providers.SdkStyleTraitProvider">
+            <summary>
+            Discovers default project traits that can be used for any project flavor or that we
+            know already are certainly going to be used by some existing logic.
+            </summary>
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Slices.Transformers.Project.BuildProjectTransformer">
+            <summary>
+            Builds project using 'dotnet build' command line option.
+            </summary>
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Slices.Transformers.Project.ReloadProjectTransformer">
+            <summary>
+            Reloads project.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Operations.FolderAnalysisOperationController.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Operations.FolderAnalysisOperationController.CategoryId">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Operations.FolderAnalysisOperationController.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Operations.FolderAnalysisOperationController.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Operations.FolderAnalysisOperationController.GetContextAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,Microsoft.UpgradeAssistant.Services.IServiceCollection,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Operations.FolderAnalysisOperationController.GetTraitsAsync(Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Operations.FolderAnalysisOperationController.GetOperationDefinitionAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Operations.FolderAnalysisOperationController.GetAnalysisAsync(Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Collections.Generic.Dictionary{System.String,System.Object},Microsoft.UpgradeAssistant.Analysis.AnalysisSettings,Microsoft.UpgradeAssistant.Analysis.IAnalysisProgress,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Operations.SolutionAnalysisOperationController.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Operations.SolutionAnalysisOperationController.CategoryId">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Operations.SolutionAnalysisOperationController.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.UpgradeAssistant.Cli.Operations.SolutionAnalysisOperationController.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Operations.SolutionAnalysisOperationController.GetContextAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,Microsoft.UpgradeAssistant.Services.IServiceCollection,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Operations.SolutionAnalysisOperationController.GetTraitsAsync(Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Operations.SolutionAnalysisOperationController.GetOperationDefinitionAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Operations.SolutionAnalysisOperationController.GetAnalysisAsync(Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Collections.Generic.Dictionary{System.String,System.Object},Microsoft.UpgradeAssistant.Analysis.AnalysisSettings,Microsoft.UpgradeAssistant.Analysis.IAnalysisProgress,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Operations.CpmUpgradePropertiesPreprocessor">
+            <summary>
+            Adds an slice with just a project node in it to convert only the project file and nothing else.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Operations.CpmUpgradePropertiesPreprocessor.PreprocessAsync(System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Operations.MtpUpgradePropertiesPreprocessor">
+            <summary>
+            Adds an slice with just a project node in it to convert only the project file and nothing else.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Operations.MtpUpgradePropertiesPreprocessor.PreprocessAsync(System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Startup.EnvironmentVariablesStartup">
+            <summary>
+            Sets environment variables for this process.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Startup.EnvironmentVariablesStartup.StartupAsync(System.Boolean,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Startup.FirstUseStartup">
+            <summary>
+            Shows first time message for user to acknowledge the telemetry
+            and provide an opt out instructions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.Startup.FirstUseStartup.StartupAsync(System.Boolean,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Cli.Startup.IUpgradeStartup">
+            <summary>
+            Defines a startup action to run early when CLI is initialized.
+            All of them should run before <see cref="T:Microsoft.UpgradeAssistant.Cli.Dependencies.ExportProvider" /> and <see cref="T:Microsoft.UpgradeAssistant.Cli.UpgradeHost" /> are initialized.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.UpgradeHost.GetServiceCollection">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.UpgradeHost.GetStartups">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.UpgradeHost.GetOperationInitializers(Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.UpgradeHost.GetNewProjectTemplatesAsync(Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.UpgradeHost.GetTargetFrameworksAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.UpgradeHost.GetTraitsAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.UpgradeHost.GetOperationAsync(Microsoft.UpgradeAssistant.Operations.IOperationController,System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,Microsoft.UpgradeAssistant.Slice,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},Microsoft.UpgradeAssistant.Services.IOperationProgressService,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.UpgradeHost.GetOperationCategoriesAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.UpgradeHost.GetOperationControllersAsync(Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.UpgradeHost.GetOperationStepAsync(Microsoft.UpgradeAssistant.Operations.OperationStepDefinition,Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.UpgradeHost.GetSerializers">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.UpgradeHost.GetSliceWithChildrenAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,Microsoft.UpgradeAssistant.SliceNode,System.Collections.Generic.IEnumerable{Microsoft.UpgradeAssistant.SliceNode},System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.UpgradeHost.GetSliceAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,Microsoft.UpgradeAssistant.SliceNode,Microsoft.UpgradeAssistant.SliceOptions,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.UpgradeAssistant.Cli.UpgradeHost.GetSliceAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,Microsoft.UpgradeAssistant.SliceOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.UpgradeAssistant.Slices.TargetFrameworks.NoNetstandardTargetFrameworkProvider">
+            <summary>
+            Target framework provider which will be called for projects that don't support netstandard.
+            </summary>
+        </member>
+    </members>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" /><DigestValue>ak7YXZYowSIz2F/dVLzf7+DLa6fgtSwZaVZbfn2geZ0=</DigestValue></Reference></SignedInfo><SignatureValue>u4TqeZRrR3waXVA9cMO/z1mtxqem6tePRRHDuMO//0NBciVZGlHQ7BqnDRMXwHSuUq2J4oGgP6WwsQ5uusf6ms2uZ9sEmKylWldkC0TE5KdMhpBoDwUxoYXXX13Jd8aot7yiCPHi8GU3RSilKSicxliueIPu64DV7bvKAKlh1WIKiVrpZ+40nbkc8/2Nb78wWzNwNWN0OlyHjXFwkF5PqhJHO1xrIpQotJbwgnDIhI1ZWeSVNG5M21uzjvnRKmopjswvkRVejv/cf5QmOJBbogQggM37N0FLfHJ2HUCj02tipPdtTQzb/jvoBrP3C+WPauT40jG7KjAMgAjdkR2Jvg==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>0L3sF8cfYGWRQumLNVgWsvASfJBgOCUJx+QjGn6jgEpU6SvR/KOWV017dHGlUEzTFD7eOOcF2A/nRbWilk8A59SOdqFEqwvbyYp9RrKrfs8iiS+Q4N3kF20DUetQ5jMttBi0yDt0hXnfUX4v6KYYAixhSw0d69Crx48DG/42FktHHpVf+C89uy3wHpJvL/ROSF2nol2wFGGSitPdJ+AlZdyQbWzfvQ7SPUjbv8o76M1udv7u0V/07aWvyg5abqJGfmXG75rXfbq/YBS72c4eNaPTLBP3JULXWhVhr7qOibmv57aYJHstxOf7wRXvjCTxuqYXZ7qOq+e2bnQrnYiNWw==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>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</X509Certificate><X509Certificate>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</X509Certificate><X509Certificate>MIIF7TCCA9WgAwIBAgIQP4vItfyfspZDtWnWbELhRDANBgkqhkiG9w0BAQsFADCBiDELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEyMDAGA1UEAxMpTWljcm9zb2Z0IFJvb3QgQ2VydGlmaWNhdGUgQXV0aG9yaXR5IDIwMTEwHhcNMTEwMzIyMjIwNTI4WhcNMzYwMzIyMjIxMzA0WjCBiDELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEyMDAGA1UEAxMpTWljcm9zb2Z0IFJvb3QgQ2VydGlmaWNhdGUgQXV0aG9yaXR5IDIwMTEwggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQCygEGqNThNE3IyaCJNuLLx/9VSvGzH9dJKjDbu0cJcfoyKrq8TKG/Ac+M6ztAlqFo6be+ouFmrEyNozQwph9FvgFyPRH9dkAFSWKxRxV8qh9zc2AodwQO5e7BW6KPeZGHCnvjzfLnsDbVU/ky2ZU+I8JxImQxCCwl8MVkXeQZ4KI2JOkwDJb5xalwL54RgpJki49KvhKSn+9GY7Qyp3pSJ4Q6g3MDOmT3qCFK7VnnkH4S6Hri0xElcTzFLh93dBWcmmYDgcRGjuKVB4qRTufcyKYMME782XgSzS0NHL2vikR7TmE/dQgfI6B0S/Jmpaz6SfsjWaTr8ZL22CZ3K/QwLopt3YEsDlKQwaRLWQi3BQUzK3Kr9j1uDRprZ/LHR47PJf0h6zSTwQY9cdNCssBAgBkm3xy0hyFfj0IbzA2j70M5xwYmZSmQBbP3sMJHPQTySx+W6hh1hhMdfgzlirrSSL0fzC/hV66AfWdC7dJse0Hbm8ukG1xDo+mTeacY1logC8Ea4PyeZb8txiSk190gWAjWP1Xl8TQLPX+uKg09FcYj5qQ1OcunCnAfPSRtOBA5jUYxe2ADBVSy2xuDCZU7JNDn1nLPEfuhhbhNfFcRf2X7tHc7uROzLLoax7Dj2cO2rXBPB2Q8Nx4CyVe0096yb5MPa50c8prWPMd/FS6/r8QIDAQABo1EwTzALBgNVHQ8EBAMCAYYwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUci06AjGQQ7kUBU7h6qfHMdEjiTQwEAYJKwYBBAGCNxUBBAMCAQAwDQYJKoZIhvcNAQELBQADggIBAH9yzw+3xRXbm8BJyiZb/p4T5tPw0tuXX/JLP02zrhmu7deXoKzvqTqjwkGw5biRnhOBJAPmCf0/V0A5ISRW0RAvS0CpNoZLtFNXmvvxfomPEf4YbFGq6O0JlbXlccmh6Yd1phV/yX43VF50k8XDZ8wNT2uoFwxtCJJ+i92Bqi1wIcM9BhS7vyRep4TXPw8hIr1LAAbblxzYXtTFC1yHblCk6MM4pPvLLMWSZpuFXst6bJN8gClYW1e1QGm6CHmmZGIVnYeWRbVmIyADixxzoNOieTPgUFmG2y/lAiXqcyqfABTINseSO+lOAOzYVgm5M0kS0lQLAausR7aRKX1MtHWAUgHoyoL2n8ysnI8X6i8msKtyrAv+nlEex0NVZ09Rs1fWtuzuUrc66U7h14GIvE+OdbtLqPA1qibUZ2dJsnBMO5PcHd94kIZysjik0dySTclY6ysSXNQ7roxrsIPlAT/4CTL2kzU0Iq/dNw13CYArzUgA8YyZGUcFAenRv9FO0OYoQzeZpApKCNmacXPSqs0xE2N2oTdvkjgefRI8ZjLny23h/FKJ3crWZgWalmG+oijHHKOnNlA8OqTfSm7mhzvO6/DggTedEzxSjr25HTTGHdUKaj2YKXCMiSrRq4IQSB/c9O+lxbtVGjhjhE63bK2VVOxlIhBJF7jAHscPrFRH</X509Certificate></X509Data></KeyInfo><Object Id="ts-countersig"><X509Data><X509Certificate>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</X509Certificate><X509Certificate>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</X509Certificate></X509Data><CounterSignature ts-format="cms-timestamp-message" xmlns="http://schemas.microsoft.com/xmldsig/timestamp/2003">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</CounterSignature></Object></Signature></doc>

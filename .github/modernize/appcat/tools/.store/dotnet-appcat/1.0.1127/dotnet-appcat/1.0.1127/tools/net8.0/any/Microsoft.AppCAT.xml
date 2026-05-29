@@ -1,0 +1,1318 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AppCAT</name>
+    </assembly>
+    <members>
+        <member name="T:System.Runtime.CompilerServices.IsExternalInit">
+            <summary>
+                Reserved to be used by the compiler for tracking metadata.
+                This class should not be used by developers in source code.
+            </summary>
+            <remarks>
+                This definition is provided by the <i>IsExternalInit</i> NuGet package (https://www.nuget.org/packages/IsExternalInit).
+                Please see https://github.com/manuelroemer/IsExternalInit for more information.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.AppCAT.Analysis.IMigrationAnalysisService">
+            <summary>
+            This service is responsible for analyzing a solution or a set of projects for Azure migration scenario
+            and generating a migration report.
+            
+            Analysis would return a report object, which can be exported to any format (HTML, JSON, CSV, etc.) using <see cref="M:Microsoft.AppCAT.Analysis.IMigrationAnalysisService.ExportAsync(Microsoft.AppCAT.Rules.ReportConfig,System.String,System.String,System.Threading.CancellationToken)" /> method.
+            
+            Note: this is in-proc MEF component.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Analysis.IMigrationAnalysisService.AnalyzeAsync(System.Collections.Generic.IEnumerable{System.String},Microsoft.AppCAT.Analysis.MigrationAnalysisConfig,System.Threading.CancellationToken)">
+            <summary>
+            Analyzes a solution or a set of projects for Azure compatibility and produces a report object.
+            </summary>
+            <param name="projectPaths">
+            Optional, if not provided, all projects in the solution will be analyzed. For all specified projects, their dependency projects also will be analyzed.
+            </param>
+            <param name="config"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AppCAT.Analysis.IMigrationAnalysisService.ExportAsync(Microsoft.AppCAT.Rules.ReportConfig,System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Exports provided report object to the specified format and saves it to the destination path.
+            Format should match the <see cref="P:Microsoft.AppCAT.Serializers.IReportSerializerMetadata.Kind" /> attribute value. To create custom serializer implement
+            an <see cref="T:Microsoft.AppCAT.Serializers.IReportSerializer" /> and export it with <see cref="T:Microsoft.AppCAT.Serializers.ReportSerializerAttribute" />.
+            </summary>
+            <param name="reportConfig"></param>
+            <param name="format"></param>
+            <param name="destinationPath"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AppCAT.Analysis.IMigrationAnalysisService.ImportAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Deserializes specified file into a report object using specified format. 
+            Format should match the <see cref="P:Microsoft.AppCAT.Serializers.IReportSerializerMetadata.Kind" /> attribute value. To create custom serializer implement
+            an <see cref="T:Microsoft.AppCAT.Serializers.IReportSerializer" /> and export it with <see cref="T:Microsoft.AppCAT.Serializers.ReportSerializerAttribute" />.
+            </summary>
+            <param name="filePath"></param>
+            <param name="format"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AppCAT.Analysis.ProgressTracker.StartAsync(System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Analysis.ProgressTracker.CompleteAsync(System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Analysis.ProjectAnalysis.GetEntryRelativePath(Microsoft.AppCAT.Analysis.AnalysisEntry)">
+            <summary>
+            Project analysis is used in VS and CLI. When we are in VS we always have a solution folder provided to the ctor.
+            When we are in CLI we don't have solution folder, only project files paths. In that case to make project paths relative,
+            we try to find closest solution file to a given project (it could be a little unprecise if user has many sln files in one
+            folder or some other sln files in subfolders, but its rare and user would know where to locate project file anyway, main
+            goal is make it relative and not expose local paths).
+            After we found a solution folder for one of the projects we cache it and try to use for other projects. If other projects
+            are not located in that subfolder, we try to find another solution file for them.
+            </summary>
+            <param name="entry"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.AppCAT.Configuration.LocalizedRuleConfig.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Configuration.LocalizedRuleConfig.Description">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Configuration.LocalizedRuleConfig.Label">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Configuration.LocalizedRuleConfig.Links">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Configuration.RunConfig">
+            <summary>
+            Schema:
+            
+            {
+              "analysis": {
+               "settings": {
+                 "binaries": {
+                   "useDefaultExclusions": true,
+                   "include": [
+                   ],
+                   "exclude": [
+                     "folder/file.*",
+                     "file.*",
+                     "folder/**/file*"
+                   ]
+                 }
+               },
+               "rules": [],
+               "analyzers": []
+              }
+            }
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.GuidHelper">
+            <summary>
+            Helps to avoid new GUIDs being generated during unit tests.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.RuleCategorySliceNodeBuilder">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.RuleCategorySliceNodeBuilder.CreateNode(System.String,System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.RuleInstanceSliceNodeBuilder">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.RuleInstanceSliceNodeBuilder.CreateNode(System.String,System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Json.AssemblyReferenceRuleProvider">
+            <summary>
+            Discovers rule instances project assembly references that match specified names or regex patterns.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.Providers.Json.AssemblyReferenceRuleProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Json.JsonRuleProvider">
+            <summary>
+            Discovers rule instances in json files by observing specified keys and
+            matching their values to explicit values or Regex patterns.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.Providers.Json.JsonRuleProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Json.PackageReferenceRuleProvider">
+            <summary>
+            Discovers rule instances among project packages that match specified names and versions (optional).
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.Providers.Json.PackageReferenceRuleProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Json.TextRuleProvider">
+            <summary>
+            Discovers rule instances in text files by observing specified keys and
+            matching their values to explicit values or Regex patterns.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.Providers.Json.TextRuleProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Binary.BinaryRuleProviderBase">
+            <summary>
+            Base node provider that can discover rule instances in binaries.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.Providers.Binary.BinaryRuleProviderBase.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Binary.Checkers.ArgumentOfTypeRuleChecker">
+            <summary>
+            Checks if an argument with specified index has expected type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.Providers.Binary.Checkers.ArgumentOfTypeRuleChecker.IsMatching(Mono.Cecil.MemberReference,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Binary.ProjectBinaryRuleProvider">
+            <summary>
+            Discovers rule instances by looking in project binary dependencies.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.Providers.Binary.RuleBinaryVisitor.GetMemberInfo(Mono.Cecil.MemberReference)">
+            <summary>
+            Returns type and member information about a member reference.
+            </summary>
+            <remarks>
+            Type information consists of full type, arity and generic parameters. Member information contains only a member name, without arity and generic parameters.
+            </remarks>
+            <param name="memberReference">Member reference to get type and member info about.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.ArgumentOfTypeRuleChecker">
+            <summary>
+            Checks if an argument with specified index has expected type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.Providers.Code.ArgumentOfTypeRuleChecker.IsMatching(Microsoft.CodeAnalysis.SyntaxNode,Microsoft.CodeAnalysis.SemanticModel,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.Providers.Code.CodeRuleProviderBase.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.CSharp.CtorRuleProvider">
+            <summary>
+            Discovers rule instances for constructors and their parameters for CSharp.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.CSharp.InvocationRuleProvider">
+            <summary>
+            Discovers rule instances for invocations and their parameters for CSharp.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.CSharp.LiteralRuleProvider">
+            <summary>
+            Discovers rule instances for code rules that scans string literals for given patterns for CSharp.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.CSharp.MemberRuleProvider">
+            <summary>
+            Discovers rule instances for code rules that target some type member access/invocation for CSharp.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.CSharp.NamespaceRuleProvider">
+            <summary>
+            Discovers rule instances for code rules that target some base namespaces for CSharp types.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.CSharp.NativeRuleProvider">
+            <summary>
+            Discovers rule instances for code rules that target some native methods
+            declarations (extern static methods with DllImport attribute) for CSharp.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.CSharp.TypeRuleProvider">
+            <summary>
+            Discovers rule instances for code rules that target some types for CSharp.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.CtorRuleProviderBase">
+            <summary>
+            Discovers rule instances for constructors and their parameters.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.ICodeRuleChecker">
+            <summary>
+            Abstract check of some syntax node specified in the rule config by name.
+            Name is assigned via ExportMetadata attribute.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.InvocationRuleProviderBase">
+            <summary>
+            Discovers rule instances for invocations and their parameters.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.LiteralRuleProviderBase">
+            <summary>
+            Discovers rule instances for code rules that target some type member access/invocation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.MemberRuleProviderBase">
+            <summary>
+            Discovers rule instances for code rules that target some type member access/invocation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.NamespaceRuleProviderBase">
+            <summary>
+            Discovers rule instances for code rules that target some types that are coming from a given namespaces.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.NativeRuleProviderBase">
+            <summary>
+            Discovers rule instances for code rules that target some native methods
+            declarations (extern static methods with DllImport attribute).
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.TypeRuleProviderBase">
+            <summary>
+            Discovers rule instances for code rules that target some types.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.VisualBasic.CtorRuleProvider">
+            <summary>
+            Discovers rule instances for constructors and their parameters for Visual Basic.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.VisualBasic.InvocationRuleProvider">
+            <summary>
+            Discovers rule instances for invocations and their parameters for CSharp.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.VisualBasic.LiteralRuleProvider">
+            <summary>
+            Discovers rule instances for code rules that scans string literals for given patterns for VB.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.VisualBasic.MemberRuleProvider">
+            <summary>
+            Discovers rule instances for code rules that target some type member access/invocation for VB.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.VisualBasic.NamespaceRuleProvider">
+            <summary>
+            Discovers rule instances for code rules that target some base namespaces for VB types.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.VisualBasic.NativeRuleProvider">
+            <summary>
+            Discovers rule instances for code rules that target some native methods
+            declarations (extern static methods with DllImport attribute) for VisualBasic.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Code.VisualBasic.TypeRuleProvider">
+            <summary>
+            Discovers rule instances for code rules that target some types for VB.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Xml.TargetFramework48RuleProvider">
+            <summary>
+            Explicit rule provider that is targeting specific scenario: 
+                - Check new TFMs netcoreapp1.0-netcoreapp3.1 or net5.0 - mandatory to net6.0+ or self-contained.
+                - Checks old TFMs [net452, net481) - potential issue.
+                - Checks Very old TFMs [net10, net452) and not 3.5 - mandatory.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.Providers.Xml.TargetFramework48RuleProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.Providers.Xml.TargetFramework48RuleProvider.CheckNetCoreAppAndAbove(Microsoft.UpgradeAssistant.SliceContext,System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.List{Microsoft.UpgradeAssistant.SliceNode},System.Threading.CancellationToken)">
+            <summary>
+            Check new TFMs netcoreapp1.0-netcoreapp3.1 or net5.0 - mandatory to net6.0+ or self-contained.
+            </summary>
+            <param name="context"></param>
+            <param name="targetFrameworkStrings"></param>
+            <param name="nodes"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.Providers.Xml.TargetFramework48RuleProvider.CheckOlderTargetFrameworks(Microsoft.UpgradeAssistant.SliceContext,System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.List{Microsoft.UpgradeAssistant.SliceNode},System.Threading.CancellationToken)">
+            <summary>
+            Checks old TFMs [net452, net481) - potential issue.
+            Checks Very old TFMs [net10, net452) and not 3.5 - mandatory.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.Xml.XmlRuleProvider">
+            <summary>
+            Discovers rule instances in web.config files.
+            We check if element is present or not first, then if rule has any attributes to match we check attributes.
+            If attribute's value in the rule is empty, we just check presence of an attribute.
+            If attribute's value in the rule is not empty, we check if attribute's value matches the rule's value.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.Providers.Xml.XmlRuleProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.WebConfig.ConfigBuildersRuleProvider">
+            <summary>
+            Discovers appSettings sections in the web.config that have non-standard keys and don't have configBuilder attribute.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.Providers.WebConfig.ConfigBuildersRuleProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.Nodes.FileSliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.WebConfig.ConnectionStringsRuleProvider">
+            <summary>
+            Discovers connection strings in web.config files and scans them to see if any rules could be matched.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.Providers.WebConfig.ConnectionStringsRuleProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.Nodes.FileSliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Nodes.Providers.WebConfig.WebConfigRuleProviderBase">
+            <summary>
+            Discovers rule instances in web.config, app.config files (and potentially in machine.config and applicationHost.config).
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Nodes.Providers.WebConfig.WebConfigRuleProviderBase.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.BinaryCache">
+             <summary>
+             Singleton cache for binary analysis results. It manages memory cache and cache on disk.
+             If results are not found in memory they are attempted to be loaded from disk.
+             The key fo each assembly is assembly name + file version. On disk we keep cached results per
+             assembly + version, i.e. we generate json files with results for each unique assembly and its version.
+            
+             Cache is located under "%LocalAppData%\AppCAT\binary\AppCAT_version".
+             
+             Note: when we have extensibility open, check if we need to invalidate cache if all discovered contracts
+             for rule providers changed (or do it explicitly when new extension is found or registered, just erase the
+             cache instead of checking it every time).
+             </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.BinaryCache.KeyProvider">
+            <summary>
+            Note: when IFileSystem implements GetFileVersion we should use that one.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.BinaryCache.Initialize">
+            <summary>
+            Since we could have multiple VS instances running simultaneously there could be IO exceptions
+            if they try to create the same folder, thus we catch them but proceed further since folder would
+            be created anyway.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.BinaryCache.GetResults(Microsoft.AppCAT.Rules.RuleSet,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.BinaryCache.SetResults(System.String,System.Collections.Generic.IEnumerable{Microsoft.AppCAT.Nodes.RuleInstanceSliceNode},System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Resources.Strings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.ACATarget">
+            <summary>
+              Looks up a localized string similar to Azure Container Apps.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.ACATargetDescription">
+            <summary>
+              Looks up a localized string similar to Discover issues and incidents assuming re-platform to Azure Container Apps.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AKSLinuxTarget">
+            <summary>
+              Looks up a localized string similar to Azure Kubernetes Service (Linux).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AKSLinuxTargetDescription">
+            <summary>
+              Looks up a localized string similar to Discover issues and incidents assuming re-platform to Azure Kubernetes Service (Linux).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AKSWindowsTarget">
+            <summary>
+              Looks up a localized string similar to Azure Kubernetes Service (Windows).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AKSWindowsTargetDescription">
+            <summary>
+              Looks up a localized string similar to Discover issues and incidents assuming re-platform to Azure Kubernetes Service (Windows).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AnalyzeBinaries">
+            <summary>
+              Looks up a localized string similar to Binary dependencies.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AnalyzeBinariesDescription">
+            <summary>
+              Looks up a localized string similar to Includes all external binary dependencies of selected projects.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AnalyzeCode">
+            <summary>
+              Looks up a localized string similar to Source code and settings.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AnalyzeCodeDescription">
+            <summary>
+              Looks up a localized string similar to Includes all your code, configs and settings in selected projects.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AnalyzingSelectedProjects">
+            <summary>
+              Looks up a localized string similar to Analyzing selected projects and their dependencies....
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AnyTarget">
+            <summary>
+              Looks up a localized string similar to Any.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AnyTargetDescription">
+            <summary>
+              Looks up a localized string similar to Discover issues and incidents common for most Azure targets.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.ApplicationPoolsInUse">
+            <summary>
+              Looks up a localized string similar to Application pools in use.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AppServiceContainerLinuxTarget">
+            <summary>
+              Looks up a localized string similar to Azure App Service Container (Linux).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AppServiceContainerLinuxTargetDescription">
+            <summary>
+              Looks up a localized string similar to Discover issues and incidents assuming re-platform to Azure App Service Container (Linux).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AppServiceContainerWindowsTarget">
+            <summary>
+              Looks up a localized string similar to Azure App Service Container (Windows).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AppServiceContainerWindowsTargetDescription">
+            <summary>
+              Looks up a localized string similar to Discover issues and incidents assuming re-platform to Azure App Service Container (Windows).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AppServiceLinuxTarget">
+            <summary>
+              Looks up a localized string similar to Azure App Service (Linux).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AppServiceLinuxTargetDescription">
+            <summary>
+              Looks up a localized string similar to Discover issues and incidents assuming re-platform to Azure App Service (Linux).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AppServiceManagedInstanceWindowsTarget">
+            <summary>
+              Looks up a localized string similar to Azure App Service Managed Instance (Windows).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AppServiceManagedInstanceWindowsTargetDescription">
+            <summary>
+              Looks up a localized string similar to Discover issues and incidents assuming re-platform to Azure App Service Managed Instance (Windows).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AppServiceWindowsTarget">
+            <summary>
+              Looks up a localized string similar to Azure App Service (Windows).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.AppServiceWindowsTargetDescription">
+            <summary>
+              Looks up a localized string similar to Discover issues and incidents assuming re-platform to Azure App Service (Windows).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.Column">
+            <summary>
+              Looks up a localized string similar to Column.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.CouldNotFindFile">
+            <summary>
+              Looks up a localized string similar to Could not find file '{0}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.CouldNotFindFileDocumentInTheWorkspace">
+            <summary>
+              Looks up a localized string similar to Could not find document for file '{0}' under target project workspace..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.Description">
+            <summary>
+              Looks up a localized string similar to Description.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.DirectoryOrFileAlreadyExists">
+            <summary>
+              Looks up a localized string similar to Directory or file '{0}' already exist..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.FoundPatternOccurrences">
+            <summary>
+              Looks up a localized string similar to Found {0} matches of '{1}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.Information">
+            <summary>
+              Looks up a localized string similar to Information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.IssueId">
+            <summary>
+              Looks up a localized string similar to Issue ID.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.Line">
+            <summary>
+              Looks up a localized string similar to Line.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.LocationKind">
+            <summary>
+              Looks up a localized string similar to Location Kind.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.Mandatory">
+            <summary>
+              Looks up a localized string similar to Mandatory.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.Optional">
+            <summary>
+              Looks up a localized string similar to Optional.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.Path">
+            <summary>
+              Looks up a localized string similar to Path.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.Potential">
+            <summary>
+              Looks up a localized string similar to Potential.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.ProjectFilesRuleTitle">
+            <summary>
+              Looks up a localized string similar to Found {0} files matching the rule:.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.ProjectPath">
+            <summary>
+              Looks up a localized string similar to Project Path.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.ReportNameCanNotContainIllegalChars">
+            <summary>
+              Looks up a localized string similar to Report name cannot contain invalid path characters..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.SaveToAppModJson">
+            <summary>
+              Looks up a localized string similar to Save as Modernization Report.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.SaveToCsv">
+            <summary>
+              Looks up a localized string similar to Save as CSV.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.SaveToHtml">
+            <summary>
+              Looks up a localized string similar to Save as HTML.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.SaveToJson">
+            <summary>
+              Looks up a localized string similar to Save as JSON.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.Settings">
+            <summary>
+              Looks up a localized string similar to Analysis settings.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.SettingsDescription">
+            <summary>
+              Looks up a localized string similar to What do you want to analyze in selected projects?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.Severity">
+            <summary>
+              Looks up a localized string similar to Severity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.Snippet">
+            <summary>
+              Looks up a localized string similar to Snippet.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.State">
+            <summary>
+              Looks up a localized string similar to State.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.StoryPoints">
+            <summary>
+              Looks up a localized string similar to Story Points.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.Target">
+            <summary>
+              Looks up a localized string similar to Target.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.TargetDescription">
+            <summary>
+              Looks up a localized string similar to What is your Azure target hosting option?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Resources.Strings.TargetFramework">
+            <summary>
+              Looks up a localized string similar to Target framework: {0}.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.DefaultRuleConfigLocator">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Rules.DefaultRuleConfigLocator.GetRuleConfigsContent">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Rules.FileRuleAnalyzer.IsFilePathMatching(System.String,System.String)">
+            <summary>
+            Checking if file name matching file pattern.
+            Note: only one * is allowed in the file pattern.
+            </summary>
+            <param name="pattern"></param>
+            <param name="filePath"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.IRule.Id">
+            <summary>
+            Unique ID of the rule. Consists of category and rule name separated by dot.
+            Rule Name is usually an integer number.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.IRule.Category">
+            <summary>
+            Category describes a feature to which the rule is related to
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.IRule.Description">
+            <summary>
+            Formal description of the rule.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.IRule.Label">
+            <summary>
+            Short description.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.IRule.Prompt">
+            <summary>
+            Optional prompt that could be used to ask LLMs about steps to resolve instances of this rule.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.IRule.Severity">
+            <summary>
+            Severity of the rule that suggest how important it is to fix the issue.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.IRule.Effort">
+            <summary>
+            Contains a score for the rule that suggests how much effort is required to fix the issue.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.IRule.Links">
+            <summary>
+            Links to official documentation of the rule.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.IRuleAnalyzer.Id">
+            <summary>
+            Unique analyzer ID. Usually it is the same as rule ID.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.IRuleAnalyzer.RuleId">
+            <summary>
+            Unique ID of the rule. Consists of category and rule name separated by dot.
+            Rule Name is usually an integer number.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.IRuleAnalyzer.Kind">
+            <summary>
+            Kind of teh rule. Rule fo specific kind could have different additional properties.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.IRuleAnalyzer.Snippet">
+            <summary>
+            TODO see if this snippet even needed and if yes, should analyzer contain it or rule?
+            Sample code snippet that demonstrates the rule. It is optional and could contain any markup not necessarily code.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.IRuleAnalyzer.Traits">
+            <summary>
+            Set of traits that suggest the context when rule should be applied.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.IRuleConfigLocator">
+            <summary>
+            Returns *.rule.json file paths.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.IRuleProvider">
+            <summary>
+            Returns all applicable rules for given context.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Rules.IRuleProvider.GetRules(Microsoft.UpgradeAssistant.Traits.ITraitsSet,Microsoft.AppCAT.Configuration.RunConfig,System.Threading.CancellationToken)">
+            <summary>
+            Returns all applicable rules for given context (traits).
+            Note: if we ever need async logic to discover rules the host should asynchronously initialize IRuleProvider when loaded.
+            GetRules should be synchronous for DiagnosticAnalyzer to work.
+            </summary>
+            <param name="traits"></param>
+            <param name="config">Optional config that can provide more rules or override existing ones.</param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AppCAT.Rules.IRuleProvider.GetRuleConfig(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Returns rule config for the specified rule id or null if not found.
+            It can be used to get insights about how rule behaves across all targets by looking at overrides collection.
+            </summary>
+            <param name="ruleId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.IRuleSnippetFactory">
+            <summary>
+            This interface is used as a point to add extension methods that help to build instances of <see cref="T:Microsoft.AppCAT.Rules.RuleSnippet" />
+            from different data. This way we only(!) create snippets using extension methods in this factory and it helps
+            to control what information is added to the snippet for different privacy modes.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.LocationKind">
+            <summary>
+            Kind of location for a rule instance to occur: file, package, reference etc.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.BinaryRuleInstanceLocation">
+            <summary>
+            Code/API location in a binary file.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.CodeRuleInstanceLocation">
+            <summary>
+            Code location in a source file.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.SettingRuleInstanceLocation">
+            <summary>
+            Setting location in a config file.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.PrivacyMode">
+             <summary>
+             Privacy mode specifies how much user data could be added to analysis reports when they are being exported.
+            
+             User data could be included in the snippets displayed in the rule incident details:
+                 - code incidents would contain parent statements of nodes that were discovered by analyzers and
+                   could accidentally capture sensitive data like passwords. For some users even the code statements
+                   themselves are sensitive.
+                 - configs and settings snippets could also contains sensitive data (like connection strings info).
+            
+             By default we are in Restricted mode which means - no snippets at all added to incidents.
+            
+             Protected mode means we could add non-user but the statements that were searched by rule analyzers:
+                 - document comment IDs (signatures of methods, types) of code we are trying to find, which is .NET
+                   objects signatures (not user's code).
+                 - section/element names for configs and settings without actual attributes that contain all data.
+                 
+             Unrestricted mode means we could add all data that we can and it is the most useful mode that should be
+             used only by users who has access to the code and this data is available to them anyway (the report is
+             just more helpful for them in this case)
+             </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.AppModReport">
+            <summary>
+            Represents the application modernization report format compatible with Azure AppCAT tools.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.AppModReportConverter">
+            <summary>
+            Converts ReportConfig to AppModReport format for Azure AppCAT compatibility.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Rules.LocalPathHelper.PreprocessLocalPaths(System.String,System.String,System.Boolean,Microsoft.UpgradeAssistant.Services.IEnvironmentService)">
+            <summary>
+            Makes local paths safe to share with others:
+                - makes them relative to specified root path
+                - checks if path is under local use or other standard folders and replaces them with env vars. 
+            </summary>
+            <param name="path"></param>
+            <param name="rootPath"></param>
+            <param name="isProtected"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.PrivateReportConfig">
+            <summary>
+            Pre-processes given report data to adjust it to specified privacy mode.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.RuleInstanceConfig.State">
+            <summary>
+            State of the rule. Could be Active, Resolved or NotApplicable and we would
+            allow users to change it in the report to track their progress.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.RuleInstanceStateChangedEventArgs">
+            <summary>
+            Sent when state of some <see cref="T:Microsoft.AppCAT.Rules.RuleInstanceConfig" /> changes. If the instance is null, it means
+            whole report was saved and all instances are now clean.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.Rule.Id">
+            <inheritdoc />
+        </member>
+        <member name="F:Microsoft.AppCAT.Rules.Rule._category">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.Rule.Description">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.Rule.Label">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.Rule.Prompt">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.Rule.Severity">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.Rule.Effort">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.Rule.Links">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.RuleAnalyzer.RuleId">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.RuleAnalyzer.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.RuleAnalyzer.Kind">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.RuleAnalyzer.Snippet">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.RuleAnalyzer.Traits">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.RuleAnalyzer.Enabled">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.RuleConfigDefinition">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.RuleConfigLocatorBase">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.RuleEffort">
+             <summary>
+             Using story points measure from WindUp, which is a modified fibonacci sequence.
+            
+             Here are some high-level guidelines:
+                 - Trivial: The migration is a trivial change or a simple library swap with no or minimal API changes.
+                 - Complex: The changes required for the migration task are complex, but have a documented solution.
+                 - Redesign: The migration task requires a redesign or a complete library change, with significant API changes.
+                 - Architectural: The migration requires a complete re-architecture of the component or subsystem.
+                 - Unknown: The migration solution is not known and may need a complete rewrite.
+            
+             Effort points are aggregated for project/component/report and can provide some effort level insights.
+             They are not exactly suggest how many man hours are required to complete the migration though.
+             </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.RuleFactoryAttribute.RuleKind">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.IRuleFactoryMetadata.RuleKind">
+            <summary>
+            Specifies a kind of <see cref="T:Microsoft.AppCAT.Rules.IRule" /> for which this factory is applicable.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.RuleIndex`1">
+            <summary>
+            Provides index for quick check if code piece even could have some matching rule.
+            This helps with quickly filtering out code places that we should not analyze if there
+            are no rules (analysis includes symbols check etc and if we can quit early we should).
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.RuleInstance">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.RuleInstance.Rule">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.RuleInstance.Description">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Rules.RuleInstance.Location">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.RuleInstanceLocation">
+            <summary>
+            Most locations are files, however there could be some "virtual" locations like some settings
+            in project, binary, or remote settings to be tweaked by a user.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.RuleProvider">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Rules.RuleProvider.GetRules(Microsoft.UpgradeAssistant.Traits.ITraitsSet,Microsoft.AppCAT.Configuration.RunConfig,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Rules.RuleSnippetFactory">
+            <summary>
+            Implements interface that is used as a point to add extension methods that help to build instances of <see cref="T:Microsoft.AppCAT.Rules.RuleSnippet" />
+            from different data. This way we only(!) create snippets using extension methods in this factory and it helps
+            to control what information is added to the snippet for different privacy modes.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Serializers.AppModJsonProjectAnalysisReportSerializer.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Serializers.AppModJsonProjectAnalysisReportSerializer.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Serializers.AppModJsonProjectAnalysisReportSerializer.Order">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Serializers.AppModJsonProjectAnalysisReportSerializer.TryGetPath(System.String,System.String,System.String@)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Serializers.AppModJsonProjectAnalysisReportSerializer.SerializeAsync(System.String,Microsoft.AppCAT.Rules.ReportConfig,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Serializers.AppModJsonProjectAnalysisReportSerializer.DeserializeAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Serializers.CsvProjectAnalysisReportSerializer.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Serializers.CsvProjectAnalysisReportSerializer.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Serializers.CsvProjectAnalysisReportSerializer.Order">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Serializers.CsvProjectAnalysisReportSerializer.TryGetPath(System.String,System.String,System.String@)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Serializers.CsvProjectAnalysisReportSerializer.SerializeAsync(System.String,Microsoft.AppCAT.Rules.ReportConfig,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Serializers.CsvProjectAnalysisReportSerializer.DeserializeAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Serializers.HtmlProjectAnalysisReportSerializer.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Serializers.HtmlProjectAnalysisReportSerializer.Order">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Serializers.HtmlProjectAnalysisReportSerializer.SerializeAsync(System.String,Microsoft.AppCAT.Rules.ReportConfig,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Serializers.HtmlProjectAnalysisReportSerializer.DeserializeAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Serializers.IReportSerializer.SerializeAsync(System.String,Microsoft.AppCAT.Rules.ReportConfig,System.Threading.CancellationToken)">
+            <summary>
+            If path is null, we expect serializer to ask where to serialize.
+            We do delegate it to serializer since we don't know if it would
+            serialize into one file or a folder with many files.
+            </summary>
+            <param name="path"></param>
+            <param name="report"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.AppCAT.Serializers.JsonProjectAnalysisReportSerializer.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Serializers.JsonProjectAnalysisReportSerializer.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Serializers.JsonProjectAnalysisReportSerializer.Order">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Serializers.JsonProjectAnalysisReportSerializer.TryGetPath(System.String,System.String,System.String@)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Serializers.JsonProjectAnalysisReportSerializer.SerializeAsync(System.String,Microsoft.AppCAT.Rules.ReportConfig,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Serializers.JsonProjectAnalysisReportSerializer.DeserializeAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Serializers.ReportSerializerAttribute">
+            <summary>
+            Attribute that is applicable for implementations of <see cref="T:Microsoft.AppCAT.Serializers.IReportSerializer" />.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Serializers.ReportSerializerAttribute.Kind">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Serializers.ReportSerializerAttribute.Order">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Serializers.IReportSerializerMetadata.Kind">
+            <summary>
+            Unique serializer format kind
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Targets.ACATargetProvider">
+            <summary>
+            ACA re-platforming target provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.ACATargetProvider.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.ACATargetProvider.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.ACATargetProvider.Description">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.ACATargetProvider.Order">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Targets.ACATargetProvider.GetTraitsAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Targets.AKSLinuxTargetProvider">
+            <summary>
+            AKS.Linux re-platforming target provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AKSLinuxTargetProvider.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AKSLinuxTargetProvider.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AKSLinuxTargetProvider.Description">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AKSLinuxTargetProvider.Order">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Targets.AKSLinuxTargetProvider.GetTraitsAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Targets.AKSWindowsTargetProvider">
+            <summary>
+            AKS.Windows re-platforming target provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AKSWindowsTargetProvider.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AKSWindowsTargetProvider.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AKSWindowsTargetProvider.Description">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AKSWindowsTargetProvider.Order">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Targets.AKSWindowsTargetProvider.GetTraitsAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Targets.AnyTargetProvider">
+            <summary>
+            Any target re-platforming target provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AnyTargetProvider.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AnyTargetProvider.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AnyTargetProvider.Description">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AnyTargetProvider.Order">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Targets.AnyTargetProvider.GetTraitsAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Targets.AppServiceContainerLinuxTargetProvider">
+            <summary>
+            AppServiceContainer.Linux re-platforming target provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceContainerLinuxTargetProvider.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceContainerLinuxTargetProvider.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceContainerLinuxTargetProvider.Description">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceContainerLinuxTargetProvider.Order">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Targets.AppServiceContainerLinuxTargetProvider.GetTraitsAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Targets.AppServiceContainerWindowsTargetProvider">
+            <summary>
+            AppServiceContainer.Windows re-platforming target provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceContainerWindowsTargetProvider.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceContainerWindowsTargetProvider.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceContainerWindowsTargetProvider.Description">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceContainerWindowsTargetProvider.Order">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Targets.AppServiceContainerWindowsTargetProvider.GetTraitsAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Targets.AppServiceLinuxTargetProvider">
+            <summary>
+            AppService.Linux re-platforming target provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceLinuxTargetProvider.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceLinuxTargetProvider.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceLinuxTargetProvider.Description">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceLinuxTargetProvider.Order">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Targets.AppServiceLinuxTargetProvider.GetTraitsAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Targets.AppServiceManagedInstanceWindowsTargetProvider">
+            <summary>
+            AppServiceManagedInstance re-platforming target provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceManagedInstanceWindowsTargetProvider.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceManagedInstanceWindowsTargetProvider.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceManagedInstanceWindowsTargetProvider.Description">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceManagedInstanceWindowsTargetProvider.Order">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Targets.AppServiceManagedInstanceWindowsTargetProvider.GetTraitsAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Targets.AppServiceWindowsTargetProvider">
+            <summary>
+            AppService.Windows re-platforming target provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceWindowsTargetProvider.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceWindowsTargetProvider.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceWindowsTargetProvider.Description">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.AppServiceWindowsTargetProvider.Order">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Targets.AppServiceWindowsTargetProvider.GetTraitsAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Targets.ITargetProvider">
+            <summary>
+            Represents a target for re-platforming the application that being assumed during analysis.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.ITargetProvider.Id">
+            <summary>
+            Unique ID of a re-platform target.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.ITargetProvider.DisplayName">
+            <summary>
+            Display name of a re-platform target.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.ITargetProvider.Description">
+            <summary>
+            Description of a re-platform target to show in UI.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Targets.ITargetProvider.Order">
+            <summary>
+            Optional order of the target, by default they are ordered alphabetically.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Targets.ITargetProvider.GetTraitsAsync(System.Threading.CancellationToken)">
+            <summary>
+            Returns a unique traits associated with this target.
+            </summary>
+            <param name="cancellation"></param>
+            <returns></returns>
+        </member>
+    </members>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" /><DigestValue>MoBxBLi9DIoBvj84o394tL1619ZGQCu8nlUVWhUr8sw=</DigestValue></Reference></SignedInfo><SignatureValue>CPeGNQdu7+t6fSMJWV8D5jX/72H7jS5JA/Zp9yjrh00Ywt6EOkAgUhAl5Du4dEemB26ubjwbnigGuffhQ3CW2KUImJKdEc8BhRfiO4DGZNJM81S0aaGm5gmY0qtt2KAyh7r2GxqdAXF/mEzAB7iz3cjVcp3FKMbccYPVxr4nV6eGU6lex5Oi9daKVDJ7GUaeG0DK5WqzpbhRW5GDOKdiBp7i5cqK9z9JvJUuwAevdIs3d8kqFjSC4P15+BDyPyBoqZIg6NN1E7ob/OxfJq/Gw+WImx/39KXDa7eUZtDR0q/U4EcIkHZfmPwlOwtPwYodmwSnpUMbyQAafBeDOilPDw==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>0L3sF8cfYGWRQumLNVgWsvASfJBgOCUJx+QjGn6jgEpU6SvR/KOWV017dHGlUEzTFD7eOOcF2A/nRbWilk8A59SOdqFEqwvbyYp9RrKrfs8iiS+Q4N3kF20DUetQ5jMttBi0yDt0hXnfUX4v6KYYAixhSw0d69Crx48DG/42FktHHpVf+C89uy3wHpJvL/ROSF2nol2wFGGSitPdJ+AlZdyQbWzfvQ7SPUjbv8o76M1udv7u0V/07aWvyg5abqJGfmXG75rXfbq/YBS72c4eNaPTLBP3JULXWhVhr7qOibmv57aYJHstxOf7wRXvjCTxuqYXZ7qOq+e2bnQrnYiNWw==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIF9TCCA92gAwIBAgITMwAAAh1NGchO1w9XSAAAAAACHTANBgkqhkiG9w0BAQsFADBXMQswCQYDVQQGEwJVUzEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMSgwJgYDVQQDEx9NaWNyb3NvZnQgQ29kZSBTaWduaW5nIFBDQSAyMDI0MB4XDTI2MDQxNjE4NTk0M1oXDTI3MDQxNTE4NTk0M1owdDELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEeMBwGA1UEAxMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0L3sF8cfYGWRQumLNVgWsvASfJBgOCUJx+QjGn6jgEpU6SvR/KOWV017dHGlUEzTFD7eOOcF2A/nRbWilk8A59SOdqFEqwvbyYp9RrKrfs8iiS+Q4N3kF20DUetQ5jMttBi0yDt0hXnfUX4v6KYYAixhSw0d69Crx48DG/42FktHHpVf+C89uy3wHpJvL/ROSF2nol2wFGGSitPdJ+AlZdyQbWzfvQ7SPUjbv8o76M1udv7u0V/07aWvyg5abqJGfmXG75rXfbq/YBS72c4eNaPTLBP3JULXWhVhr7qOibmv57aYJHstxOf7wRXvjCTxuqYXZ7qOq+e2bnQrnYiNWwIDAQABo4IBmzCCAZcwDgYDVR0PAQH/BAQDAgeAMB8GA1UdJQQYMBYGCisGAQQBgjdMCAEGCCsGAQUFBwMDMB0GA1UdDgQWBBR+kLjMKnDxtIUJUOnOYwrU0y61XjBFBgNVHREEPjA8pDowODEeMBwGA1UECxMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMRYwFAYDVQQFEw0yMzAwMTIrNTA3NTU5MB8GA1UdIwQYMBaAFH9ZP1Qh2q1P7wXl5qPXLQaUEggxMGAGA1UdHwRZMFcwVaBToFGGT2h0dHA6Ly93d3cubWljcm9zb2Z0LmNvbS9wa2lvcHMvY3JsL01pY3Jvc29mdCUyMENvZGUlMjBTaWduaW5nJTIwUENBJTIwMjAyNC5jcmwwbQYIKwYBBQUHAQEEYTBfMF0GCCsGAQUFBzAChlFodHRwOi8vd3d3Lm1pY3Jvc29mdC5jb20vcGtpb3BzL2NlcnRzL01pY3Jvc29mdCUyMENvZGUlMjBTaWduaW5nJTIwUENBJTIwMjAyNC5jcnQwDAYDVR0TAQH/BAIwADANBgkqhkiG9w0BAQsFAAOCAgEASk22Do88Exvw1xms/bOvn0Hmk7Q3BZjGPuVMlRQso+z7/uYt+6n1/JUi/7QSH2EH1rDLgUJX2bqyQ+q+B1Sdgnh/tX4IqvHXB3VSqGd0mtql6F93KvYkvHFW9Oge/uf1yeyNDsRx/Xw7Lyd098OVf2bQCBZi65fj9ArRvvdrs0bJ9J023RYzpCzC1jywFN0x6ISkZUhDIBSaT5JuZ+VAGd+cV+hVgqwy7Eim+eeW04n8GvJiQcHZaH9G5n2InR/ncWdRXQ8by5zZfc3irAOJHo2miKqiD4LocALYuUJewZUzaCTcMQrwZqltjEC5wpGDf1VVLEd1dsf63Ezc6AX/2f0qUTr3WgNmTjndboqFybd7XS0O7x6aqYm9Cn1q/xVl1tdKt/FcXwp0UAas20rs7Ue5xDLs1+wpPgf12jw13daoe9vkGMgdGdlc1pjvc7J2/VKv3cLvCxnkKp8ruu0gxgAr514otn2/flEuPdlU510pxSsqsIM1MhTLWStf7B2E7+mxuE7UFMoEMUzfmVfmiSJSjtjKme2yqwJzs0vZujYKE3VjqtdW0zmcCpSBFfxIVfUlpA5naUf4Tz09r+kxI+BfD0/8x40XsyFOXPwxpbf1YWP6StF5CbRMjJpktQTLY1P66gWVTCJt3Z8ULP0wQcq/gn/Gda+2on0FUPlkqs4=</X509Certificate><X509Certificate>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</X509Certificate><X509Certificate>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</X509Certificate></X509Data></KeyInfo><Object Id="ts-countersig"><X509Data><X509Certificate>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</X509Certificate><X509Certificate>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</X509Certificate></X509Data><CounterSignature ts-format="cms-timestamp-message" xmlns="http://schemas.microsoft.com/xmldsig/timestamp/2003">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</CounterSignature></Object></Signature></doc>

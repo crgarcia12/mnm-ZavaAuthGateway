@@ -1,0 +1,966 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AppCAT.Cli</name>
+    </assembly>
+    <members>
+        <member name="M:Microsoft.AppCAT.Cli.AppCATHost.GetSerializers">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.AppCATHost.GetTargetProviders">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.AppCATHost.GetServiceCollection">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Report.AnalysisSettingsFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Report.AnalysisSettingsFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Report.AnalysisSettingsFlowStep.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Report.AnalysisSettingsFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Report.AnalysisSettingsFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Report.AnalysisSettingsFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Report.RunConfigFileFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Report.RunConfigFileFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Report.RunConfigFileFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Report.RunConfigFileFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Report.RunConfigFileFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Report.PrivacyModeFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Report.PrivacyModeFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Report.PrivacyModeFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Report.PrivacyModeFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Report.PrivacyModeFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Report.ReportFileFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Report.ReportFileFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Report.ReportFileFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Report.ReportFileFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Report.ReportFileFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Report.ReportSerializerFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Report.ReportSerializerFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Report.ReportSerializerFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Report.ReportSerializerFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Report.ReportSerializerFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.StartNodeAsync(Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.StartEntryAsync(Microsoft.AppCAT.Analysis.AnalysisEntry,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.UpdateEntryAsync(Microsoft.AppCAT.Analysis.AnalysisEntry,System.Double,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.CompleteEntryAsync(Microsoft.AppCAT.Analysis.AnalysisEntry,Microsoft.AppCAT.Analysis.AnalysisState,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.ReportOverallProgressToStdout(System.String)">
+            <summary>
+            Computes the mean percentage across all tracked entries and writes a
+            progress line to stdout if the integer value has advanced since the
+            last report.  Format:  APPCAT_PROGRESS:{0-100}:{message}
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep.TryAdvanceReportedPct(System.Int32)">
+            <summary>
+            Atomically advances <see cref="F:Microsoft.AppCAT.Cli.Flow.Steps.Analysis.RunAnalysisFlowStep._lastReportedOverallPct" /> to <paramref name="newPct" />
+            only if <paramref name="newPct" /> is strictly greater than the current value.
+            </summary>
+            <returns><c>true</c> if the value was advanced; <c>false</c> if another thread
+            already reported an equal or higher percentage.</returns>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Source.FolderFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Source.FolderFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Source.FolderFlowStep.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Source.FolderFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Source.FolderFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Source.FolderFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Source.SourceFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Source.SourceFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Source.SourceFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Source.SourceFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Source.SourceFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.IIS.IISApplicationsFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.IIS.IISApplicationsFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.IIS.IISApplicationsFlowStep.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.IIS.IISApplicationsFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.IIS.IISApplicationsFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.IIS.IISApplicationsFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Project.SourceProjectFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Project.SourceProjectFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Project.SourceProjectFlowStep.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Project.SourceProjectFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Project.SourceProjectFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Project.SourceProjectFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Target.TargetFlowStep.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Target.TargetFlowStep.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Flow.Steps.Target.TargetFlowStep.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Target.TargetFlowStep.ValidateUserInputAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Target.TargetFlowStep.RunAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Flow.Steps.Target.TargetFlowStep.ResetAsync(Spectre.Console.Flow.IFlowContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.AppFolderSliceNodeBuilder">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.AppFolderSliceNodeBuilder.CreateNode(System.String,System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.IISApplicationSliceNodeBuilder">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.IISApplicationSliceNodeBuilder.CreateNode(System.String,System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.IISServerSliceNodeBuilder">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.IISServerSliceNodeBuilder.CreateNode(System.String,System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.IISSiteSliceNodeBuilder">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.IISSiteSliceNodeBuilder.CreateNode(System.String,System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.Providers.Binary.FolderBinaryRuleProvider">
+            <summary>
+            Discovers rule instances by looking in binaries located in the specified folder.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.Providers.File.FileRuleProvider">
+            <summary>
+            Checks static content files and returns rule Scale.0001 if found.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.Providers.File.FileRuleProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.Providers.File.FileSliceNodeProvider">
+            <summary>
+            Generates <see cref="T:Microsoft.UpgradeAssistant.Nodes.FileSliceNode" /> nodes for files in the app folder.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.Providers.File.FileSliceNodeProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.Providers.File.AppPoolFrameworkNodeProvider">
+            <summary>
+            Analyses IIS site applications and checks their application pools.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.Providers.File.AppPoolFrameworkNodeProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.Providers.File.AppPoolIdentityNodeProvider">
+            <summary>
+            Analyses IIS site applications and checks their application pools.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.Providers.File.AppPoolIdentityNodeProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.Providers.File.GlobalModulesNodeProvider">
+            <summary>
+            Analyses IIS site application and checks their physical path is a UNC path.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.Providers.File.GlobalModulesNodeProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.Providers.File.IISApplicationNodeProvider">
+            <summary>
+            Analyses IIS site and produces IIS application nodes for the site.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.Providers.File.IISApplicationNodeProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.Providers.File.IISNodeProviderBase">
+            <summary>
+            Base class for IIS related node providers that contain some common methods
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.Providers.File.IsapiFiltersNodeProvider">
+            <summary>
+            Analyses IIS site application and checks their physical path is a UNC path.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.Providers.File.IsapiFiltersNodeProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.Providers.File.LocationTagNodeProvider">
+            <summary>
+            Analyses IIS applicationHost.config and checks custom location tags.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.Providers.File.LocationTagNodeProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.Providers.File.ServerOtherFrameworksNodeProvider">
+            <summary>
+            Analyses IIS server and discovers all potential non-.NET Framework dependencies.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.Providers.File.ServerOtherFrameworksNodeProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.Providers.File.ServerValidConfigNodeProvider">
+            <summary>
+            Analyses IIS server and checks if applicationHost.config is found and is valid.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.Providers.File.ServerValidConfigNodeProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.Providers.File.SiteAppPoolNodeProvider">
+            <summary>
+            Analyses IIS site applications and checks their application pools.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.Providers.File.SiteAppPoolNodeProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.Providers.File.SiteAuthenticationNodeProvider">
+            <summary>
+            Analyses IIS site and checks if it has any authentication enabled that is not supported by Azure App Service.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.Providers.File.SiteAuthenticationNodeProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.Providers.File.SiteAuthenticationNodeProvider.DoesSiteHaveOverride(Microsoft.UpgradeAssistant.SliceContext,System.String,Microsoft.AppCAT.Cli.Services.IISSite)">
+            <summary>
+            We check site override only after section with unsupported already identity enabled was detected in
+            applicationHost.config. Thus every application in this site must have an override otherwise we have
+            to report unsupported authentication.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.Providers.File.SiteBindingsNodeProvider">
+            <summary>
+            Analyses IIS site bindings and returns rule nodes for issues found.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.Providers.File.SiteBindingsNodeProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.Providers.File.SiteContentSizeNodeProvider">
+            <summary>
+            Analyses IIS site applications and checks their application pools.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.Providers.File.SiteContentSizeNodeProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Nodes.Providers.File.UncPathNodeProvider">
+            <summary>
+            Analyses IIS site application and checks their physical path is a UNC path.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Nodes.Providers.File.UncPathNodeProvider.GetNodesAsync(Microsoft.UpgradeAssistant.SliceContext,Microsoft.UpgradeAssistant.SliceNode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Resources.Strings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.Analysis">
+            <summary>
+              Looks up a localized string similar to Analysis.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.AnalysisConfirmation">
+            <summary>
+              Looks up a localized string similar to We have gathered all required options and are ready to run analysis. Do you want to continue?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.AnalyzeBinariesDescription">
+            <summary>
+              Looks up a localized string similar to Includes all external binary dependencies of selected projects.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.AnalyzeCodeDescription">
+            <summary>
+              Looks up a localized string similar to Includes all your code, configs and settings in selected projects.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.AnalyzeCommandDescription">
+            <summary>
+              Looks up a localized string similar to Scan and analyze .NET applications source code to identify replatforming and migration opportunities for Azure..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.AnalyzingFolder">
+            <summary>
+              Looks up a localized string similar to Analyzing folder....
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.AnalyzingIISServer">
+            <summary>
+              Looks up a localized string similar to Analyzing IIS Server....
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.ApplicationOptionDescription">
+            <summary>
+              Looks up a localized string similar to Path to the application to be analyzed (could be repo folder, solution or project file path)..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.ConfigFile">
+            <summary>
+              Looks up a localized string similar to Config file.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.ConfigOptionDescription">
+            <summary>
+              Looks up a localized string similar to Config file to customize analysis (select binaries, add or modify analysis rules)..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.Default">
+            <summary>
+              Looks up a localized string similar to &lt;default&gt;.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.DirectoryOrFileAlreadyExists">
+            <summary>
+              Looks up a localized string similar to Directory or file '{0}' already exist..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.EnterFolderPath">
+            <summary>
+              Looks up a localized string similar to Enter folder path (or [highlight]&lt;[/] to go back).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.EnterReportName">
+            <summary>
+              Looks up a localized string similar to Enter report name (or [highlight]&lt;[/] to go back).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.EnterRunConfigPath">
+            <summary>
+              Looks up a localized string similar to Enter path to config file ([highlight]&lt;[/] to go back, [highlight]&gt;[/] to skip).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.FileDoesNotExist">
+            <summary>
+              Looks up a localized string similar to File '{0}' does not exist..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.Folder">
+            <summary>
+              Looks up a localized string similar to Folder.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.FolderAnalysisDescription">
+            <summary>
+              Looks up a localized string similar to build output binaries and settings.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.FolderDoesNotExist">
+            <summary>
+              Looks up a localized string similar to Folder '{0}' does not exist..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.FolderDoesNotExistOrInvalid">
+            <summary>
+              Looks up a localized string similar to Folder '{0}' does not exist or contains invalid path characters..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.FolderPath">
+            <summary>
+              Looks up a localized string similar to Folder path.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.FolderPathRequired">
+            <summary>
+              Looks up a localized string similar to Folder path is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.Folders">
+            <summary>
+              Looks up a localized string similar to Folders.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.IISApplicationRequired">
+            <summary>
+              Looks up a localized string similar to IIS application is required.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.IISApps">
+            <summary>
+              Looks up a localized string similar to IIS.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.IISConfigNotFound">
+            <summary>
+              Looks up a localized string similar to IIS Server config is not found on this machine. Path checked '{0}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.IISIsNotInstalled">
+            <summary>
+              Looks up a localized string similar to IIS Server is not found on this machine..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.IISRequiresElevation">
+            <summary>
+              Looks up a localized string similar to Admin permissions are required for IIS Server analysis. Restart this tool in elevated command line prompt..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.IISServer">
+            <summary>
+              Looks up a localized string similar to IIS Server.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.IISServerAnalysis">
+            <summary>
+              Looks up a localized string similar to IIS Server.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.IISServerAnalysisDescription">
+            <summary>
+              Looks up a localized string similar to sites, applications with their configs and binaries.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.IISServerAndSites">
+            <summary>
+              Looks up a localized string similar to IIS Server and sites.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.IISServerConfigInvalid">
+            <summary>
+              Looks up a localized string similar to There was an error accessing IIS Server config file (applicationHost.config). Check if you have permissions to access it and it exists on the machine..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.InitializingSelecteProjects">
+            <summary>
+              Looks up a localized string similar to Initializing selected projects and their dependencies....
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.InvalidReportName">
+            <summary>
+              Looks up a localized string similar to Invalid report name '{0}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.LoadingSelectedProjects">
+            <summary>
+              Looks up a localized string similar to Loading selected projects and their dependencies....
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.NoProjectSelected">
+            <summary>
+              Looks up a localized string similar to No projects selected for analysis..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.NoProjectsFoundInCurrentDir">
+            <summary>
+              Looks up a localized string similar to No projects found in current directory..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.NoSourceSelected">
+            <summary>
+              Looks up a localized string similar to No source selected..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.NotValidConfigPath">
+            <summary>
+              Looks up a localized string similar to Config path is either not valid or file does not exist..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.NotValidReportName">
+            <summary>
+              Looks up a localized string similar to Report name is invalid..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.PickIISSitesTitle">
+            <summary>
+              Looks up a localized string similar to Which IIS sites do you want to analyze [highlight](found {0})[/]?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.PickProjectsFromTitle">
+            <summary>
+              Looks up a localized string similar to Which projects do you want to analyze [highlight](found {0})[/]?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.PickSolutionTitle">
+            <summary>
+              Looks up a localized string similar to Which solution to use to discover project for the analysis?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.Privacy">
+            <summary>
+              Looks up a localized string similar to Privacy.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.PrivacyMode">
+            <summary>
+              Looks up a localized string similar to Privacy mode.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.PrivacyModeOptionDescription">
+            <summary>
+              Looks up a localized string similar to Privacy mode specifying how much data is included in generated report files (Unrestricted, Protected, Restricted)..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.PrivacyModeRequired">
+            <summary>
+              Looks up a localized string similar to Privacy mode is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.ProjectPathDoesNotExist">
+            <summary>
+              Looks up a localized string similar to Project path does not exist '{0}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.ProjectPathInvalid">
+            <summary>
+              Looks up a localized string similar to Project path is invalid '{0}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.ProtectedModeDescription">
+            <summary>
+              Looks up a localized string similar to No sensitive data included in report snippets.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.ReportFormat">
+            <summary>
+              Looks up a localized string similar to Report format.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.ReportFormatRequired">
+            <summary>
+              Looks up a localized string similar to Report format is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.ReportName">
+            <summary>
+              Looks up a localized string similar to Report name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.ReportNameRequired">
+            <summary>
+              Looks up a localized string similar to Report name is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.ReportOptionDescription">
+            <summary>
+              Looks up a localized string similar to Path or name of the report to be generated after analysis is complete (could be folder or file name depending on specified serializer)..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.ReportSavedAtPath">
+            <summary>
+              Looks up a localized string similar to Report with [highlight]{0}[/] privacy mode saved at '{1}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.RestrictedModeDescription">
+            <summary>
+              Looks up a localized string similar to No snippets are included in report.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.RunConfigConfirmation">
+            <summary>
+              Looks up a localized string similar to Do you want to provide a config file to customize the analysis?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.RunConfigDoesNotExist">
+            <summary>
+              Looks up a localized string similar to Config file '{0}' does not exist..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.RunConfigIncorrectExtension">
+            <summary>
+              Looks up a localized string similar to Config file has incorrect format '{0}', it should be a JSON file..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SelectAll">
+            <summary>
+              Looks up a localized string similar to Select all.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SelectAllSites">
+            <summary>
+              Looks up a localized string similar to All sites.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SelectComponentsToAnalyze">
+            <summary>
+              Looks up a localized string similar to Select components to analyze..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SelectedIISSites">
+            <summary>
+              Looks up a localized string similar to Selected IIS sites.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SelectedIISSitesValue">
+            <summary>
+              Looks up a localized string similar to {0} (+ {1} more sites).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SelectedProjects">
+            <summary>
+              Looks up a localized string similar to Selected projects.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SelectedProjectsValue">
+            <summary>
+              Looks up a localized string similar to {0} (+ {1} more projects).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SelectPrivacyMode">
+            <summary>
+              Looks up a localized string similar to Select privacy mode.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SelectReportSerializer">
+            <summary>
+              Looks up a localized string similar to In what format should the report be generated?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SelectSource">
+            <summary>
+              Looks up a localized string similar to What do you want to analyze?.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SerializeOptionDescription">
+            <summary>
+              Looks up a localized string similar to Specifies the format for the report to be used after analysis is complete (HTML, CSV, JSON, etc)..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SerializerUnknown">
+            <summary>
+              Looks up a localized string similar to Serializer '{0}' is unknown..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SmallFolders">
+            <summary>
+              Looks up a localized string similar to folders.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SolutionAnalysis">
+            <summary>
+              Looks up a localized string similar to Application sources.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SolutionAnalysisDescription">
+            <summary>
+              Looks up a localized string similar to source code, settings and binary dependencies.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.Source">
+            <summary>
+              Looks up a localized string similar to Source.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SourceOptionDescription">
+            <summary>
+              Looks up a localized string similar to Source which the tool should analyze (Solution, Folder, IISServer)..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SourceProjectRequired">
+            <summary>
+              Looks up a localized string similar to Project path is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SourceProjects">
+            <summary>
+              Looks up a localized string similar to Projects.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SourceRequired">
+            <summary>
+              Looks up a localized string similar to Analysis source is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.SourceUnknown">
+            <summary>
+              Looks up a localized string similar to Source '{0}' is unknown..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.Startup">
+            <summary>
+              Looks up a localized string similar to Startup.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.StartupFailed">
+            <summary>
+              Looks up a localized string similar to Startup action failed '{0}'..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.Target">
+            <summary>
+              Looks up a localized string similar to Target.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.TargetOptionDescription">
+            <summary>
+              Looks up a localized string similar to Target toward which the tool should analyze the application..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.TargetRequired">
+            <summary>
+              Looks up a localized string similar to Analysis target is required..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.TargetUnknown">
+            <summary>
+              Looks up a localized string similar to Target '{0}' is unknown..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.TotalEffortDiscovered">
+            <summary>
+              Looks up a localized string similar to Discovered story points: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.TotalElapsedTime">
+            <summary>
+              Looks up a localized string similar to Time elapsed {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.TotalIncidentsDiscovered">
+            <summary>
+              Looks up a localized string similar to Discovered incidents: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.TotalIssuesDiscovered">
+            <summary>
+              Looks up a localized string similar to Discovered issues: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Resources.Strings.UnrestrictedModeDescription">
+            <summary>
+              Looks up a localized string similar to Source code and settings snippets are included in report.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Slices.Operation.FolderAnalysisOperationController.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Slices.Operation.FolderAnalysisOperationController.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Slices.Operation.FolderAnalysisOperationController.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Slices.Operation.FolderAnalysisOperationController.GetContextAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,Microsoft.UpgradeAssistant.Services.IServiceCollection,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Slices.Operation.FolderAnalysisOperationController.GetTraitsAsync(Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Slices.Operation.FolderAnalysisOperationController.GetOperationDefinitionAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Slices.Operation.FolderAnalysisOperationController.GetAnalysisAsync(Spectre.Console.Flow.IFlowContext,Microsoft.UpgradeAssistant.Traits.ITraitsSet,Microsoft.AppCAT.Analysis.AnalysisSettings,Microsoft.AppCAT.Analysis.IAnalysisProgress,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Slices.Operation.IAnalysisOperationController.GetAnalysisAsync(Spectre.Console.Flow.IFlowContext,Microsoft.UpgradeAssistant.Traits.ITraitsSet,Microsoft.AppCAT.Analysis.AnalysisSettings,Microsoft.AppCAT.Analysis.IAnalysisProgress,System.Threading.CancellationToken)">
+            <summary>
+            Returns an analysis experience object for the given context, traits, and settings.
+            </summary>
+            <param name="context"></param>
+            <param name="traits"></param>
+            <param name="settings"></param>
+            <param name="progress"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Slices.Operation.IISServerAnalysisOperationController.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Slices.Operation.IISServerAnalysisOperationController.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Slices.Operation.IISServerAnalysisOperationController.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Slices.Operation.IISServerAnalysisOperationController.GetContextAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,Microsoft.UpgradeAssistant.Services.IServiceCollection,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Slices.Operation.IISServerAnalysisOperationController.GetTraitsAsync(Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Slices.Operation.IISServerAnalysisOperationController.GetOperationDefinitionAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Slices.Operation.IISServerAnalysisOperationController.GetAnalysisAsync(Spectre.Console.Flow.IFlowContext,Microsoft.UpgradeAssistant.Traits.ITraitsSet,Microsoft.AppCAT.Analysis.AnalysisSettings,Microsoft.AppCAT.Analysis.IAnalysisProgress,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Slices.Operation.SolutionAnalysisOperationController.Id">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Slices.Operation.SolutionAnalysisOperationController.DisplayName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Slices.Operation.SolutionAnalysisOperationController.Description">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Slices.Operation.SolutionAnalysisOperationController.GetContextAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,Microsoft.UpgradeAssistant.Services.IServiceCollection,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Slices.Operation.SolutionAnalysisOperationController.GetTraitsAsync(Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Slices.Operation.SolutionAnalysisOperationController.GetOperationDefinitionAsync(System.String,Microsoft.UpgradeAssistant.Traits.ITraitsSet,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Slices.Operation.SolutionAnalysisOperationController.GetAnalysisAsync(Spectre.Console.Flow.IFlowContext,Microsoft.UpgradeAssistant.Traits.ITraitsSet,Microsoft.AppCAT.Analysis.AnalysisSettings,Microsoft.AppCAT.Analysis.IAnalysisProgress,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Slices.Services.ServiceCollection">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Slices.Services.ServiceCollection.AddService``1(``0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Slices.Services.ServiceCollection.AddService(System.Type,Microsoft.UpgradeAssistant.Services.IService)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Slices.Services.ServiceCollection.GetService``1">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Slices.Services.ServiceCollection.GetService(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AppCAT.Cli.Services.IISServerConfigLocatorAttribute">
+            <summary>
+            Attribute that is applicable for implementations of <see cref="T:Microsoft.AppCAT.Cli.Services.IIISServerConfigLocator" />.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AppCAT.Cli.Services.IISServerConfigLocatorAttribute.Order">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AppCAT.Cli.Services.IISService.GetServer">
+            <inheritdoc />
+        </member>
+    </members>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" /><DigestValue>O7cCCRZzrwlOXQJyl8hnBewvo2pcqBkvMpmEQZRUamg=</DigestValue></Reference></SignedInfo><SignatureValue>uNqNXRH0UuN5fi7x78a4MemgmKR9DNaaM8414x506OT/iWFO/+hu64y+BxzKWkmcxbRCAZtKTyFXLQkDMisgfQks7Ufb1rieIYqIsiZqP2Y85PSXBzImmvEvAUf6GMw2XQOp+423ns00/dzIj5UMF6p9UnHPEkTczLOqF1J35m7CnKRHfXJ7Pv7vJfvMOqS/Lw/0wjagtxExw04EofhHPaz5iVF+vtpDQRjgiJVCMH2qQI3ZCapPdYq5OWNokLnIqPwuYeLeFY0AxKnzU8eNynocstUryFZC+h54yWioDTP2B1A9FjfG5OZpuLM1kNJT7HGQSuGxE7UhAJw7M5vP+g==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>0L3sF8cfYGWRQumLNVgWsvASfJBgOCUJx+QjGn6jgEpU6SvR/KOWV017dHGlUEzTFD7eOOcF2A/nRbWilk8A59SOdqFEqwvbyYp9RrKrfs8iiS+Q4N3kF20DUetQ5jMttBi0yDt0hXnfUX4v6KYYAixhSw0d69Crx48DG/42FktHHpVf+C89uy3wHpJvL/ROSF2nol2wFGGSitPdJ+AlZdyQbWzfvQ7SPUjbv8o76M1udv7u0V/07aWvyg5abqJGfmXG75rXfbq/YBS72c4eNaPTLBP3JULXWhVhr7qOibmv57aYJHstxOf7wRXvjCTxuqYXZ7qOq+e2bnQrnYiNWw==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>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</X509Certificate><X509Certificate>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</X509Certificate><X509Certificate>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</X509Certificate></X509Data></KeyInfo><Object Id="ts-countersig"><X509Data><X509Certificate>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</X509Certificate><X509Certificate>MIIHcTCCBVmgAwIBAgITMwAAABXF52ueAptJmQAAAAAAFTANBgkqhkiG9w0BAQsFADCBiDELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEyMDAGA1UEAxMpTWljcm9zb2Z0IFJvb3QgQ2VydGlmaWNhdGUgQXV0aG9yaXR5IDIwMTAwHhcNMjEwOTMwMTgyMjI1WhcNMzAwOTMwMTgzMjI1WjB8MQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMSYwJAYDVQQDEx1NaWNyb3NvZnQgVGltZS1TdGFtcCBQQ0EgMjAxMDCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOThpkzntHIhC3miy9ckeb0O1YLT/e6cBwfSqWxOdcjKNVf2AX9sSuDivbk+F2Az/1xPx2b3lVNxWuJ+Slr+uDZnhUYjDLWNE893MsAQGOhgfWpSg0S3po5GawcU88V29YZQ3MFEyHFcUTE3oAo4bo3t1w/YJlN8OWECesSq/XJprx2rrPY2vjUmZNqYO7oaezOtgFt+jBAcnVL+tuhiJdxqD89d9P6OU8/W7IVWTe/dvI2k45GPsjksUZzpcGkNyjYtcI4xyDUoveO0hyTD4MmPfrVUj9z6BVWYbWg7mka97aSueik3rMvrg0XnRm7KMtXAhjBcTyziYrLNueKNiOSWrAFKu75xqRdbZ2De+JKRHh09/SDPc31BmkZ1zcRfNN0Sidb9pSB9fvzZnkXftnIv231fgLrbqn427DZM9ituqBJR6L8FA6PRc6ZNN3SUHDSCD/AQ8rdHGO2n6Jl8P0zbr17C89XYcz1DTsEzOUyOArxCaC4Q6oRRRuLRvWoYWmEBc8pnol7XKHYC4jMYctenIPDC+hIK12NvDMk2ZItboKaDIV1fMHSRlJTYuVD5C4lh8zYGNRiER9vcG9H9stQcxWv2XFJRXRLbJbqvUAV6bMURHXLvjflSxIUXk8A8FdsaN8cIFRg/eKtFtvUeh17aj54WcmnGrnu3tz5q4i6tAgMBAAGjggHdMIIB2TASBgkrBgEEAYI3FQEEBQIDAQABMCMGCSsGAQQBgjcVAgQWBBQqp1L+ZMSavoKRPEY1Kc8Q/y8E7jAdBgNVHQ4EFgQUn6cVXQBeYl2D9OXSZacbUzUZ6XIwXAYDVR0gBFUwUzBRBgwrBgEEAYI3TIN9AQEwQTA/BggrBgEFBQcCARYzaHR0cDovL3d3dy5taWNyb3NvZnQuY29tL3BraW9wcy9Eb2NzL1JlcG9zaXRvcnkuaHRtMBMGA1UdJQQMMAoGCCsGAQUFBwMIMBkGCSsGAQQBgjcUAgQMHgoAUwB1AGIAQwBBMAsGA1UdDwQEAwIBhjAPBgNVHRMBAf8EBTADAQH/MB8GA1UdIwQYMBaAFNX2VsuP6KJcYmjRPZSQW9fOmhjEMFYGA1UdHwRPME0wS6BJoEeGRWh0dHA6Ly9jcmwubWljcm9zb2Z0LmNvbS9wa2kvY3JsL3Byb2R1Y3RzL01pY1Jvb0NlckF1dF8yMDEwLTA2LTIzLmNybDBaBggrBgEFBQcBAQROMEwwSgYIKwYBBQUHMAKGPmh0dHA6Ly93d3cubWljcm9zb2Z0LmNvbS9wa2kvY2VydHMvTWljUm9vQ2VyQXV0XzIwMTAtMDYtMjMuY3J0MA0GCSqGSIb3DQEBCwUAA4ICAQCdVX38Kq3hLB9nATEkW+Geckv8qW/qXBS2Pk5HZHixBpOXPTEztTnXwnE2P9pkbHzQdTltuw8x5MKP+2zRoZQYIu7pZmc6U03dmLq2HnjYNi6cqYJWAAOwBb6J6Gngugnue99qb74py27YP0h1AdkY3m2CDPVtI1TkeFN1JFe53Z/zjj3G82jfZfakVqr3lbYoVSfQJL1AoL8ZthISEV09J+BAljis9/kpicO8F7BUhUKz/AyeixmJ5/ALaoHCgRlCGVJ1ijbCHcNhcy4sa3tuPywJeBTpkbKpW99Jo3QMvOyRgNI95ko+ZjtPu4b6MhrZlvSP9pEB9s7GdP32THJvEKt1MMU0sHrYUP4KWN1APMdUbZ1jdEgssU5HLcEUBHG/ZPkkvnNtyo4JvbMBV0lUZNlz138eW0QBjloZkWsNn6Qo3GcZKCS6OEuabvshVGtqRRFHqfG3rsjoiV5PndLQTHa1V1QJsWkBRH58oWFsc/4Ku+xBZj1p/cvBQUl+fpO+y/g75LcVv7TOPqUxUYS8vwLBgqJ7Fx0ViY1w/ue10CgaiQuPNtq6TPmb/wrpNPgkNWcr4A245oyZ1uEi6vAnQj0llOZ0dFtq0Z4+7X6gMTN9vMvpe784cETRkPHIqzqKOghif9lwY1NNje6CbaUFEMFxBmoQtB1VM1izoXBm8g==</X509Certificate></X509Data><CounterSignature ts-format="cms-timestamp-message" xmlns="http://schemas.microsoft.com/xmldsig/timestamp/2003">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</CounterSignature></Object></Signature></doc>
