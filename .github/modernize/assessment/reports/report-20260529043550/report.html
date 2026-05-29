@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Assessment - ZavaAuthGateway</title>
+<style>
+:root {
+  --bg-primary: #ffffff;
+  --bg-card: #f8f9fa;
+  --bg-page: #f0f1f3;
+  --text-primary: #24292f;
+  --text-secondary: #57606a;
+  --text-muted: #6b7280;
+  --border-color: #d0d7de;
+  --border-light: #e1e4e8;
+  --link-color: #2563eb;
+  --color-mandatory: #E3008C;
+  --color-potential: #637CEF;
+  --color-optional: #A19F9D;
+  --font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  --font-mono: 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-family); font-size: 13px; color: var(--text-primary); background: var(--bg-primary); line-height: 1.5; margin: 0; padding: 0; }
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Page layout ───────────────────────────────────────────── */
+.main { margin: 0; padding: 24px 32px; background: var(--bg-primary); }
+.back-link { color: var(--text-muted); font-size: 13px; margin-bottom: 16px; display: block; }
+h1 { font-weight: 600; font-size: 20px; color: var(--text-primary); margin-bottom: 20px; }
+
+/* ── Report cards (matches VS Code .vscode-report-card) ──── */
+.report-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 4px; padding: 12px; margin-bottom: 20px; }
+.report-card h2 { font-size: 14px; font-weight: 600; margin: 0; color: var(--text-primary); }
+.report-card-body { margin-top: 16px; }
+
+/* ── Component Information (two-column) ────────────────── */
+.app-info-container { display: flex; gap: 8px; flex-wrap: wrap; }
+.app-info-column { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 8px; }
+.app-info-row { display: flex; align-items: baseline; }
+.app-info-label { width: 136px; flex-shrink: 0; font-weight: 600; color: var(--text-primary); }
+.app-info-value { flex: 1; color: var(--text-primary); }
+
+/* ── Issue Summary (pie charts + legend) ─────────────────── */
+.cards-container { display: flex; align-items: stretch; gap: 20px; flex-wrap: wrap; }
+.issue-summary-card { flex: 2; }
+.domain-summary-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-around; }
+.domain-summary-item { flex: 1; min-width: 120px; text-align: center; padding: 0 16px; border-right: 1px solid var(--border-light); }
+.domain-summary-item:last-child { border-right: none; }
+.domain-summary-item h3 { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-top: 8px; }
+.domain-summary-item .count { font-size: 12px; color: var(--text-secondary); }
+.criticality-legend { display: flex; flex-wrap: wrap; gap: 15px; padding-top: 12px; justify-content: center; }
+.criticality-legend .legend-item { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text-secondary); }
+.legend-swatch { display: inline-block; width: 1em; height: 1em; border-radius: 2px; }
+
+/* ── Issue list tables ───────────────────────────────────── */
+.issue-section { margin-top: 20px; }
+.issue-section h2 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+.issue-table { width: 100%; border-collapse: collapse; table-layout: fixed; min-width: 600px; }
+.issue-table th { text-align: left; text-transform: uppercase; font-weight: 600; font-size: calc(13px * 0.875); padding: 6px 8px; background: var(--bg-card); border-bottom: 1px solid var(--border-color); color: var(--text-secondary); position: sticky; top: 0; z-index: 1; }
+.issue-table td { padding: 12px 8px; border-bottom: 1px solid var(--border-light); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
+.col-issue { width: 55%; }
+.col-criticality { width: 25%; }
+.col-storypoint { width: 20%; }
+
+/* ── Target dropdown ─────────────────────────────────────── */
+.target-select-container { margin: 4px 0 16px 0; display: flex; align-items: center; gap: 8px; }
+.target-select-container label { font-weight: 600; color: var(--text-primary); font-size: 14px; }
+.target-select-container select { font-family: var(--font-family); font-size: 13px; padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-primary); color: var(--text-primary); cursor: pointer; }
+
+/* ── Filter bar ──────────────────────────────────────────── */
+.filter-bar { display: flex; flex-wrap: wrap; gap: 16px; margin: 16px 0 8px 0; align-items: center; }
+.multi-select { position: relative; display: inline-block; min-width: 140px; }
+.multi-select-btn { font-family: var(--font-family); font-size: 13px; padding: 4px 24px 4px 8px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-primary); color: var(--text-primary); cursor: pointer; width: 100%; text-align: left; position: relative; white-space: nowrap; }
+.multi-select-btn::after { content: '\25BE'; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 11px; color: var(--text-secondary); }
+.multi-select-dropdown { display: none; position: absolute; top: 100%; left: 0; min-width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; margin-top: 2px; }
+.multi-select.open .multi-select-dropdown { display: block; }
+.multi-select-option { display: flex; align-items: center; gap: 6px; padding: 5px 10px; cursor: pointer; font-size: 13px; white-space: nowrap; }
+.multi-select-option:hover { background: var(--bg-secondary); }
+.multi-select-option input[type=checkbox] { margin: 0; cursor: pointer; }
+.clear-filters { font-size: 12px; color: var(--link-color); cursor: pointer; margin-left: 4px; }
+
+/* ── Criticality labels (colored square + text) ──────────── */
+.crit-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; white-space: nowrap; }
+.crit-square { display: inline-block; width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+.crit-square-mandatory { background: var(--color-mandatory); }
+.crit-square-potential { background: var(--color-potential); }
+.crit-square-optional { background: var(--color-optional); }
+
+/* ── Expandable rows ─────────────────────────────────────── */
+.expand-btn { background: none; border: none; cursor: pointer; width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 11px; transition: transform 0.15s; padding: 0; vertical-align: middle; flex-shrink: 0; }
+.expand-btn.open { transform: rotate(90deg); }
+.issue-title-cell { display: flex; align-items: center; gap: 4px; }
+.detail-row td { padding: 0; border-bottom: 1px solid var(--border-light); white-space: normal; overflow: visible; text-overflow: clip; }
+.detail-content { display: flex; gap: 0; padding: 8px 8px 8px 32px; min-width: 0; }
+.file-list { flex: 0 0 50%; min-width: 0; overflow: hidden; }
+.file-list table { width: 100%; border-collapse: collapse; }
+.file-list th { font-size: calc(13px * 0.875); text-transform: uppercase; font-weight: 600; color: var(--text-secondary); padding: 6px 8px; border-bottom: 1px solid var(--border-color); text-align: left; height: 32px; }
+.file-list td { font-size: 13px; padding: 6px 8px; border-bottom: 1px solid var(--border-light); color: var(--text-primary); }
+.file-list .file-path { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 300px; display: block; }
+.file-list .position { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
+.explanation-panel { flex: 1; padding-left: 16px; min-width: 0; overflow-wrap: break-word; word-wrap: break-word; }
+.explanation-panel h4 { font-size: calc(13px * 0.875); text-transform: uppercase; font-weight: 600; color: var(--text-secondary); padding: 6px 0; border-bottom: 1px solid var(--border-color); height: 32px; margin: 0; }
+.explanation-panel p { font-size: 13px; padding: 8px 0; color: var(--text-primary); line-height: 1.6; white-space: normal; word-break: break-word; }
+
+/* ── Experimental badge ──────────────────────────────────── */
+.badge-experimental { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; background: #fef9c3; color: #854d0e; vertical-align: middle; margin-left: 8px; cursor: default; }
+
+/* ── Footer ──────────────────────────────────────────────── */
+.footer { text-align: center; margin-top: 24px; color: var(--text-muted); font-size: 13px; }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 800px) {
+  .main { padding: 16px; }
+  .app-info-container { flex-direction: column; }
+  .domain-summary-container { flex-direction: column; }
+  .domain-summary-item { border-right: none; border-bottom: 1px solid var(--border-light); padding-bottom: 12px; }
+  .detail-content { flex-direction: column; }
+  .file-list { flex: none; width: 100%; }
+  .explanation-panel { padding-left: 0; padding-top: 8px; }
+}
+/* ── Tab navigation ──────────────────────────────────────── */
+.tab-nav { display: flex; gap: 0; border-bottom: 1px solid var(--border-color); margin-bottom: 28px; flex-wrap: wrap; }
+.tab-btn { background: none; border: none; border-bottom: 2px solid transparent; padding: 10px 18px; font-size: 13px; font-family: var(--font-family); color: var(--text-secondary); cursor: pointer; margin-bottom: -1px; white-space: nowrap; position: relative; }
+.tab-btn:hover { color: var(--text-primary); }
+.tab-btn.active { color: var(--link-color); border-bottom-color: var(--link-color); font-weight: 600; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── Tooltip on tab ──────────────────────────────────────── */
+.tab-btn[data-tooltip]::after { content: attr(data-tooltip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: #24292f; color: #ffffff; font-size: 12px; font-weight: 400; padding: 6px 10px; border-radius: 4px; white-space: normal; width: max-content; max-width: 260px; text-align: center; pointer-events: none; opacity: 0; transition: opacity 0.15s; z-index: 100; }
+.tab-btn[data-tooltip]:hover::after { opacity: 1; }
+
+/* ── Fact content — prose column ─────────────────────────── */
+.fact-content { max-width: 860px; margin: 0 auto; line-height: 1.75; color: var(--text-primary); font-size: 14px; }
+.fact-content h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px 0; color: var(--text-primary); letter-spacing: -0.01em; }
+.fact-content h1 + p { margin-top: 6px; color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; }
+.fact-content h2 { font-size: 17px; font-weight: 700; margin: 36px 0 12px 0; padding-bottom: 6px; border-bottom: 1px solid var(--border-color); color: var(--text-primary); letter-spacing: -0.01em; }
+.fact-content h3 { font-size: 14px; font-weight: 700; margin: 24px 0 8px 0; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 12px; color: var(--text-secondary); }
+.fact-content p { margin: 10px 0; color: var(--text-primary); }
+.fact-content ul, .fact-content ol { margin: 10px 0 10px 22px; }
+.fact-content li { margin: 5px 0; }
+.fact-content a { color: var(--link-color); }
+.fact-content a:hover { text-decoration: underline; }
+
+/* ── Fact tables ─────────────────────────────────────────── */
+.table-wrap { overflow-x: auto; margin: 16px 0; }
+.fact-content table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 13px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color); }
+.fact-content thead { background: var(--bg-card); }
+.fact-content th { text-align: left; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 14px; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); }
+.fact-content td { padding: 9px 14px; border-bottom: 1px solid var(--border-light); vertical-align: top; color: var(--text-primary); }
+.fact-content tr:last-child td { border-bottom: none; }
+.fact-content tbody tr:hover { background: #f6f8fa; }
+
+/* ── Fact code ───────────────────────────────────────────── */
+.fact-content code { font-family: var(--font-mono); font-size: 12px; background: #f0f1f3; padding: 2px 6px; border-radius: 4px; color: #c7254e; }
+.fact-content pre { background: #f6f8fa; border: 1px solid var(--border-light); border-radius: 6px; padding: 14px 16px; overflow-x: auto; margin: 14px 0; }
+.fact-content pre code { background: none; color: var(--text-primary); padding: 0; border-radius: 0; }
+.fact-content hr { border: none; border-top: 1px solid var(--border-light); margin: 28px 0; }
+.fact-content strong { font-weight: 600; }
+.fact-content em { font-style: italic; }
+.fact-content blockquote { border-left: 3px solid var(--border-color); margin: 12px 0; padding: 4px 16px; color: var(--text-secondary); }
+.fact-unavailable { padding: 32px 0; }
+.fact-unavailable h3 { font-size: 16px; font-weight: 600; color: var(--text-primary); text-transform: none; letter-spacing: 0; margin: 0 0 12px 0; }
+.fact-unavailable p { margin: 0 0 8px 0; color: var(--text-secondary); }
+.fact-unavailable ol, .fact-unavailable ul { margin: 0 0 0 22px; color: var(--text-primary); }
+.fact-unavailable li { margin: 6px 0; }
+
+/* ── Mermaid diagram card ─────────────────────────────────── */
+.mermaid { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 8px; padding: 24px 16px; margin: 20px 0; overflow-x: auto; text-align: center; cursor: pointer; position: relative; }
+.mermaid:hover { border-color: var(--border-color); }
+.mermaid svg { max-width: 100%; height: auto !important; display: inline-block; }
+.mermaid-zoom-hint { position: absolute; top: 8px; right: 10px; font-size: 11px; color: var(--text-muted); opacity: 0; transition: opacity 0.15s; pointer-events: none; }
+.mermaid:hover .mermaid-zoom-hint { opacity: 1; }
+
+/* ── Diagram lightbox ────────────────────────────────────── */
+.diagram-lightbox { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.7); backdrop-filter: blur(2px); align-items: center; justify-content: center; cursor: zoom-out; padding: 48px 32px; }
+.diagram-lightbox.open { display: flex; }
+.diagram-lightbox-inner { background: #ffffff; border-radius: 10px; padding: 32px; width: 88vw; max-height: 88vh; overflow: hidden; cursor: default; box-shadow: 0 24px 64px rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; }
+.diagram-lightbox-inner svg { width: 100% !important; height: auto !important; max-height: 76vh; display: block; }
+.diagram-lightbox-close { position: fixed; top: 20px; right: 24px; background: #ffffff; border: none; border-radius: 50%; width: 36px; height: 36px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-primary); box-shadow: 0 2px 8px rgba(0,0,0,0.2); z-index: 1001; }
+.diagram-lightbox-close:hover { background: var(--bg-card); }
+.diagram-lightbox-hint { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.55); color: #ffffff; font-size: 12px; padding: 6px 14px; border-radius: 20px; pointer-events: none; white-space: nowrap; z-index: 1001; }
+</style>
+<script>
+window.__mermaidPending = [];
+window.__mermaidReady = false;
+window.__renderMermaidIn = function(container) {
+  if (container) { window.__mermaidPending.push(container); }
+};
+</script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({ startOnLoad: false, theme: 'default', flowchart: { useMaxWidth: true }, sequence: { useMaxWidth: true } });
+
+window.__renderMermaidIn = function(container) {
+  var nodes = container ? container.querySelectorAll('.mermaid:not([data-processed])') : [];
+  if (nodes.length > 0) {
+    mermaid.run({ nodes: Array.from(nodes) }).then(function() {
+      nodes.forEach(function(node) {
+        if (!node.querySelector('.mermaid-zoom-hint')) {
+          var hint = document.createElement('span');
+          hint.className = 'mermaid-zoom-hint';
+          hint.textContent = 'Click to expand';
+          node.appendChild(hint);
+        }
+      });
+    });
+  }
+};
+
+var drained = new Set();
+(window.__mermaidPending || []).forEach(function(c) {
+  if (!drained.has(c)) { drained.add(c); window.__renderMermaidIn(c); }
+});
+window.__mermaidPending = [];
+window.__mermaidReady = true;
+
+function renderActivePanels() {
+  document.querySelectorAll('.tab-panel.active').forEach(function(p) {
+    if (!drained.has(p)) { drained.add(p); window.__renderMermaidIn(p); }
+  });
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', renderActivePanels);
+} else {
+  renderActivePanels();
+}
+</script>
+</head><body>
+<div id="diagram-lightbox" class="diagram-lightbox" role="dialog" aria-modal="true">
+  <button class="diagram-lightbox-close" id="diagram-lightbox-close" aria-label="Close">&#x2715;</button>
+  <div class="diagram-lightbox-hint">Scroll to zoom &nbsp;&middot;&nbsp; Drag to pan &nbsp;&middot;&nbsp; Double-click to reset</div>
+  <div class="diagram-lightbox-inner" id="diagram-lightbox-inner"></div>
+</div>
+<div class="main">
+<h1>ZavaAuthGateway</h1>
+<div class="report-card">
+  <h2>Component Information</h2>
+  <div class="report-card-body">
+    <div class="app-info-container">
+      <div class="app-info-column">
+        <div class="app-info-row"><span class="app-info-label">Component Name</span><span class="app-info-value">ZavaAuthGateway</span></div>
+        <div class="app-info-row"><span class="app-info-label">Effort</span><span class="app-info-value" id="effort-display">S (total story points: 12)</span></div>
+      </div>
+      <div class="app-info-column">
+        <div class="app-info-row"><span class="app-info-label">Build Tools</span><span class="app-info-value">MSBuild</span></div>
+        <div class="app-info-row"><span class="app-info-label">Frameworks</span><span class="app-info-value">.NETFramework,Version=v4.8</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="tab-issues" data-tooltip="Issues detected in the source code">Issues</button>
+  <button class="tab-btn" data-tab="tab-arch" data-tooltip="How the app&#x27;s layers connect — from UI to data.">Architecture</button>
+  <button class="tab-btn" data-tab="tab-api" data-tooltip="Endpoints exposed by this app and how services communicate.">API Contracts</button>
+  <button class="tab-btn" data-tab="tab-config" data-tooltip="Environment settings, runtime profiles, and deployment manifests.">Configuration</button>
+  <button class="tab-btn" data-tab="tab-workflows" data-tooltip="Domain entities and the core flows users move through.">Business Workflows</button>
+  <button class="tab-btn" data-tab="tab-deps" data-tooltip="Libraries and frameworks this app depends on, grouped by category.">Dependencies</button>
+  <button class="tab-btn" data-tab="tab-data" data-tooltip="Database schema, entity relationships, and persistence behavior.">Data Model</button>
+</nav>
+<div id="tab-issues" class="tab-panel active">
+<div class="target-select-container">
+  <label for="target-select">Target Compute Service:</label>
+  <select id="target-select" onchange="onTargetChange(this.value)">
+    <option value="AppService.Windows">Azure App Service</option>
+    <option value="AppService.Linux">Azure Kubernetes Service</option>
+    <option value="AKS.Linux">Azure Container Apps</option>
+    <option value="AKS.Windows">Azure App Service Container</option>
+    <option value="ACA">Azure App Service Managed Instance</option>
+  </select>
+</div>
+<div class="report-card">
+  <h2>Issue Summary</h2>
+  <div class="report-card-body">
+    <div class="domain-summary-container" id="donut-container">
+      <div class="domain-summary-item">
+<svg viewBox="0 0 100 100" width="100" height="100" style="display:block;margin:0 auto;transform:rotate(-90deg);">
+  <circle cx="50" cy="50" r="35" fill="none" stroke="var(--color-potential)" stroke-width="15" stroke-dasharray="53.48 219.91" stroke-dashoffset="-0.00"/>
+  <circle cx="50" cy="50" r="35" fill="none" stroke="var(--color-optional)" stroke-width="15" stroke-dasharray="163.43 219.91" stroke-dashoffset="-54.98"/>
+</svg>
+
+        <h3>Cloud Readiness</h3>
+        <div class="count">4 issues</div>
+      </div>
+    </div>
+    <div class="criticality-legend">
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--color-mandatory)"></span>Mandatory</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--color-potential)"></span>Potential</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--color-optional)"></span>Optional</div>
+    </div>
+  </div>
+</div>
+<div class="filter-bar" id="filter-bar">
+  <div class="multi-select" id="criticality-ms">
+    <button class="multi-select-btn" onclick="toggleMultiSelect('criticality-ms')">Criticality</button>
+    <div class="multi-select-dropdown">
+      <label class="multi-select-option"><input type="checkbox" value="potential" onchange="onMultiSelectChange('criticality-ms','Criticality')"/> Potential</label>
+      <label class="multi-select-option"><input type="checkbox" value="optional" onchange="onMultiSelectChange('criticality-ms','Criticality')"/> Optional</label>
+    </div>
+  </div>
+  <a class="clear-filters" href="javascript:void(0)" onclick="clearAllFilters()">Clear all</a>
+</div>
+<div class="issue-section" data-domain="cloud-readiness">
+  <h2>Cloud Readiness</h2>
+  <table class="issue-table">
+    <colgroup><col class="col-issue"/><col class="col-criticality"/><col class="col-storypoint"/></colgroup>
+    <thead><tr><th>Issue Category</th><th>Criticality</th><th>Story Point</th></tr></thead>
+    <tbody>
+    <tr class="issue-row" data-criticality="potential" data-targets='{&quot;AppService.Windows&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;potential&quot;},&quot;AppService.Linux&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;potential&quot;},&quot;AKS.Linux&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;potential&quot;},&quot;AKS.Windows&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;potential&quot;},&quot;ACA&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;potential&quot;},&quot;AppServiceContainer.Linux&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;potential&quot;},&quot;AppServiceContainer.Windows&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;potential&quot;},&quot;AppServiceManagedInstance.Windows&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;potential&quot;}}' data-default-effort="3" data-default-severity="potential" data-rule="Database.0002" onclick="toggleRow('row-cloudreadiness-0', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-0">&#x276F;</button> SQL database connection detected</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-potential"></span>Potential</span></td>
+      <td class="sp-cell">3</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-0" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="workspace/crgarcia12/mnm-ZavaAuthGateway/web.config">workspace/crgarcia12/mnm-ZavaAuthGateway/web.config</span></td><td><span class="position"></span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>SQL database connection detected.</p><p>Ensure the database is available/reachable on Azure.</p><p>If it is not, there are multiple ways you can move your data to Azure:<br/>    1. Migrate to Azure SQL Database.<br/>    2. Consider Azure SQL Managed Instance if you need features that are not available in Azure SQL Database and you don’t want to use a VM.<br/>    3. Migrate your database servers directly to SQL Server on Azure VMs.</p><p>To assess database migration effort, you can use Azure Migrate tool, see the link below.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="optional" data-targets='{&quot;AppService.Windows&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AppService.Linux&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AKS.Linux&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AKS.Windows&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;ACA&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AppServiceContainer.Linux&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AppServiceContainer.Windows&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AppServiceManagedInstance.Windows&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="3" data-default-severity="optional" data-rule="Security.0003" onclick="toggleRow('row-cloudreadiness-1', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-1">&#x276F;</button> Hardcoded sensitive data detected</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-optional"></span>Optional</span></td>
+      <td class="sp-cell">3</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-1" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="workspace/crgarcia12/mnm-ZavaAuthGateway/AuthRepository.cs">workspace/crgarcia12/mnm-ZavaAuthGateway/AuthRepository.cs</span></td><td><span class="position">Line 11</span></td></tr>
+            <tr><td><span class="file-path" title="workspace/crgarcia12/mnm-ZavaAuthGateway/DbConfig.cs">workspace/crgarcia12/mnm-ZavaAuthGateway/DbConfig.cs</span></td><td><span class="position">Line 22</span></td></tr>
+            <tr><td><span class="file-path" title="workspace/crgarcia12/mnm-ZavaAuthGateway/DbConfig.cs">workspace/crgarcia12/mnm-ZavaAuthGateway/DbConfig.cs</span></td><td><span class="position">Line 13</span></td></tr>
+            <tr><td><span class="file-path" title="workspace/crgarcia12/mnm-ZavaAuthGateway/Login.aspx.cs">workspace/crgarcia12/mnm-ZavaAuthGateway/Login.aspx.cs</span></td><td><span class="position">Line 26</span></td></tr>
+            <tr><td><span class="file-path" title="workspace/crgarcia12/mnm-ZavaAuthGateway/Login.aspx.cs">workspace/crgarcia12/mnm-ZavaAuthGateway/Login.aspx.cs</span></td><td><span class="position">Line 33</span></td></tr>
+            <tr><td><span class="file-path" title="workspace/crgarcia12/mnm-ZavaAuthGateway/Login.aspx.cs">workspace/crgarcia12/mnm-ZavaAuthGateway/Login.aspx.cs</span></td><td><span class="position">Line 18</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>Hardcoded sensitive data detected.</p><p>If you are targeting Managed Instance on Azure App Service, externalize secrets to Key Vault/App Configuration; use managed identity instead of passwords or embedded connection strings.</p><p>While if targeting other Azure compute services:</p><p>Avoid placing sensitive data such as passwords, ids, tokens etc., directly in config files and code since it compromises the security of your application.</p><p>Use Azure App Configuration or Azure KeyVault to store secrets.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="optional" data-targets='{&quot;AppService.Windows&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AppService.Linux&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AKS.Linux&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AKS.Windows&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;ACA&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AppServiceContainer.Linux&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AppServiceContainer.Windows&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AppServiceManagedInstance.Windows&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;}}' data-default-effort="3" data-default-severity="optional" data-rule="Database.0003" onclick="toggleRow('row-cloudreadiness-2', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-2">&#x276F;</button> System.Data.SqlClient dependency detected</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-optional"></span>Optional</span></td>
+      <td class="sp-cell">3</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-2" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="workspace/crgarcia12/mnm-ZavaAuthGateway/web.config">workspace/crgarcia12/mnm-ZavaAuthGateway/web.config</span></td><td><span class="position"></span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>System.Data.SqlClient dependency is detected.</p><p>While System.Data.SqlClient will work in Azure, the newer Microsoft.Data.SqlClient package is the primary .NET SQL client moving forward and receiving the latest features. For example, Microsoft.Data.SqlClient easily allows use of Azure Managed Identity from a connection string.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="optional" data-targets='{&quot;AppService.Windows&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AppService.Linux&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AKS.Linux&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AKS.Windows&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;ACA&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AppServiceContainer.Linux&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AppServiceContainer.Windows&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;AppServiceManagedInstance.Windows&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;}}' data-default-effort="3" data-default-severity="optional" data-rule="Security.0002" onclick="toggleRow('row-cloudreadiness-3', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-3">&#x276F;</button> Connection strings without configuration builders detected</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-optional"></span>Optional</span></td>
+      <td class="sp-cell">3</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-3" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="workspace/crgarcia12/mnm-ZavaAuthGateway/web.config">workspace/crgarcia12/mnm-ZavaAuthGateway/web.config</span></td><td><span class="position"></span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>Connection strings without configuration builders detected.  </p><p> Keeping connection strings directly in the app is not the best practice and might introduce security risks, increased maintenance, scalability challenges or compliance standards (such as PCI DSS, GDPR, etc.). </p><p> Instead, it is recommended to use configuration builders to get secrets from secure sources in Azure environment.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</div><!-- #tab-issues -->
+<div id="tab-arch" class="tab-panel">
+  <div class="fact-content"><h1 id="architecture-diagram">Architecture Diagram</h1>
+<p>ZavaAuthGateway is an ASP.NET Web Forms application (.NET Framework 4.8) that provides centralized authentication and session management for the ZavaBank platform, exposing both browser-based login flows and REST-style HTTP handler endpoints for token validation.</p>
+<h2 id="application-architecture">Application Architecture</h2>
+<div class="mermaid">
+flowchart TD
+    subgraph Client["Client Layer"]
+        Browser["Web Browser"]
+        APIClient["API Client / Java Services"]
+    end
+    subgraph App["Application Layer - ASP.NET Web Forms (.NET Framework 4.8)"]
+        LoginPage["Login.aspx (Login UI)"]
+        LogoutPage["Logout.aspx (Logout UI)"]
+        DefaultPage["Default.aspx (Landing Page)"]
+        ApiValidate["ApiAuthValidate.ashx (Token Validation API)"]
+        WhoAmI["WhoAmI.ashx (Identity API)"]
+        Health["Health.ashx (Health Check)"]
+        FormsAuth["ASP.NET Forms Authentication"]
+    end
+    subgraph DataAccess["Data Access Layer"]
+        AuthRepo["AuthRepository (ADO.NET)"]
+        DbConfig["DbConfig (Connection Factory)"]
+    end
+    subgraph Storage["Data Storage"]
+        SQL[("SQL Server - ZavaBankDB")]
+    end
+
+    Browser -->|"HTTPS - login form"| LoginPage
+    Browser -->|"HTTPS - logout"| LogoutPage
+    Browser -->|"HTTPS - landing"| DefaultPage
+    APIClient -->|"GET api/auth/validate?token="| ApiValidate
+    APIClient -->|"GET WhoAmI.ashx"| WhoAmI
+    APIClient -->|"GET health"| Health
+    LoginPage -->|"authenticate"| FormsAuth
+    LogoutPage -->|"sign out"| FormsAuth
+    DefaultPage -->|"check identity"| FormsAuth
+    WhoAmI -->|"decrypt cookie"| FormsAuth
+    LoginPage -->|"lookup user"| AuthRepo
+    ApiValidate -->|"validate session token"| AuthRepo
+    WhoAmI -->|"lookup user and roles"| AuthRepo
+    LogoutPage -->|"deactivate token"| AuthRepo
+    AuthRepo -->|"build connection string"| DbConfig
+    AuthRepo -->|"SQL queries"| SQL
+</div>
+<h3 id="technology-stack-summary">Technology Stack Summary</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Layer</th><th>Technology</th><th>Version</th><th>Purpose</th>
+</tr></thead><tbody>
+<tr><td>Presentation</td><td>ASP.NET Web Forms</td><td>.NET Framework 4.8</td><td>Browser-based login/logout UI pages</td></tr>
+<tr><td>API Endpoints</td><td>ASP.NET IHttpHandler</td><td>.NET Framework 4.8</td><td>REST-style handlers for token validation and identity</td></tr>
+<tr><td>Authentication</td><td>ASP.NET Forms Authentication</td><td>.NET Framework 4.8</td><td>Cookie-based session management (.ZAVAAUTH cookie)</td></tr>
+<tr><td>Data Access</td><td>ADO.NET (System.Data.SqlClient)</td><td>.NET Framework 4.8</td><td>Direct SQL queries against SQL Server</td></tr>
+<tr><td>Data Storage</td><td>SQL Server</td><td>2019+ (Docker)</td><td>User accounts, roles, and session tokens</td></tr>
+<tr><td>Runtime</td><td>.NET Framework</td><td>4.8</td><td>Application runtime</td></tr>
+<tr><td>Container</td><td>Docker</td><td>-</td><td>Containerized deployment</td></tr>
+</tbody></table></div>
+<h3 id="data-storage-external-services">Data Storage & External Services</h3>
+<p>The application relies on a single SQL Server database (<code>ZavaBankDB</code>) which stores user accounts (<code>Users</code>), role assignments (<code>Roles</code>, <code>UserRoles</code>), and active session tokens (<code>SessionTokens</code>). The connection string is resolved at runtime from environment variables (<code>DB_HOST</code>, <code>DB_PORT</code>, <code>DB_NAME</code>, <code>DB_USER</code>, <code>DB_PASSWORD</code>), with a fallback to the <code>web.config</code> <code>connectionStrings</code> section. No external caches, message brokers, or third-party API integrations are present.</p>
+<h3 id="key-architectural-decisions">Key Architectural Decisions</h3>
+<ul>
+<li><strong>Direct ADO.NET with raw SQL</strong>: The application bypasses ORM frameworks and uses <code>SqlConnection</code>/<code>SqlCommand</code> directly, with parameterized queries for data access.</li>
+<li><strong>Forms Authentication for cross-ecosystem SSO</strong>: The <code>.ZAVAAUTH</code> cookie carries an encrypted <code>FormsAuthenticationTicket</code> whose <code>UserData</code> field holds a raw GUID session token, allowing Java services (which cannot decrypt the cookie) to pass the token via query string to <code>api/auth/validate</code>.</li>
+<li><strong>SHA-1 salted password hashing</strong>: Passwords are verified by computing <code>SHA1(salt + password)</code> and comparing against the stored <code>PasswordHash</code>.</li>
+</ul>
+<h2 id="component-relationships">Component Relationships</h2>
+<div class="mermaid">
+flowchart LR
+    subgraph Presentation["Presentation"]
+        LoginPage["Login.aspx"]
+        LogoutPage["Logout.aspx"]
+        DefaultPage["Default.aspx"]
+    end
+    subgraph Handlers["HTTP Handlers"]
+        ApiValidate["ApiAuthValidateHandler"]
+        WhoAmI["WhoAmIHandler"]
+        Health["HealthHandler"]
+    end
+    subgraph Auth["Authentication Infrastructure"]
+        FormsAuth["FormsAuthentication"]
+    end
+    subgraph DataAccess["Data Access"]
+        AuthRepo["AuthRepository"]
+        DbConfig["DbConfig"]
+        AuthUser["AuthUser (Entity)"]
+        SessionResult["SessionValidationResult (Entity)"]
+    end
+
+    LoginPage -->|"GetUserByUsername, CreateSessionToken, UpdateLastLogin"| AuthRepo
+    LoginPage -->|"Encrypt + set cookie"| FormsAuth
+    LogoutPage -->|"DeactivateSessionToken"| AuthRepo
+    LogoutPage -->|"SignOut"| FormsAuth
+    DefaultPage -->|"check IsAuthenticated"| FormsAuth
+    ApiValidate -->|"ValidateSessionToken"| AuthRepo
+    WhoAmI -->|"Decrypt cookie"| FormsAuth
+    WhoAmI -->|"GetUserByUsername, GetUserRoles"| AuthRepo
+    AuthRepo -->|"GetConnectionString"| DbConfig
+    AuthRepo -->|"returns"| AuthUser
+    AuthRepo -->|"returns"| SessionResult
+</div>
+<h3 id="component-inventory">Component Inventory</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Component</th><th>Layer</th><th>Type</th><th>Responsibility</th>
+</tr></thead><tbody>
+<tr><td>Login.aspx / Login.aspx.cs</td><td>Presentation</td><td>Web Forms Page</td><td>Renders login form; validates credentials; creates session token; sets Forms Auth cookie</td></tr>
+<tr><td>Logout.aspx / Logout.aspx.cs</td><td>Presentation</td><td>Web Forms Page</td><td>Deactivates session token in DB; clears Forms Auth cookie; redirects to login</td></tr>
+<tr><td>Default.aspx / Default.aspx.cs</td><td>Presentation</td><td>Web Forms Page</td><td>Post-login landing page; redirects unauthenticated users to login</td></tr>
+<tr><td>ApiAuthValidateHandler</td><td>HTTP Handlers</td><td>IHttpHandler</td><td>Validates a session token (via query string or header) against the database; returns JSON result</td></tr>
+<tr><td>WhoAmIHandler</td><td>HTTP Handlers</td><td>IHttpHandler</td><td>Decrypts the .ZAVAAUTH cookie and returns user identity, display name, roles, and session token as JSON</td></tr>
+<tr><td>HealthHandler</td><td>HTTP Handlers</td><td>IHttpHandler</td><td>Returns plain-text "OK" for liveness checks</td></tr>
+<tr><td>AuthRepository</td><td>Data Access</td><td>Repository</td><td>Encapsulates all SQL Server interactions: user lookup, role fetch, session token CRUD, last-login update</td></tr>
+<tr><td>DbConfig</td><td>Data Access</td><td>Configuration Utility</td><td>Builds the SQL Server connection string from environment variables or web.config fallback</td></tr>
+<tr><td>AuthUser</td><td>Data Access</td><td>Entity / DTO</td><td>Represents a user record returned from the database</td></tr>
+<tr><td>SessionValidationResult</td><td>Data Access</td><td>Entity / DTO</td><td>Represents a validated session token result with user identity and expiry</td></tr>
+</tbody></table></div></div>
+</div>
+<div id="tab-api" class="tab-panel">
+  <div class="fact-content"><h1 id="api-service-communication-contracts">API & Service Communication Contracts</h1>
+<p>ZavaAuthGateway exposes four HTTP endpoints — two ASP.NET Web Forms pages (browser login/logout) and two ASHX HTTP handlers (token validation and identity) — all running as a single self-contained service with no inter-service communication.</p>
+<h2 id="service-catalog">Service Catalog</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service</th><th>Port</th><th>Category</th><th>Purpose</th>
+</tr></thead><tbody>
+<tr><td>ZavaAuthGateway</td><td>8080 (Docker / xsp4)</td><td>API Layer</td><td>Centralized authentication gateway; handles browser-based login/logout and provides REST-style token validation and identity endpoints for downstream services</td></tr>
+</tbody></table></div>
+<h2 id="api-endpoints-inventory">API Endpoints Inventory</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service</th><th>Method</th><th>Path</th><th>Request</th><th>Response</th>
+</tr></thead><tbody>
+<tr><td>ZavaAuthGateway</td><td>GET/POST</td><td><code>/Login.aspx</code></td><td>Form fields: <code>txtUsername</code>, <code>txtPassword</code> (HTML form POST)</td><td>HTML page; sets <code>.ZAVAAUTH</code> cookie on success, redirects to <code>Default.aspx</code></td></tr>
+<tr><td>ZavaAuthGateway</td><td>GET</td><td><code>/Logout.aspx</code></td><td><code>.ZAVAAUTH</code> cookie (browser)</td><td>Clears cookie; redirects to <code>Login.aspx?loggedOut=1</code></td></tr>
+<tr><td>ZavaAuthGateway</td><td>GET</td><td><code>/Default.aspx</code></td><td><code>.ZAVAAUTH</code> cookie (browser)</td><td>HTML landing page; redirects unauthenticated users to <code>Login.aspx</code></td></tr>
+<tr><td>ZavaAuthGateway</td><td>GET</td><td><code>/api/auth/validate</code></td><td>Query param <code>token</code> or header <code>X-Session-Token</code></td><td>JSON: <code>{"valid":true,"userId":N,"username":"...","expiresAt":"..."}</code> or <code>{"valid":false}</code></td></tr>
+<tr><td>ZavaAuthGateway</td><td>GET</td><td><code>/WhoAmI.ashx</code></td><td><code>.ZAVAAUTH</code> cookie</td><td>JSON: <code>{"authenticated":true,"username":"...","displayName":"...","sessionToken":"...","roles":[...]}</code> or <code>{"authenticated":false}</code></td></tr>
+<tr><td>ZavaAuthGateway</td><td>GET</td><td><code>/health</code></td><td>—</td><td>Plain text <code>OK</code> (200)</td></tr>
+</tbody></table></div>
+<h2 id="management-observability-endpoints">Management & Observability Endpoints</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service</th><th>Endpoint</th><th>Notes</th>
+</tr></thead><tbody>
+<tr><td>ZavaAuthGateway</td><td><code>GET /health</code></td><td>Custom liveness endpoint; returns plain-text <code>OK</code> — no dependency checks, no JSON, no framework health-check integration</td></tr>
+</tbody></table></div>
+<p>No metrics exporters, tracing instrumentation, or Swagger/OpenAPI specifications are configured.</p>
+<h2 id="dtos-contracts">DTOs & Contracts</h2>
+<p>The application uses two internal sealed classes as service-level data models — they are not serialized over the wire but serve as internal contracts between the data access layer and the HTTP handlers:</p>
+<ul>
+<li><strong><code>AuthUser</code></strong> — represents a user record returned by <code>AuthRepository.GetUserByUsername</code>; used as an internal request/response type within the application (never directly JSON-serialized)</li>
+<li><strong><code>SessionValidationResult</code></strong> — represents a validated session token record with user identity and expiry; returned by <code>AuthRepository.ValidateSessionToken</code> and used by <code>ApiAuthValidateHandler</code> to build its JSON response</li>
+</ul>
+<p>All JSON responses are manually constructed via string concatenation with <code>HttpUtility.JavaScriptStringEncode</code> for escaping — there is no JSON serialization library (no <code>System.Text.Json</code>, no <code>Newtonsoft.Json</code>, no Jackson). There are no OpenAPI/Swagger specifications, protobuf schemas, or GraphQL schemas.</p>
+<h2 id="communication-patterns">Communication Patterns</h2>
+<p><strong>Synchronous only.</strong> The application makes no outbound HTTP calls and uses no message brokers, queues, or event-driven patterns. All communication is synchronous and intra-process: HTTP handlers interact directly with <code>AuthRepository</code>, which issues blocking ADO.NET calls to SQL Server.</p>
+<p><strong>Service discovery:</strong> None. The SQL Server connection is resolved from environment variables (<code>DB_HOST</code>, <code>DB_PORT</code>, <code>DB_NAME</code>, <code>DB_USER</code>, <code>DB_PASSWORD</code>) or from <code>web.config</code> <code>connectionStrings</code>. No service registry is used.</p>
+<p><strong>Resilience policies:</strong> None. There are no retry policies, circuit breakers, timeouts, or bulkhead patterns configured. A SQL Server connectivity failure will propagate as an unhandled exception.</p>
+<p><strong>Startup dependency chain:</strong> The application container must be able to reach SQL Server before accepting traffic; no readiness probes or startup wait mechanisms are configured.</p>
+<p><strong>Security posture:</strong></p>
+<ul>
+<li><strong>Authentication:</strong> Browser flows use ASP.NET Forms Authentication (<code>.ZAVAAUTH</code> encrypted cookie). The <code>/api/auth/validate</code> endpoint accepts a raw session token via query string or <code>X-Session-Token</code> header and validates it against <code>SessionTokens</code> in the database. The <code>/WhoAmI.ashx</code> endpoint validates the <code>.ZAVAAUTH</code> Forms Auth cookie.</li>
+<li><strong>Authorization:</strong> <code>web.config</code> denies anonymous users by default (<code><deny users="?" /></code>); individual paths (<code>Login.aspx</code>, <code>Logout.aspx</code>, <code>api/auth/validate</code>, <code>health</code>, <code>WhoAmI.ashx</code>) are explicitly opened to all users.</li>
+<li><strong>Transport security (TLS):</strong> No TLS termination is configured at the application level. The Docker container listens on plain HTTP port 8080; TLS would need to be provided by a reverse proxy or load balancer in front.</li>
+<li><strong>No HTTPS enforcement, CORS policy, CSRF protection, or rate limiting is configured.</strong> The <code>WhoAmIHandler</code> adds <code>Access-Control-Allow-Origin: *</code>, permitting cross-origin requests from any origin.</li>
+</ul>
+<h2 id="service-technology-matrix">Service Technology Matrix</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service</th><th>Web Framework</th><th>Data Access</th><th>Discovery</th><th>Gateway</th><th>Health Check</th><th>Cache</th><th>Metrics</th>
+</tr></thead><tbody>
+<tr><td>ZavaAuthGateway</td><td>ASP.NET Web Forms + IHttpHandler (.NET Fx 4.8)</td><td>ADO.NET (SqlClient)</td><td>None — env vars</td><td>None</td><td>Custom <code>/health</code> (plain text)</td><td>None</td><td>None</td></tr>
+</tbody></table></div>
+<h2 id="service-communication-sequence">Service Communication Sequence</h2>
+<div class="mermaid">
+sequenceDiagram
+    participant Browser as "Web Browser"
+    participant APIClient as "API Client / Java Service"
+    participant Login as "Login.aspx"
+    participant Validate as "api/auth/validate"
+    participant WhoAmI as "WhoAmI.ashx"
+    participant Repo as "AuthRepository"
+    participant DB as "SQL Server (ZavaBankDB)"
+
+    Note over Browser,DB: Browser Login Flow
+    Browser->>Login: POST /Login.aspx (username, password)
+    Login->>Repo: GetUserByUsername(username)
+    Repo->>DB: SELECT Users WHERE Username=?
+    DB-->>Repo: AuthUser row
+    Repo-->>Login: AuthUser
+    Login->>Login: SHA1(salt+password) vs PasswordHash
+    alt Valid credentials
+        Login->>Repo: CreateSessionToken(userId, guid, ip, ua)
+        Repo->>DB: INSERT SessionTokens
+        Login->>Repo: UpdateLastLogin(userId)
+        Repo->>DB: UPDATE Users SET LastLoginDate
+        Login-->>Browser: 302 + Set-Cookie .ZAVAAUTH (encrypted ticket)
+    else Invalid credentials
+        Login-->>Browser: 200 HTML with error message
+    end
+
+    Note over APIClient,DB: Token Validation Flow
+    APIClient->>Validate: GET /api/auth/validate?token=GUID
+    Validate->>Repo: ValidateSessionToken(token)
+    Repo->>DB: SELECT SessionTokens JOIN Users WHERE Token=? AND IsActive=1
+    alt Token valid and not expired
+        DB-->>Repo: userId, username, expiresAt
+        Repo-->>Validate: SessionValidationResult
+        Validate-->>APIClient: 200 {"valid":true,"userId":N,"username":"...","expiresAt":"..."}
+    else Token invalid or expired
+        DB-->>Repo: no rows
+        Repo-->>Validate: null
+        Validate-->>APIClient: 200 {"valid":false}
+    end
+
+    Note over Browser,DB: WhoAmI Flow
+    Browser->>WhoAmI: GET /WhoAmI.ashx (Cookie .ZAVAAUTH)
+    WhoAmI->>WhoAmI: FormsAuthentication.Decrypt(cookie)
+    alt Cookie valid and not expired
+        WhoAmI->>Repo: GetUserByUsername(ticket.Name)
+        Repo->>DB: SELECT Users WHERE Username=?
+        DB-->>Repo: AuthUser
+        WhoAmI->>Repo: GetUserRoles(userId)
+        Repo->>DB: SELECT Roles JOIN UserRoles WHERE UserID=?
+        DB-->>Repo: role list
+        WhoAmI-->>Browser: 200 {"authenticated":true,"username":"...","roles":[...]}
+    else Cookie missing or expired
+        WhoAmI-->>Browser: 200 {"authenticated":false}
+    end
+</div></div>
+</div>
+<div id="tab-config" class="tab-panel">
+  <div class="fact-content"><h1 id="configuration-externalized-settings-inventory">Configuration & Externalized Settings Inventory</h1>
+<p>ZavaAuthGateway uses two configuration sources — <code>web.config</code> (static XML) and OS environment variables — with no runtime profile system, no secret store integration, and no feature flag framework.</p>
+<h2 id="configuration-sources">Configuration Sources</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Source</th><th>Type</th><th>Path/Location</th><th>Notes</th>
+</tr></thead><tbody>
+<tr><td><code>web.config</code></td><td>Static XML (ASP.NET)</td><td><code>/web.config</code></td><td>Primary config file; contains connection string, Forms Authentication settings, machine key, HTTP handler registrations, and authorization rules</td></tr>
+<tr><td>Environment variables</td><td>OS/container env</td><td>Runtime (Docker <code>ENV</code> or host)</td><td><code>DB_HOST</code>, <code>DB_PORT</code>, <code>DB_NAME</code>, <code>DB_USER</code>, <code>DB_PASSWORD</code>; override the <code>web.config</code> connection string when all five are present</td></tr>
+<tr><td><code>ZavaAuthGateway.csproj</code></td><td>MSBuild project file</td><td><code>/ZavaAuthGateway.csproj</code></td><td>Declares referenced assemblies and target framework (v4.8); no conditional build properties</td></tr>
+<tr><td><code>packages.config</code></td><td>NuGet package manifest</td><td><code>/packages.config</code></td><td>Empty — no third-party packages</td></tr>
+<tr><td><code>Dockerfile</code></td><td>Container build definition</td><td><code>/Dockerfile</code></td><td>Builds with Mono 6.12 / mcs; exposes port 8080; no build-arg or ENV declarations</td></tr>
+</tbody></table></div>
+<p>No Spring Cloud Config, Azure App Configuration, AWS AppConfig, Consul, HashiCorp Vault, or Azure KeyVault references detected.</p>
+<h2 id="build-profiles">Build Profiles</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Profile</th><th>Activation</th><th>Purpose</th><th>Key Dependencies/Plugins</th>
+</tr></thead><tbody>
+<tr><td>Debug</td><td>Default MSBuild configuration</td><td>Development build with debug symbols (<code><compilation debug="true"></code>)</td><td>Standard .NET Framework BCL assemblies</td></tr>
+<tr><td>Release</td><td>Manual (<code>/p:Configuration=Release</code>)</td><td>Production-optimized build</td><td>Same assembly set; no conditional NuGet packages</td></tr>
+<tr><td>Docker (Mono)</td><td><code>docker build</code></td><td>Builds and runs on Mono 6.12 via <code>mcs</code> compiler</td><td><code>mono:6.12</code> base image, <code>mono-xsp4</code> web server</td></tr>
+</tbody></table></div>
+<p>No Maven/Gradle build profiles. No webpack/vite configurations. No conditional compilation symbols defined in the project file.</p>
+<h2 id="runtime-profiles">Runtime Profiles</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Profile</th><th>Activation Method</th><th>Config Files</th><th>Key Overrides</th>
+</tr></thead><tbody>
+<tr><td>Default (all environments)</td><td>Single configuration — no profile switching</td><td><code>web.config</code></td><td>Connection string overridden via env vars at runtime</td></tr>
+</tbody></table></div>
+<p>No <code>appsettings.{Environment}.json</code>, no Spring profile-specific files, no <code>ASPNETCORE_ENVIRONMENT</code>, no <code>.env</code> variants. The application has a single runtime configuration with environment variables providing the only runtime override mechanism.</p>
+<h2 id="properties-inventory">Properties Inventory</h2>
+<h3 id="zavaauthgateway">ZavaAuthGateway</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Property Key</th><th>Default (web.config)</th><th>Profile</th><th>Source</th>
+</tr></thead><tbody>
+<tr><td><code>connectionStrings["ZavaBankDb"]</code></td><td><code>Server=sqlserver,1433;Database=ZavaBankDB;User Id=sa;<strong><em></strong></em>;TrustServerCertificate=true;</code></td><td>All</td><td><code>web.config</code></td></tr>
+<tr><td><code>DB_HOST</code></td><td>_(not set)_</td><td>All</td><td>Environment variable</td></tr>
+<tr><td><code>DB_PORT</code></td><td>_(not set)_</td><td>All</td><td>Environment variable</td></tr>
+<tr><td><code>DB_NAME</code></td><td>_(not set)_</td><td>All</td><td>Environment variable</td></tr>
+<tr><td><code>DB_USER</code></td><td>_(not set)_</td><td>All</td><td>Environment variable</td></tr>
+<tr><td><code>DB_PASSWORD</code></td><td>_(not set)_</td><td>All</td><td>Environment variable</td></tr>
+<tr><td><code>system.web/compilation[@debug]</code></td><td><code>true</code></td><td>All</td><td><code>web.config</code></td></tr>
+<tr><td><code>system.web/compilation[@targetFramework]</code></td><td><code>4.8</code></td><td>All</td><td><code>web.config</code></td></tr>
+<tr><td><code>system.web/httpRuntime[@targetFramework]</code></td><td><code>4.8</code></td><td>All</td><td><code>web.config</code></td></tr>
+<tr><td><code>system.web/customErrors[@mode]</code></td><td><code>Off</code></td><td>All</td><td><code>web.config</code></td></tr>
+<tr><td><code>system.web/authentication[@mode]</code></td><td><code>Forms</code></td><td>All</td><td><code>web.config</code></td></tr>
+<tr><td><code>forms[@loginUrl]</code></td><td><code>~/Login.aspx</code></td><td>All</td><td><code>web.config</code></td></tr>
+<tr><td><code>forms[@timeout]</code></td><td><code>30</code> (minutes)</td><td>All</td><td><code>web.config</code></td></tr>
+<tr><td><code>forms[@name]</code></td><td><code>.ZAVAAUTH</code></td><td>All</td><td><code>web.config</code></td></tr>
+<tr><td><code>forms[@protection]</code></td><td><code>All</code></td><td>All</td><td><code>web.config</code></td></tr>
+<tr><td><code>forms[@slidingExpiration]</code></td><td><code>true</code></td><td>All</td><td><code>web.config</code></td></tr>
+<tr><td><code>forms[@path]</code></td><td><code>/</code></td><td>All</td><td><code>web.config</code></td></tr>
+<tr><td><code>machineKey[@validationKey]</code></td><td><code>CB2721ABDAF8E9DC516D621D8B8BF13A2C9E8689A25303BF</code></td><td>All</td><td><code>web.config</code> — <strong>hardcoded; see Secrets section</strong></td></tr>
+<tr><td><code>machineKey[@decryptionKey]</code></td><td><code>E9D2490BD0075B51D1BA5288514514AF</code></td><td>All</td><td><code>web.config</code> — <strong>hardcoded; see Secrets section</strong></td></tr>
+<tr><td><code>machineKey[@validation]</code></td><td><code>SHA1</code></td><td>All</td><td><code>web.config</code></td></tr>
+<tr><td><code>machineKey[@decryption]</code></td><td><code>AES</code></td><td>All</td><td><code>web.config</code></td></tr>
+<tr><td><code>system.web/authorization</code> (default)</td><td><code><deny users="?"></code></td><td>All</td><td><code>web.config</code></td></tr>
+<tr><td>XSP4 port</td><td><code>8080</code></td><td>All</td><td><code>CMD</code> in <code>Dockerfile</code></td></tr>
+<tr><td>XSP4 address</td><td><code>0.0.0.0</code></td><td>All</td><td><code>CMD</code> in <code>Dockerfile</code></td></tr>
+</tbody></table></div>
+<h2 id="startup-parameters-resource-requirements">Startup Parameters & Resource Requirements</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service</th><th>Runtime Options</th><th>Memory Limit</th><th>Instance Count</th>
+</tr></thead><tbody>
+<tr><td>ZavaAuthGateway</td><td><code>xsp4 --port 8080 --address 0.0.0.0 --nonstop</code> (Mono 6.12)</td><td>Not specified (no Docker <code>--memory</code>, no K8s <code>resources.limits</code>)</td><td>Not specified</td></tr>
+</tbody></table></div>
+<p>No JVM heap settings (Java not used). No <code>ASPNETCORE_ENVIRONMENT</code>. No resource limits declared in <code>Dockerfile</code> or any orchestration file.</p>
+<h2 id="startup-dependency-chain">Startup Dependency Chain</h2>
+<ol>
+<li><strong>SQL Server</strong> must be reachable before the application can serve authenticated requests.</li>
+</ol>
+<ul>
+<li>No <code>depends_on</code>, <code>dockerize</code>, Kubernetes readiness probe, or startup retry mechanism is configured.</li>
+<li>If SQL Server is unavailable at startup, the application will start successfully but every data-access operation will fail with a <code>SqlException</code> at runtime.</li>
+</ul>
+<p>No Docker Compose file is present. No Kubernetes manifests detected.</p>
+<h2 id="secrets-sensitive-configuration">Secrets & Sensitive Configuration</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Secret Reference</th><th>Type</th><th>Current Storage</th>
+</tr></thead><tbody>
+<tr><td><code>connectionStrings["ZavaBankDb"]</code> → `<strong><em></strong></em></td><td>Database password</td><td><strong>Hardcoded plaintext in <code>web.config</code></strong></td></tr>
+<tr><td><code>machineKey[@validationKey]</code> = <code>CB2721ABDAF8E9DC516D621D8B8BF13A2C9E8689A25303BF</code></td><td>Forms Auth HMAC key</td><td><strong>Hardcoded plaintext in <code>web.config</code></strong></td></tr>
+<tr><td><code>machineKey[@decryptionKey]</code> = <code>E9D2490BD0075B51D1BA5288514514AF</code></td><td>Forms Auth AES encryption key</td><td><strong>Hardcoded plaintext in <code>web.config</code></strong></td></tr>
+<tr><td><code>DB_PASSWORD</code></td><td>Database password</td><td>Environment variable (not set by default; expected to be injected by container orchestrator or host)</td></tr>
+</tbody></table></div>
+<h3 id="secrets-provisioning-workflow">Secrets Provisioning Workflow</h3>
+<p>There is no integrated secrets provisioning workflow. Secrets are currently handled in two ways:</p>
+<ol>
+<li><strong>Hardcoded in <code>web.config</code></strong> (development/default): The SQL Server password and the Forms Authentication machine key are committed directly in <code>web.config</code>. These values are exposed in source control and must be rotated.</li>
+<li><strong>Environment variables</strong> (intended production path): <code>DbConfig</code> checks for all five <code>DB_*</code> environment variables at connection-string build time. If all are present, they supersede the <code>web.config</code> value. No framework (KeyVault, Vault, AWS Secrets Manager) bridges these env vars — they must be injected externally by the container runtime, CI/CD pipeline, or host OS.</li>
+</ol>
+<p>The <code>machineKey</code> has no environment-variable override mechanism; it can only be changed by editing <code>web.config</code>. For production deployments it should be managed via a secrets store and injected at deploy time, not committed to the repository.</p>
+<h2 id="feature-flags">Feature Flags</h2>
+<p>No feature flag framework is configured. No <code>@ConditionalOnProperty</code>, <code>IFeatureManager</code>, LaunchDarkly, Unleash, or custom toggle logic detected.</p>
+<h2 id="framework-runtime-versions">Framework & Runtime Versions</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Component</th><th>Version</th><th>Source</th>
+</tr></thead><tbody>
+<tr><td>Target Framework</td><td>.NET Framework 4.8</td><td><code>ZavaAuthGateway.csproj</code> <code><TargetFrameworkVersion>v4.8</TargetFrameworkVersion></code></td></tr>
+<tr><td>ASP.NET Web Forms</td><td>4.8 (bundled with .NET Fx)</td><td><code>web.config</code> <code>targetFramework="4.8"</code></td></tr>
+<tr><td>ASP.NET Forms Authentication</td><td>4.8 (bundled)</td><td><code>web.config</code> <code><authentication mode="Forms"></code></td></tr>
+<tr><td>ADO.NET / System.Data.SqlClient</td><td>4.8 (bundled)</td><td><code>ZavaAuthGateway.csproj</code> <code><Reference Include="System.Data" /></code></td></tr>
+<tr><td>Mono</td><td>6.12</td><td><code>Dockerfile</code> <code>FROM mono:6.12</code></td></tr>
+<tr><td>XSP4 (Mono web server)</td><td>Bundled with Mono 6.12</td><td><code>Dockerfile</code> <code>apt-get install -y mono-xsp4</code></td></tr>
+<tr><td>mcs (Mono C# compiler)</td><td>Bundled with Mono 6.12</td><td><code>Dockerfile</code> <code>RUN mcs ...</code></td></tr>
+<tr><td>Docker base image</td><td><code>mono:6.12</code> (Debian Buster)</td><td><code>Dockerfile</code></td></tr>
+<tr><td>NuGet packages</td><td>None</td><td><code>packages.config</code> (empty)</td></tr>
+</tbody></table></div></div>
+</div>
+<div id="tab-workflows" class="tab-panel">
+  <div class="fact-content"><h1 id="core-business-workflows">Core Business Workflows</h1>
+<p>ZavaAuthGateway is the centralized identity and session management service for the ZavaBank platform, responsible for authenticating users, issuing session tokens, validating those tokens on behalf of downstream services, and providing identity information for cross-ecosystem single sign-on.</p>
+<h2 id="domain-entities">Domain Entities</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Entity</th><th>Service / Bounded Context</th><th>Description</th><th>Key Relationships</th>
+</tr></thead><tbody>
+<tr><td>User</td><td>Identity Management</td><td>A registered bank system user with credentials, account status (active/locked), and personal name</td><td>Has many Roles (via UserRoles); has many SessionTokens</td></tr>
+<tr><td>Role</td><td>Authorization</td><td>A named permission group assigned to users (e.g., <code>Admin</code>, <code>Teller</code>, <code>Customer</code>)</td><td>Assigned to many Users via UserRoles</td></tr>
+<tr><td>UserRole</td><td>Authorization</td><td>Join entity recording a user's role membership</td><td>Links User to Role</td></tr>
+<tr><td>SessionToken</td><td>Session Management</td><td>An active login session represented by a GUID token with expiry, source system, client IP, and user agent</td><td>Belongs to one User; created on login, deactivated on logout</td></tr>
+</tbody></table></div>
+<h2 id="service-to-domain-mapping">Service-to-Domain Mapping</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service</th><th>Domain Context</th><th>Owned Entities</th><th>External Dependencies</th>
+</tr></thead><tbody>
+<tr><td>ZavaAuthGateway</td><td>Identity & Session Management</td><td>User, Role, UserRole, SessionToken</td><td>SQL Server (ZavaBankDB); no upstream services consumed</td></tr>
+</tbody></table></div>
+<p>ZavaAuthGateway is a single-service bounded context. It does not consume any downstream or peer services. All other ZavaBank services (including Java applications) consume ZavaAuthGateway's endpoints to validate identity.</p>
+<h2 id="primary-workflows">Primary Workflows</h2>
+<h3 id="workflow-1-user-login">Workflow 1: User Login</h3>
+<p>A user submits credentials through the browser-based login form. The gateway looks up the user record, verifies the salted SHA-1 password hash, creates a session token, records the login timestamp, and issues an encrypted Forms Authentication cookie containing the session token in its payload. On success the browser is redirected to the landing page.</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li>User submits <code>txtUsername</code> and <code>txtPassword</code> via POST to <code>Login.aspx</code>.</li>
+<li>Input is validated: both fields must be non-empty.</li>
+<li><code>AuthRepository.GetUserByUsername</code> fetches the user record.</li>
+<li>Business rule checks: user must exist, be active (<code>IsActive=true</code>), and not be locked out (<code>IsLockedOut=false</code>).</li>
+<li>Password is verified by computing <code>SHA1(salt + submittedPassword)</code> and comparing against <code>PasswordHash</code>.</li>
+<li>A GUID session token is generated and persisted via <code>AuthRepository.CreateSessionToken</code> with a 30-minute expiry.</li>
+<li><code>AuthRepository.UpdateLastLogin</code> records the login timestamp.</li>
+<li>A <code>FormsAuthenticationTicket</code> is created (version 2, 30-minute expiry, sliding, <code>UserData = sessionToken</code>).</li>
+<li>The ticket is encrypted and written as the <code>.ZAVAAUTH</code> cookie (HttpOnly, 30-minute expiry, path <code>/</code>).</li>
+<li>Browser is redirected to <code>Default.aspx</code>.</li>
+</ol>
+<p>---</p>
+<h3 id="workflow-2-user-logout">Workflow 2: User Logout</h3>
+<p>A logged-in user navigates to <code>Logout.aspx</code>. The gateway reads and decrypts the Forms Auth cookie, extracts the session token from the ticket's <code>UserData</code>, deactivates that token in the database, clears the cookie, and redirects to the login page.</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li>Browser sends GET to <code>Logout.aspx</code> with <code>.ZAVAAUTH</code> cookie.</li>
+<li>Cookie value is decrypted via <code>FormsAuthentication.Decrypt</code>.</li>
+<li>If decryption succeeds and <code>ticket.UserData</code> is non-empty, <code>AuthRepository.DeactivateSessionToken</code> sets <code>IsActive=0</code> and <code>ExpiresAt=GETDATE()</code>.</li>
+<li><code>FormsAuthentication.SignOut()</code> is called.</li>
+<li>An expired replacement cookie (past-dated <code>Expires</code>) is written to force browser removal.</li>
+<li>Browser is redirected to <code>Login.aspx?loggedOut=1</code>.</li>
+</ol>
+<p>---</p>
+<h3 id="workflow-3-session-token-validation-cross-service-api">Workflow 3: Session Token Validation (Cross-Service / API)</h3>
+<p>Java or other services that cannot decrypt the <code>.ZAVAAUTH</code> cookie call <code>GET /api/auth/validate</code> with the session token to verify a user's identity before processing a request.</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li>Caller provides the session token via query string (<code>?token=</code>) or <code>X-Session-Token</code> header.</li>
+<li>Input validation: token must be non-empty (returns 400 if missing).</li>
+<li><code>AuthRepository.ValidateSessionToken</code> queries <code>SessionTokens JOIN Users</code> where:</li>
+</ol>
+<ul>
+<li><code>Token</code> matches</li>
+<li><code>SessionTokens.IsActive = 1</code></li>
+<li><code>SessionTokens.ExpiresAt > GETDATE()</code></li>
+<li><code>Users.IsActive = 1</code></li>
+</ul>
+<ol>
+<li>If valid: returns <code>{"valid":true,"userId":N,"username":"...","expiresAt":"..."}</code> (HTTP 200).</li>
+<li>If invalid or expired: returns <code>{"valid":false}</code> (HTTP 200).</li>
+</ol>
+<p>---</p>
+<h3 id="workflow-4-identity-lookup-whoami">Workflow 4: Identity Lookup (WhoAmI)</h3>
+<p>Browser-based clients that hold the <code>.ZAVAAUTH</code> cookie call <code>GET /WhoAmI.ashx</code> to retrieve the full identity of the currently logged-in user, including display name, roles, and raw session token (for cross-ecosystem use).</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li>Browser sends GET to <code>WhoAmI.ashx</code> with <code>.ZAVAAUTH</code> cookie.</li>
+<li>Cookie presence and non-emptiness is checked; missing or empty cookie returns <code>{"authenticated":false}</code>.</li>
+<li><code>FormsAuthentication.Decrypt</code> decrypts the cookie; failure or null/expired ticket returns <code>{"authenticated":false}</code>.</li>
+<li><code>AuthRepository.GetUserByUsername(ticket.Name)</code> fetches the user record; null, inactive, or locked-out user returns <code>{"authenticated":false}</code>.</li>
+<li><code>AuthRepository.GetUserRoles(userId)</code> fetches the user's role list.</li>
+<li>Display name is computed as <code>FirstName + " " + LastName</code>, falling back to <code>Username</code> if blank.</li>
+<li>Session token is extracted from <code>ticket.UserData</code>.</li>
+<li>Returns <code>{"authenticated":true,"username":"...","displayName":"...","sessionToken":"...","roles":[...]}</code>.</li>
+</ol>
+<h2 id="cross-service-data-flows">Cross-Service Data Flows</h2>
+<p>ZavaAuthGateway is the <strong>identity authority</strong> — it does not consume other services. The data flow is outbound only: downstream ZavaBank services (including Java applications) call <code>GET /api/auth/validate?token=<guid></code> to verify a session token, receiving the user's ID, username, and token expiry in return. This pattern enables cross-ecosystem SSO: the Java portal passes the GUID (extracted from the <code>.ZAVAAUTH</code> cookie or a <code>?sessionToken=</code> query parameter) to the validation endpoint rather than attempting to decrypt the ASP.NET FormsAuthentication ticket directly.</p>
+<p>There are no circuit breaker patterns, retry policies, or fallback behaviors. If ZavaAuthGateway is unavailable, calling services receive no token validation response and must handle the failure themselves.</p>
+<h2 id="business-workflow-sequence">Business Workflow Sequence</h2>
+<div class="mermaid">
+sequenceDiagram
+    participant User as "User (Browser)"
+    participant Login as "Login.aspx"
+    participant DB as "SQL Server (ZavaBankDB)"
+    participant JavaSvc as "Java Service"
+    participant Validate as "api/auth/validate"
+
+    Note over User,DB: Login Workflow
+    User->>Login: POST credentials (username, password)
+    Login->>DB: Lookup user by username
+    DB-->>Login: User record (hash, salt, isActive, isLockedOut)
+    alt Credentials valid and account active
+        Login->>Login: Verify SHA1(salt+password) == PasswordHash
+        Login->>DB: Create SessionToken (GUID, 30-min expiry)
+        Login->>DB: Update LastLoginDate
+        Login-->>User: 302 + Set-Cookie .ZAVAAUTH (encrypted ticket with session GUID)
+    else Invalid credentials or locked account
+        Login-->>User: 200 HTML with error message
+    end
+
+    Note over JavaSvc,DB: Cross-Service Token Validation
+    JavaSvc->>Validate: GET /api/auth/validate?token=GUID
+    Validate->>DB: Validate token (active, not expired, user active)
+    alt Token valid
+        DB-->>Validate: userId, username, expiresAt
+        Validate-->>JavaSvc: 200 {"valid":true,"userId":N,"username":"..."}
+    else Token invalid or expired
+        DB-->>Validate: no rows
+        Validate-->>JavaSvc: 200 {"valid":false}
+    end
+
+    Note over User,DB: Logout Workflow
+    User->>Login: GET /Logout.aspx
+    Login->>Login: Decrypt .ZAVAAUTH cookie
+    Login->>DB: Deactivate SessionToken (IsActive=0)
+    Login-->>User: Clear cookie + 302 to Login.aspx
+</div>
+<h2 id="business-rules-decision-logic">Business Rules & Decision Logic</h2>
+<p><strong>Authentication Rules:</strong></p>
+<ul>
+<li>Username and password fields must both be non-empty; empty submissions are rejected with a form-level error message.</li>
+<li>The user account must exist in the <code>Users</code> table, have <code>IsActive = true</code>, and have <code>IsLockedOut = false</code>; any failure produces a generic "Invalid username or password" message (no account-existence disclosure).</li>
+<li>Password verification: <code>SHA1(salt + submittedPassword)</code> must equal <code>PasswordHash</code> (case-insensitive hex comparison).</li>
+</ul>
+<p><strong>Session Token Rules:</strong></p>
+<ul>
+<li>Session tokens are 32-character uppercase GUIDs (<code>Guid.NewGuid().ToString("N").ToUpperInvariant()</code>).</li>
+<li>Tokens are created with a 30-minute expiry (<code>DATEADD(MINUTE, 30, GETDATE())</code>); the Forms Auth ticket mirrors this expiry.</li>
+<li>Sliding expiration is enabled for the Forms Auth cookie (<code>slidingExpiration="true"</code>, timeout 30 minutes) — the cookie expiry is extended on each request, but the <code>SessionTokens</code> row expiry in the database is <strong>not</strong> updated on each request, creating a drift: the browser cookie may still be valid while the DB token has expired.</li>
+<li>Token validation requires the token to be active (<code>IsActive = 1</code>), not expired (<code>ExpiresAt > GETDATE()</code>), and the owning user to be active (<code>Users.IsActive = 1</code>).</li>
+<li>On logout, the token is explicitly deactivated (<code>IsActive = 0</code>, <code>ExpiresAt = GETDATE()</code>) — this is the only server-side session invalidation mechanism.</li>
+</ul>
+<p><strong>Authorization Rules:</strong></p>
+<ul>
+<li>All paths deny anonymous users by default (<code><deny users="?" /></code>); individual paths are explicitly opened.</li>
+<li>Role data is returned by <code>WhoAmI.ashx</code> for use by consuming services; ZavaAuthGateway itself does not enforce role-based access control on its own endpoints.</li>
+</ul>
+<p><strong>Cross-Cutting Concerns:</strong></p>
+<ul>
+<li><strong>Transactions</strong>: None. Each database operation uses an independent <code>SqlConnection</code>; there is no <code>TransactionScope</code> wrapping the login sequence (user lookup + token creation + last-login update). A partial failure mid-login could leave the DB in an inconsistent state.</li>
+<li><strong>Error handling</strong>: Exceptions in <code>WhoAmI.ashx</code> are silently swallowed with a <code>catch {}</code> returning <code>{"authenticated":false}</code>. <code>Logout.aspx</code> similarly swallows decryption/deactivation exceptions. No structured error logging is configured.</li>
+<li><strong>Audit/logging</strong>: No application-level logging framework is configured. Login success, failure, and logout events are not logged.</li>
+<li><strong>Security</strong>: The Forms Auth cookie is <code>HttpOnly</code> but not <code>Secure</code> (no HTTPS enforcement); the <code>Access-Control-Allow-Origin: *</code> header on <code>WhoAmI.ashx</code> allows any origin to read identity data.</li>
+</ul></div>
+</div>
+<div id="tab-deps" class="tab-panel">
+  <div class="fact-content"><h1 id="dependency-map">Dependency Map</h1>
+<p>ZavaAuthGateway declares no third-party NuGet packages; all dependencies are built-in .NET Framework 4.8 BCL and ASP.NET assemblies referenced directly in the project file.</p>
+<h2 id="dependencies">Dependencies</h2>
+<div class="mermaid">
+flowchart LR
+    App["ZavaAuthGateway"]
+
+    subgraph Web["Web Frameworks"]
+        SystemWeb["System.Web (ASP.NET Web Forms, IHttpHandler, FormsAuthentication)"]
+    end
+    subgraph DB["Database / ORM"]
+        SystemData["System.Data (ADO.NET SqlClient)"]
+    end
+    subgraph Util["Utilities"]
+        System["System (Core BCL)"]
+        SystemConfig["System.Configuration (ConfigurationManager)"]
+        SystemCore["System.Core (LINQ, Cryptography)"]
+    end
+
+    App -->|"web / auth"| Web
+    App -->|"data access"| DB
+    App -->|"utilities"| Util
+</div>
+<h3 id="dependency-summary">Dependency Summary</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Category</th><th>Count</th><th>Key Libraries</th><th>Notes</th>
+</tr></thead><tbody>
+<tr><td>Web Frameworks</td><td>1</td><td>System.Web (.NET Framework 4.8)</td><td>Provides ASP.NET Web Forms, IHttpHandler pipeline, and FormsAuthentication — all tied to .NET Framework</td></tr>
+<tr><td>Database / ORM</td><td>1</td><td>System.Data / SqlClient (.NET Framework 4.8)</td><td>Raw ADO.NET; no ORM layer; ships inside the .NET Framework</td></tr>
+<tr><td>Utilities</td><td>3</td><td>System, System.Configuration, System.Core</td><td>Core BCL assemblies bundled with .NET Framework 4.8</td></tr>
+</tbody></table></div>
+<h3 id="version-compatibility-risks">Version & Compatibility Risks</h3>
+<p>All declared dependencies are in-box .NET Framework 4.8 assemblies — there are zero third-party NuGet packages. While .NET Framework 4.8 itself receives security patches, it is the final major version of the legacy Windows-only runtime and will not receive new feature development. <code>System.Web</code> (WebForms + FormsAuthentication) is <strong>not available on .NET 5/6/7/8/9/10</strong> and has no direct upgrade path; migrating to modern .NET requires replacing Web Forms pages with Razor Pages or Minimal API endpoints and replacing <code>FormsAuthentication</code> with ASP.NET Core cookie authentication or token-based auth. <code>System.Data.SqlClient</code> (in-box) should be replaced with <code>Microsoft.Data.SqlClient</code> (NuGet) when targeting modern .NET. The <code>machineKey</code> element in <code>web.config</code> uses a hardcoded SHA-1 / AES key which is a known security concern.</p>
+<h3 id="notable-observations">Notable Observations</h3>
+<ul>
+<li><strong>No third-party NuGet packages</strong>: The entire dependency surface consists of .NET Framework BCL assemblies, which minimizes supply-chain risk but also means the application relies exclusively on framework-level APIs that are absent from modern .NET.</li>
+<li><strong>System.Web is the primary migration blocker</strong>: <code>System.Web.UI.Page</code> (Web Forms), <code>IHttpHandler</code>, and <code>FormsAuthentication</code> are all <code>System.Web</code> types with no equivalent in .NET Core/5+; each must be rewritten rather than ported.</li>
+<li><strong>SHA-1 password hashing</strong>: The login flow computes <code>SHA1(salt + password)</code> using <code>System.Security.Cryptography.SHA1</code>, which is considered weak for password storage — modern equivalents (bcrypt, PBKDF2, Argon2) should replace it during any migration.</li>
+<li><strong>Hardcoded machine key</strong>: <code>web.config</code> contains a static <code>machineKey</code> used for Forms Authentication ticket encryption; this key should be rotated and managed via a secrets store, not committed to source.</li>
+</ul>
+<h2 id="test-dependencies">Test Dependencies</h2>
+<p>No test-scoped dependencies detected.</p>
+<p>Total test-scope dependencies: 0</p>
+<p>No testing frameworks or test helper libraries are declared in <code>packages.config</code> or <code>ZavaAuthGateway.csproj</code>. The project has no automated test infrastructure in place.</p></div>
+</div>
+<div id="tab-data" class="tab-panel">
+  <div class="fact-content"><h1 id="data-architecture-persistence-layer">Data Architecture & Persistence Layer</h1>
+<p>ZavaAuthGateway persists all authentication and session data in a single SQL Server database (<code>ZavaBankDB</code>) accessed through raw ADO.NET — there is no ORM layer, no migration tool, and no caching layer.</p>
+<h2 id="database-configuration">Database Configuration</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service/Module</th><th>DB Type</th><th>Profile</th><th>Driver</th><th>Connection</th><th>Migration Tool</th>
+</tr></thead><tbody>
+<tr><td>ZavaAuthGateway</td><td>SQL Server</td><td>All (single config)</td><td>System.Data.SqlClient (in-box .NET Fx 4.8)</td><td>Resolved from env vars <code>DB_HOST</code>, <code>DB_PORT</code>, <code>DB_NAME</code>, <code>DB_USER</code>, <code>DB_PASSWORD</code>; falls back to <code>web.config</code> <code>connectionStrings["ZavaBankDb"]</code></td><td>None — schema is managed externally; the application issues no DDL</td></tr>
+</tbody></table></div>
+<p>No Flyway, Liquibase, EF Migrations, or any other migration tool is configured. Schema creation and evolution are entirely external to the application.</p>
+<h2 id="data-ownership-per-service">Data Ownership per Service</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service</th><th>Tables Owned</th><th>ORM Framework</th><th>Caching</th><th>Notes</th>
+</tr></thead><tbody>
+<tr><td>ZavaAuthGateway</td><td>Users, Roles, UserRoles, SessionTokens</td><td>None (raw ADO.NET)</td><td>None</td><td>All queries are hand-written parameterized SQL; no second-level cache or session cache is configured</td></tr>
+</tbody></table></div>
+<h2 id="entity-model">Entity Model</h2>
+<div class="mermaid">
+erDiagram
+    Users ||--o{ UserRoles : "assigned"
+    Roles ||--o{ UserRoles : "assigned to"
+    Users ||--o{ SessionTokens : "owns"
+
+    Users {
+        int UserID PK
+        string Username UK "unique login name"
+        string PasswordHash
+        string Salt
+        bool IsActive
+        bool IsLockedOut
+        string FirstName
+        string LastName
+        datetime LastLoginDate
+        datetime ModifiedDate
+    }
+
+    Roles {
+        int RoleID PK
+        string RoleName
+    }
+
+    UserRoles {
+        int UserID PK "composite PK; FK to Users"
+        int RoleID PK "composite PK; FK to Roles"
+    }
+
+    SessionTokens {
+        int ID PK
+        int UserID FK
+        string Token UK "GUID session token"
+        datetime CreatedAt
+        datetime ExpiresAt
+        string SourceSystem
+        bool IsActive
+        string IPAddress
+        string UserAgent
+    }
+</div>
+<p>> Note: Table and column names are inferred from SQL queries in <code>AuthRepository.cs</code>; no ORM schema files exist to confirm exact DDL.</p>
+<h2 id="key-repository-methods">Key Repository Methods</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service</th><th>Repository</th><th>Notable Methods</th><th>Purpose</th>
+</tr></thead><tbody>
+<tr><td>ZavaAuthGateway</td><td><code>AuthRepository</code></td><td><code>GetUserByUsername(string username)</code></td><td>Fetches user record including password hash and salt for credential verification; returns <code>AuthUser</code> or <code>null</code></td></tr>
+<tr><td>ZavaAuthGateway</td><td><code>AuthRepository</code></td><td><code>GetUserRoles(int userId)</code></td><td>Returns list of role names for a user via <code>UserRoles</code> join to <code>Roles</code></td></tr>
+<tr><td>ZavaAuthGateway</td><td><code>AuthRepository</code></td><td><code>CreateSessionToken(int userId, string token, string ipAddress, string userAgent)</code></td><td>Inserts a new active session token with 30-minute expiry into <code>SessionTokens</code></td></tr>
+<tr><td>ZavaAuthGateway</td><td><code>AuthRepository</code></td><td><code>DeactivateSessionToken(string token)</code></td><td>Sets <code>IsActive=0</code> and <code>ExpiresAt=GETDATE()</code> for the given token (used on logout)</td></tr>
+<tr><td>ZavaAuthGateway</td><td><code>AuthRepository</code></td><td><code>ValidateSessionToken(string token)</code></td><td>Queries <code>SessionTokens</code> joined to <code>Users</code> to verify the token is active, not expired, and the owning user is active; returns <code>SessionValidationResult</code> or <code>null</code></td></tr>
+<tr><td>ZavaAuthGateway</td><td><code>AuthRepository</code></td><td><code>UpdateLastLogin(int userId)</code></td><td>Updates <code>LastLoginDate</code> and <code>ModifiedDate</code> on the <code>Users</code> row after successful login</td></tr>
+</tbody></table></div>
+<p>All methods use <code>SqlConnection</code> + <code>SqlCommand</code> with <code>AddWithValue</code> parameterized queries. No stored procedures, no bulk operations, no transactions.</p>
+<h2 id="caching-strategy">Caching Strategy</h2>
+<p>No caching layer is configured. Every request to <code>/api/auth/validate</code> or <code>/WhoAmI.ashx</code> results in a direct synchronous SQL query to SQL Server. There are no in-memory caches, no Redis, no second-level ORM cache, and no HTTP response caching headers.</p>
+<p>Given that session token validation is called on every cross-service API request, the absence of a short-lived in-memory or distributed cache for hot tokens is a scalability concern worth addressing during modernization.</p>
+<h2 id="data-ownership-boundaries">Data Ownership Boundaries</h2>
+<p>ZavaAuthGateway owns all four tables exclusively — there is no database-per-service isolation; the tables reside inside the shared <code>ZavaBankDB</code> database. No inter-service data access patterns are present; the application does not query any external service's tables and no other service is documented as sharing these tables, though the <code>ZavaBankDB</code> naming implies this database may be shared with other applications in the ZavaBank platform.</p>
+<p>No CQRS, read-replica, or event-sourcing patterns are implemented. All reads and writes go through the same synchronous ADO.NET path.</p>
+<h3 id="data-classification-sensitivity">Data Classification & Sensitivity</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Entity</th><th>Sensitive Fields</th><th>Classification</th><th>Controls in Place</th>
+</tr></thead><tbody>
+<tr><td>Users</td><td>Username, FirstName, LastName, LastLoginDate</td><td>PII</td><td>No encryption-at-rest or field-level masking configured at the application layer; password is stored as SHA-1(salt+password) — SHA-1 is considered cryptographically weak for password storage</td></tr>
+<tr><td>SessionTokens</td><td>Token, IPAddress, UserAgent</td><td>PII (device/network identifiers)</td><td>Token is a plain GUID stored in cleartext; no encryption-at-rest configured</td></tr>
+<tr><td>Roles / UserRoles</td><td>RoleName</td><td>None</td><td>—</td></tr>
+</tbody></table></div>
+<p>No PHI (health records) or PCI (payment card data) detected. PII is present in <code>Users</code> and <code>SessionTokens</code>; no encryption-at-rest, data masking, or field-level access controls are configured at the application level. The hardcoded <code>web.config</code> <code>machineKey</code> used for Forms Authentication ticket encryption should be treated as a credential and rotated.</p></div>
+</div>
+<p class="footer">Your feedback is invaluable &mdash; <a href="https://aka.ms/ghcp-appmod/feedback">Share feedback</a></p>
+<script>
+function toggleRow(rowId, triggerRow) {
+  var detail = document.getElementById(rowId);
+  var btn = document.getElementById('btn-' + rowId);
+  if (!detail) return;
+  var visible = detail.style.display !== 'none';
+  detail.style.display = visible ? 'none' : 'table-row';
+  if (btn) btn.classList.toggle('open', !visible);
+}
+(function() {
+  var nav = document.querySelector('.tab-nav');
+  if (!nav) return;
+  nav.addEventListener('click', function(e) {
+    var btn = e.target.closest('.tab-btn');
+    if (!btn) return;
+    var targetId = btn.getAttribute('data-tab');
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    var panel = document.getElementById(targetId);
+    if (panel) {
+      panel.classList.add('active');
+      if (window.__mermaidReady) { window.__renderMermaidIn(panel); }
+    }
+  });
+})();
+
+// ── Diagram lightbox ────────────────────────────────────────
+(function() {
+  var lightbox = document.getElementById('diagram-lightbox');
+  var inner = document.getElementById('diagram-lightbox-inner');
+  var closeBtn = document.getElementById('diagram-lightbox-close');
+  if (!lightbox || !inner || !closeBtn) return;
+
+  var scale = 1;
+  var translateX = 0;
+  var translateY = 0;
+  var isDragging = false;
+  var dragStartX = 0;
+  var dragStartY = 0;
+
+  function applyTransform() {
+    var svg = inner.querySelector('svg');
+    if (svg) {
+      svg.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px) scale(' + scale + ')';
+      svg.style.transformOrigin = 'center center';
+      svg.style.transition = 'none';
+    }
+  }
+
+  function resetTransform() {
+    scale = 1; translateX = 0; translateY = 0;
+    applyTransform();
+  }
+
+  function openLightbox(svgEl) {
+    inner.innerHTML = svgEl.outerHTML;
+    var injected = inner.querySelector('svg');
+    if (injected) {
+      injected.removeAttribute('width');
+      injected.removeAttribute('height');
+      injected.style.cursor = 'grab';
+    }
+    resetTransform();
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    inner.innerHTML = '';
+    document.body.style.overflow = '';
+    resetTransform();
+  }
+
+  inner.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    var delta = e.deltaY > 0 ? 0.9 : 1.1;
+    scale = Math.min(Math.max(scale * delta, 0.3), 8);
+    applyTransform();
+  }, { passive: false });
+
+  inner.addEventListener('mousedown', function(e) {
+    if (e.button !== 0) return;
+    isDragging = true;
+    dragStartX = e.clientX - translateX;
+    dragStartY = e.clientY - translateY;
+    var svg = inner.querySelector('svg');
+    if (svg) { svg.style.cursor = 'grabbing'; }
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', function(e) {
+    if (!isDragging) return;
+    translateX = e.clientX - dragStartX;
+    translateY = e.clientY - dragStartY;
+    applyTransform();
+  });
+
+  document.addEventListener('mouseup', function() {
+    if (!isDragging) return;
+    isDragging = false;
+    var svg = inner.querySelector('svg');
+    if (svg) { svg.style.cursor = 'grab'; }
+  });
+
+  inner.addEventListener('dblclick', function() { resetTransform(); });
+
+  document.addEventListener('click', function(e) {
+    var card = e.target.closest('.mermaid');
+    if (!card) return;
+    if (e.target.closest('.diagram-lightbox-close')) return;
+    var svg = card.querySelector('svg');
+    if (svg) { openLightbox(svg); }
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+
+  lightbox.addEventListener('click', function(e) {
+    if (e.target === lightbox) { closeLightbox(); }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { closeLightbox(); }
+  });
+})();
+
+var _currentTarget = '';
+
+function toggleMultiSelect(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  document.querySelectorAll('.multi-select.open').forEach(function(ms) { if (ms.id !== id) ms.classList.remove('open'); });
+  el.classList.toggle('open');
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.multi-select')) {
+    document.querySelectorAll('.multi-select.open').forEach(function(ms) { ms.classList.remove('open'); });
+  }
+});
+
+function getMultiSelectValues(msId) {
+  var el = document.getElementById(msId);
+  if (!el) return [];
+  var checked = el.querySelectorAll('input[type=checkbox]:checked');
+  var vals = [];
+  for (var i = 0; i < checked.length; i++) vals.push(checked[i].value);
+  return vals;
+}
+
+function onMultiSelectChange(msId, label) {
+  var el = document.getElementById(msId);
+  if (!el) return;
+  var vals = getMultiSelectValues(msId);
+  var total = el.querySelectorAll('input[type=checkbox]').length;
+  var btn = el.querySelector('.multi-select-btn');
+  if (btn) {
+    btn.textContent = vals.length > 0 && vals.length < total ? label + ' (' + vals.length + ')' : label;
+  }
+  applyFilters();
+}
+
+function applyFilters() {
+  var selectedDomains = getMultiSelectValues('domain-ms');
+  var selectedCrits = getMultiSelectValues('criticality-ms');
+
+  var sections = document.querySelectorAll('.issue-section');
+  for (var i = 0; i < sections.length; i++) {
+    var domain = sections[i].getAttribute('data-domain');
+    sections[i].style.display = (selectedDomains.length === 0 || selectedDomains.indexOf(domain) >= 0) ? '' : 'none';
+  }
+
+  var rows = document.querySelectorAll('.issue-row');
+  for (var i = 0; i < rows.length; i++) {
+    var row = rows[i];
+    var section = row.closest('.issue-section');
+    if (section && section.style.display === 'none') {
+      row.style.display = 'none';
+      var next = row.nextElementSibling;
+      if (next && next.classList.contains('detail-row')) next.style.display = 'none';
+      continue;
+    }
+
+    var show = true;
+    if (_currentTarget && row.hasAttribute('data-targets')) {
+      var targetsStr = row.getAttribute('data-targets');
+      if (targetsStr && targetsStr !== '{}') {
+        try {
+          var targets = JSON.parse(targetsStr);
+          if (Object.keys(targets).length > 0 && !targets[_currentTarget]) {
+            show = false;
+          }
+        } catch(e) {}
+      }
+    }
+
+    if (show && selectedCrits.length > 0) {
+      var crit = row.getAttribute('data-criticality');
+      if (selectedCrits.indexOf(crit) < 0) show = false;
+    }
+
+    row.style.display = show ? '' : 'none';
+    var nextRow = row.nextElementSibling;
+    if (nextRow && nextRow.classList.contains('detail-row')) {
+      if (!show) nextRow.style.display = 'none';
+    }
+  }
+}
+
+function clearAllFilters() {
+  document.querySelectorAll('.multi-select input[type=checkbox]').forEach(function(cb) { cb.checked = false; });
+  var domainBtn = document.querySelector('#domain-ms .multi-select-btn');
+  if (domainBtn) domainBtn.textContent = 'Domain';
+  var critBtn = document.querySelector('#criticality-ms .multi-select-btn');
+  if (critBtn) critBtn.textContent = 'Criticality';
+  applyFilters();
+}
+
+function onTargetChange(targetId) {
+  _currentTarget = targetId;
+  var rows = document.querySelectorAll('.issue-row[data-targets]');
+  var totalEffort = 0;
+  var domainCrits = {};
+
+  for (var i = 0; i < rows.length; i++) {
+    var row = rows[i];
+    var targets = JSON.parse(row.getAttribute('data-targets'));
+    var section = row.closest('.issue-section');
+    var domain = section ? section.getAttribute('data-domain') : '';
+
+    if (!targets || Object.keys(targets).length === 0) {
+      var sp = parseFloat(row.querySelector('.sp-cell').textContent) || 0;
+      totalEffort += sp;
+      if (!domainCrits[domain]) domainCrits[domain] = {mandatory:0,potential:0,optional:0};
+      var crit = row.getAttribute('data-criticality') || 'optional';
+      domainCrits[domain][crit] = (domainCrits[domain][crit] || 0) + 1;
+      continue;
+    }
+
+    var override = targets[targetId];
+    if (!override) {
+      continue;
+    }
+
+    var newSeverity = (override.severity || row.getAttribute('data-default-severity') || '').toLowerCase();
+    row.setAttribute('data-criticality', newSeverity);
+    var critCell = row.querySelector('.crit-cell');
+    if (critCell) {
+      var critText = newSeverity === 'mandatory' ? 'Mandatory' : newSeverity === 'potential' ? 'Potential' : 'Optional';
+      var cssClass = newSeverity === 'mandatory' ? 'crit-square-mandatory' : newSeverity === 'potential' ? 'crit-square-potential' : 'crit-square-optional';
+      critCell.innerHTML = '<span class="crit-label"><span class="crit-square ' + cssClass + '"></span>' + critText + '</span>';
+    }
+
+    var newEffort = override.effort !== undefined ? override.effort : parseFloat(row.getAttribute('data-default-effort')) || 0;
+    var spCell = row.querySelector('.sp-cell');
+    if (spCell) spCell.textContent = newEffort;
+    totalEffort += newEffort;
+
+    if (!domainCrits[domain]) domainCrits[domain] = {mandatory:0,potential:0,optional:0};
+    domainCrits[domain][newSeverity] = (domainCrits[domain][newSeverity] || 0) + 1;
+  }
+
+  var secSection = document.querySelector('.issue-section[data-domain="security"]');
+  if (secSection) {
+    var secRows = secSection.querySelectorAll('.issue-row');
+    for (var j = 0; j < secRows.length; j++) {
+      if (!secRows[j].hasAttribute('data-targets') || secRows[j].getAttribute('data-targets') === '') {
+        var sp = parseFloat(secRows[j].querySelector('.sp-cell').textContent) || 0;
+        totalEffort += sp;
+        if (!domainCrits['security']) domainCrits['security'] = {mandatory:0,potential:0,optional:0};
+        var sc = secRows[j].getAttribute('data-criticality') || 'optional';
+        domainCrits['security'][sc] = (domainCrits['security'][sc] || 0) + 1;
+      }
+    }
+  }
+
+  var label = totalEffort < 20 ? 'S' : totalEffort < 50 ? 'M' : totalEffort < 100 ? 'L' : 'XL';
+  var effortEl = document.getElementById('effort-display');
+  if (effortEl) effortEl.textContent = label + ' (total story points: ' + totalEffort + ')';
+
+  updateDonuts(domainCrits);
+  applyFilters();
+}
+
+function updateDonuts(domainCrits) {
+  var container = document.getElementById('donut-container');
+  if (!container) return;
+  container.innerHTML = '';
+  var domainNames = {'cloud-readiness':'Cloud Readiness','java-upgrade':'Java Upgrade','dotnet-upgrade':'DotNET Upgrade','security':'Security'};
+  var domainOrder = ['cloud-readiness','java-upgrade','dotnet-upgrade','security'];
+  for (var d = 0; d < domainOrder.length; d++) {
+    var key = domainOrder[d];
+    var c = domainCrits[key];
+    if (!c || (c.mandatory + c.potential + c.optional) === 0) continue;
+    var total = c.mandatory + c.potential + c.optional;
+    var div = document.createElement('div');
+    div.className = 'domain-summary-item';
+    div.innerHTML = buildDonutSvg(c.mandatory, c.potential, c.optional) +
+      '<h3>' + domainNames[key] + '</h3>' +
+      '<div class="count">' + total + ' issue' + (total !== 1 ? 's' : '') + '</div>';
+    container.appendChild(div);
+  }
+}
+
+function buildDonutSvg(m, p, o) {
+  var total = m + p + o;
+  if (total === 0) return '<svg viewBox="0 0 100 100" width="100" height="100" style="display:block;margin:0 auto;"><circle cx="50" cy="50" r="35" fill="none" stroke="#d0d7de" stroke-width="15" opacity="0.5"/></svg>';
+  var r = 35, circ = 2 * Math.PI * r, offset = 0;
+  var svg = '<svg viewBox="0 0 100 100" width="100" height="100" style="display:block;margin:0 auto;transform:rotate(-90deg);">';
+  var segs = [{c:m,color:'var(--color-mandatory)'},{c:p,color:'var(--color-potential)'},{c:o,color:'var(--color-optional)'}];
+  for (var i = 0; i < segs.length; i++) {
+    if (segs[i].c === 0) continue;
+    var segLen = (segs[i].c / total) * circ;
+    var gap = total > segs[i].c ? 1.5 : 0;
+    var drawLen = Math.max(segLen - gap, 0.5);
+    svg += '<circle cx="50" cy="50" r="' + r + '" fill="none" stroke="' + segs[i].color + '" stroke-width="15" stroke-dasharray="' + drawLen.toFixed(2) + ' ' + circ.toFixed(2) + '" stroke-dashoffset="' + (-offset).toFixed(2) + '"/>';
+    offset += segLen;
+  }
+  svg += '</svg>';
+  return svg;
+}
+</script>
+<script>document.addEventListener('DOMContentLoaded', function() { onTargetChange('AppService.Windows'); });</script>
+</div></body></html>
