@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Tasks template for modernization plan. Generate this file alongside plan.md to track individual migration tasks.",
+  "tasks": [
+    {
+      "type": "upgrade",
+      "id": "001-upgrade-dotnet-to-net10",
+      "description": "Upgrade ZavaAuthGateway from .NET Framework 4.8 to the latest .NET LTS target.",
+      "reason": "The user explicitly requested modernization to the latest framework and this must precede cloud-native service changes.",
+      "requirements": "Modernize the project to latest .NET LTS (net10.0), convert project structure as needed for modern build/runtime compatibility, and preserve authentication gateway behavior.",
+      "successCriteria": {
+        "passBuild": "true",
+        "generateNewUnitTests": "false",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "transform",
+      "id": "002-transform-cloud-native-services",
+      "description": "Modernize application dependencies and runtime integration to Azure cloud-native services.",
+      "reason": "The user requested modernization to cloud-native services as part of Azure migration.",
+      "requirements": "Adopt Azure-native service patterns for data/config/secret management and identity-based authentication where applicable for the Zava authentication gateway.",
+      "dependencies": [
+        "001-upgrade-dotnet-to-net10"
+      ],
+      "skills": [
+        {
+          "name": "migration-managed-identity",
+          "location": "builtin"
+        },
+        {
+          "name": "migration-azure-sql-database",
+          "location": "builtin"
+        },
+        {
+          "name": "migration-local-appsettings-azure-app-configuration-via-deployment",
+          "location": "builtin"
+        },
+        {
+          "name": "migration-azure-keyvault-secret",
+          "location": "builtin"
+        },
+        {
+          "name": "migration-console-logging",
+          "location": "builtin"
+        }
+      ],
+      "successCriteria": {
+        "passBuild": "true",
+        "generateNewUnitTests": "false",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "security",
+      "id": "003-security-cve-remediation",
+      "description": "Scan dependencies for CVEs and remediate vulnerabilities before Azure deployment.",
+      "reason": "Security/CVE remediation is required for every modernization plan.",
+      "requirements": "Scan all project dependencies for known CVEs and upgrade vulnerable dependencies to minimum patched versions while preserving application behavior.",
+      "dependencies": [
+        "002-transform-cloud-native-services"
+      ],
+      "successCriteria": {
+        "passBuild": "true",
+        "generateNewUnitTests": "false",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "deployment",
+      "id": "004-deployment-azure-container-apps",
+      "description": "Deploy the modernized ZavaAuthGateway application to Azure Container Apps.",
+      "reason": "The user explicitly requested deployment to Azure.",
+      "requirements": "Containerize and deploy the upgraded application to Azure Container Apps with configuration and identities aligned to modernization tasks.",
+      "dependencies": [
+        "003-security-cve-remediation"
+      ],
+      "targetAzureService": "Azure Container Apps",
+      "resourceStatus": "will create new service",
+      "deploymentTool": "bicep",
+      "skills": [
+        {
+          "name": "azcli-containerapp-deploy",
+          "location": "builtin"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "planName": "plan",
+    "projectName": "ZavaAuthGateway",
+    "language": "dotnet",
+    "createdAt": "2026-05-29T08:15:44Z",
+    "version": "1.0"
+  }
+}
